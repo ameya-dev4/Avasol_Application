@@ -23,7 +23,9 @@ const AdminSignUp=()=>{
           mandal:"",
           areaName:"",
           pincode:"",
-          status:0
+          status:0,
+          photo:"",
+          tos:true
           
         }
     });
@@ -40,7 +42,7 @@ const AdminSignUp=()=>{
      
 
       try {
-        const response = await fetch('http://avasol.ameyalabs.com:5000/admin-signup', {
+        const response = await fetch('http://100.20.33.222:5000/admin/signup', {
           method: 'POST',
           mode:'cors',
           headers: {
@@ -176,7 +178,7 @@ const AdminSignUp=()=>{
                             </Col>
                             <Col>
                                 <Form.Label>Email ID</Form.Label>
-                                <Form.Control type="text" {...register('username',{
+                                <Form.Control type="text" {...register('emailId',{
                                   pattern:{
                                     value:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                                     message:"Invalid Email"

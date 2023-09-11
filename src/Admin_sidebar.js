@@ -81,7 +81,7 @@ function Admin_sidebar({openSidebarToggle, OpenSidebar}) {
                 </Link>
             </li>
             <li className='sidebar-list-item'>
-                <Link to='/logout'>
+                <Link to='/admin_logout'>
                     {/* <BsFillArchiveFill className='icon'/> */}
                     <i className='feather icon-log-out'> Logout</i>
                 </Link>

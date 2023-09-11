@@ -55,6 +55,20 @@ const {errors}=formState;
 const [showdetails,setDetails]=useState([])
 
 const [loginType,setLoginType]=React.useState('user')
+
+console.log(loginType)
+let API_url;
+if (loginType==='admin'){
+  API_url='http://100.20.33.222:5000/admin/login'
+}
+else if(loginType==='user'){
+  API_url='http://100.20.33.222:5000/user/login'
+}
+else{
+  API_url='http://100.20.33.222:5000/se/login'
+}
+console.log(API_url)
+
 const handleChange = (event) => {
   setLoginType(event.target.value);
 };
@@ -62,7 +76,7 @@ const handleChange = (event) => {
   
   const submitHandler = async(event) => {
     try {
-      const response = await fetch('http://avasol.ameyalabs.com:5000/login', {
+      const response = await fetch(API_url, {
         method: 'POST',
         mode:'cors',
         headers: {
@@ -89,7 +103,8 @@ const handleChange = (event) => {
               navigate('/latest_serv_request')
             }
             else if (loginType==='admin'){
-              window.open('/admin_home','_blank')
+              // window.open('/admin_home','_blank')
+              navigate('/admin_home')
             } 
             else{
               navigate('/service_engg')
@@ -141,7 +156,7 @@ const handleChange = (event) => {
 
     <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs" style={{backgroundColor:'white',borderRadius:'5px'}}>
-        <p style={{color:'red'}}>{ err?"signin  failed":"" }</p>
+        
           <CssBaseline />
           <Box
             sx={{
@@ -157,6 +172,7 @@ const handleChange = (event) => {
             <Typography component="h1" variant="h5" style={{color:'black'}}>
               {loginType==='admin'?'Admin':loginType==='user'?'User':'Service Engineer'}
             </Typography>
+            <p style={{color:'red'}}>{ err?"signin  failed":"" }</p>
             <Box component="form" onSubmit={access_token===null?handleSubmit(submitHandler):()=>alert(`you are aleady logged in as ${loginType}`)} noValidate sx={{ mt: 1 }}>
                   <FormControl sx={{ width:'100%' }}>
               <InputLabel id="demo-simple-select-autowidth-label">Login As</InputLabel>

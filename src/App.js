@@ -27,6 +27,8 @@ import AllServiceEngg from './AllServiceEngineers'
 import AdminMyProfile from './AdminMyProfile'
 import Manage_Users from './Manage_Users'
 import AdminMyDashboard from './AdminMyDashboard'
+import Admin_logout from './Admin_logout'
+import Admin_Edit_Profile from './Admin_Edit_Profile'
 
 
 
@@ -63,6 +65,10 @@ function App() {
             <Route path='admin_profile' element={<AdminMyProfile/>}/>
             <Route path='manage_users' element={<Manage_Users/>}/>
             <Route path='admin_mydash' element={<AdminMyDashboard/>}/>
+            <Route path='admin_logout' element={<Admin_logout/>}/>
+            <Route path='admin_profile_update' element={<Admin_Edit_Profile/>}/>
+
+            
             
           </Routes>      
     </>
