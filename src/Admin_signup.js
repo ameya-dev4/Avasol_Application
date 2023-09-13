@@ -265,7 +265,7 @@ const AdminSignUp=()=>{
                             </Col>
                             <Col md={3} className="d-flex flex-row-reverse mt-4">
                                 <Col>
-                                    <Button  variant='danger'onClick={()=>navigate.push('/auth/userdashboard')} className="feather icon-x"> Cancle</Button>
+                                    <Button  variant='danger'onClick={()=>navigate.push('admin')} className="feather icon-x"> Cancle</Button>
                                 </Col>
                                 <Col>
                                     <Button variant='primary' onClick={handleSubmit(SubmitHandler)}><i className="fa fa-edit"> Submit</i> </Button>

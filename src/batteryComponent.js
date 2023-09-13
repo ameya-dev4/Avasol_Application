@@ -4,7 +4,7 @@ import Popup from './Popup';
 import { useNavigate } from 'react-router-dom';
 import { GetToken } from './Api/auth';
 
-const apiUrl = 'http://avasol.ameyalabs.com:5000/view-batteries';
+const apiUrl = 'http://100.20.33.222:5000/user/get-battery-list';
 const access_token = GetToken();
 
 function DisplayBattery() {
@@ -74,7 +74,7 @@ function DisplayBattery() {
     }
     
 
-    fetch("http://avasol.ameyalabs.com:5000/delete-battery",{
+    fetch("http://100.20.33.222:5000/user/delete-battery",{
       method : "DELETE",
       headers : {
         'Authorization':`Bearer ${access_token}`,
@@ -136,70 +136,7 @@ function DisplayBattery() {
   };
 
   
-  // const handleUpdateBattery = () => {
-  //   fetch(`http://avasol.ameyalabs.com:5000/update-battery`, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${access_token}`,
-  //     },
-  //     body: JSON.stringify({
-  //       batteryId: selectedBattery.batteryId,
-  //       batteryCapacity:batteryCapacity,
-  //       batteryVoltage:batteryVoltage,
-  //       batteryCurrent:batteryCurrent,
-  //       make:make,
-  //       model:model,
-  //       dealerId:dealerId,
-  //       invoice:invoice,
-  //       invoiceNumber:invoiceNumber,
-  //       invoiceUploaded:invoiceUploaded,
-  //       principalId:principalId,
-  //       purchaseDate:purchaseDate,
-  //       warranty:warranty,
-  //       status:0, 
-  //       username:selectedBattery.username
-        
-  //     }),
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         console.log('PUT request successful.');
-  //         alert('Updated Successfully');
-  //         setSelectedBattery(null);
-  //         setIsOpen(false);
-  //         // Update the latestBattery array with the updated data
-  //         setLatestBattery((prevLatestBattery) =>
-  //           prevLatestBattery.map((battery) =>
-  //             battery.batteryId === selectedBattery.batteryId
-  //               ? {
-  //                   ...battery,
-  //                   batteryCapacity:batteryCapacity,
-  //                 batteryVoltage:batteryVoltage,
-  //                 batteryCurrent:batteryCurrent,
-  //                 make:make,
-  //                 model:model,
-  //                 dealerId:dealerId,
-  //                 invoice:invoice,
-  //                 invoiceNumber:invoiceNumber,
-  //                 invoiceUploaded:invoiceUploaded,
-  //                 principalId:principalId,
-  //                 purchaseDate:purchaseDate,
-  //                 warranty:warranty,
-  //                 status:0, 
-  //                 }
-  //               : battery
-  //           )
-  //         );
-  //         navigate('/userMyBatteries')
-  //       } else {
-  //         console.error('PUT request failed:', response.status);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error occurred during PUT request:', error);
-  //     });
-  // };
+
   const handleUpdateBattery = () => {
     const updatedBatteryData = {
       batteryId: selectedBattery.batteryId,
@@ -219,7 +156,7 @@ function DisplayBattery() {
       username: selectedBattery.username,
     };
   
-    fetch(`http://avasol.ameyalabs.com:5000/update-battery`, {
+    fetch('http://100.20.33.222:5000/user/update-battery', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -232,8 +169,8 @@ function DisplayBattery() {
           console.log('PUT request successful.');
           alert('Updated Successfully');
           setSelectedBattery(null);
-          setIsOpen(false);
-  
+          setIsOpen(!isOpen);
+          navigate('/userMyBatteries');
           // Update the latestBattery array with the updated data
           setLatestBattery((prevLatestBattery) =>
             prevLatestBattery.map((battery) =>
@@ -243,11 +180,12 @@ function DisplayBattery() {
             )
           );
   
-          navigate('/userMyBatteries');
+          
         } else {
           const errorResponse = await response.json();
           console.error('PUT request failed:', errorResponse);
           alert('Update failed. Please check the console for details.');
+          
         }
       })
       .catch((error) => {
@@ -280,7 +218,7 @@ function DisplayBattery() {
           <tbody>
             {latestBattery.map((record) => (
               <tr key={record.batteryId}>
-                <th scope="row">{record.BatteryName}</th>
+                <th scope="row">{record.batteryName}</th>
                 <td>
                   <Button
                     variant="success"
@@ -309,7 +247,7 @@ function DisplayBattery() {
         </table>
       </Container>
 
-      {selectedBattery && isOpen && (
+      {(selectedBattery && isOpen)?(
         <div className='popup-container'>
         <Popup
           content={
@@ -449,7 +387,7 @@ function DisplayBattery() {
           handleClose={togglePopup}
         />
         </div>
-      )}
+      ):("")}
     </div>
   );
 }

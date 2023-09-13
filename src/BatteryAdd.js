@@ -53,7 +53,7 @@ const BatteryAdd = () => {
     const submitHandler=(data)=>{
         const jsonData=JSON.stringify(data)
         console.log(jsonData)
-        fetch("http://avasol.ameyalabs.com:5000/post-new-battery",{
+        fetch('http://100.20.33.222:5000/user/add-new-battery',{
             mode:'cors',
             method:'POST',
             headers:{
@@ -71,7 +71,7 @@ const BatteryAdd = () => {
             })
 
         alert("Battery added successfully new")
-        // navigate.push('/basic/view_battery')
+        navigate('/userMyBatteries')
         
       }
 
@@ -190,7 +190,7 @@ const BatteryAdd = () => {
 
             <Form.Label>Enter Date</Form.Label>
             <div>
-                <Form.Control type='date'  {...register('purchaseDate',{
+                <Form.Control type='text'  {...register('purchaseDate',{
                     required:'missing Date'
                 })} placeholder='Enter Date'/>
                 <p className='error'>{errors.purchaseDate?.message}</p>

@@ -15,7 +15,7 @@ import UserDash_upblock from './UserDash_upblock';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 
 const access_token =GetToken()
-const apiUrl = 'http://avasol.ameyalabs.com:5000/view-batteries'; 
+const apiUrl = 'http://100.20.33.222:5000/user/get-battery-list'; 
 
 
 
@@ -48,59 +48,6 @@ function ViewBatteryDetails({Toggle}) {
     // Call the function to get and display the latest service requests on page load
     getLatestRequests();
   }, []);
-
-  function handleClick(batteryId){
-    setDisplayDetails(true)
-    batteryId_value = batteryId;
-    // console.log("hello",batteryId);
-  }
-
-  function Display(){
-    console.log(batteryId_value)
-    let BatteryInfo = []
-    for (let i=0 ; i<latestRequests.length ; i++){
-      if(batteryId_value === latestRequests[i].batteryId){
-        BatteryInfo = latestRequests[i];
-         console.log("battery",BatteryInfo);
-      }
-    }
-
-    return(
-      <DisplayBattery/>
-    )
-  }
-
-  function handleDelete(){
-    
-    let BatteryInfo = [];
-    for (let i=0 ; i<latestRequests.length ; i++){
-      if(batteryId_value === latestRequests[i].batteryId){
-        BatteryInfo = latestRequests[i];
-        console.log(BatteryInfo);
-
-      }
-    }
-
-    fetch('http://avasol.ameyalabs.com:5000/delete-service-request',{
-            method:'DELETE',
-            headers:{
-                'Content-Type':'application/json',
-                'Authorization':"Bearer "+access_token,
-            },
-            body : JSON.stringify(BatteryInfo),
-        }).then((response) => response.json())
-        .then((Data) =>{
-          setDisplayDetails(false);
-            alert("Details are successfully Deleted");
-            console.log(Data);
-            navigate('/basic/Home')
-            
-        })
-        .catch((error) => {
-            console.log(error)
-        });
-  }
-
 
 
 

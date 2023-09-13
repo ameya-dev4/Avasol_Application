@@ -15,7 +15,7 @@ function UserGetDetails(){
         username :parse_username,
       }
 
-    fetch("http://avasol.ameyalabs.com:5000/get-user-details",{
+    fetch("http://100.20.33.222:5000/user/get-profile",{
       method:'POST',
       headers:{
         'Accept':'application/json',

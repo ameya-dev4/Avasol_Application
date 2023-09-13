@@ -17,7 +17,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { GetToken } from '../src/Api/auth';
 
-const apiUrl = 'http://avasol.ameyalabs.com:5000/view-batteries'; 
+const apiUrl = 'http://100.20.33.222:5000/user/get-battery-list'; 
 const access_token = GetToken();
 
 let batteryId;
@@ -59,7 +59,7 @@ function DisplayBattery(){
 
     }
     
-    fetch("http://avasol.ameyalabs.com:5000/delete-battery",{
+    fetch("http://100.20.33.222:5000/user/delete-battery",{
       method : "DELETE",
       headers : {
         'Authorization':`Bearer ${access_token}`,
@@ -254,9 +254,3 @@ function DisplayBattery(){
 
 }
 export default DisplayBattery;
-
-{/* <TableRow>
-                      <TableCell><Button  variant="outlined"  className='btn btn-primary' onClick={() =>navigate('/userMyBatteries')}>Cancel</Button></TableCell>
-                      <TableCell><Button   className='btn btn-primary' onClick={()=>navigate('/battery_update')}>Update</Button></TableCell>
-                      <TableCell><Button  className='btn btn-danger' onClick={() => handleDelete(record.batteryId)}>Delete Battery </Button></TableCell>
-                      </TableRow> */}

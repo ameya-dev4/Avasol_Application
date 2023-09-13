@@ -21,16 +21,17 @@ const PostNewBattery = () => {
         batteryId:"",
         noteToServiceEngineer:"",
         openDate:"",
-        otpId:0,
+        otpId:5,
         payerId:"",
         requestId:0,
         serviceEngineerId:"",
         serviceEngineerNote:"",
         shortDescription:"",
-        status:1,
-        trasactionId:0,
+        status:6,
+        trasactionId:1,
         username:parse_username,
         warranty:check ? 'yes':'no',
+        selfDeclaration:true
         
             }
           });
@@ -65,7 +66,7 @@ const PostNewBattery = () => {
     const SubmitHandler= async (event)=>{
         console.log(event)
         try {
-          const response = await fetch('http://avasol.ameyalabs.com:5000/post-service-request', {
+          const response = await fetch('http://100.20.33.222:5000/user/add-service-request', {
             method:'POST',
             mode:'cors',
             headers: {
@@ -139,7 +140,8 @@ const PostNewBattery = () => {
     //                   console.log(error)
     //               })
     //           }
-              
+             
+    console.log("batteryId",details)
   return (
     
         <Row className="m-3">
@@ -155,9 +157,9 @@ const PostNewBattery = () => {
                         <Col>
                             <Form.Label>BatteryId</Form.Label>
                             {/* <Form.Control type="number" {...register('batteryId')}></Form.Control> */}
-                            <Form.Control as='select' onChange={(e)=>setDetails(e.target.value)}>
+                            <Form.Control as='select' onChange={(e)=>setDetails(e.target.value)} {...register('batteryId')}>
                                 {user_batteries && parse_batteries.map(uniqueId=>{
-                                    return <option>{uniqueId.batteryId}</option>
+                                    return <option value={uniqueId.batteryId}>{uniqueId.batteryId}</option>
                                 })}
                             </Form.Control>
                         </Col>

@@ -48,7 +48,7 @@ console.log("parse",parse_username)
     },[])
   
     function getUser(){
-      fetch('http://avasol.ameyalabs.com:5000/get-user-details',{
+      fetch('http://100.20.33.222:5000/user/get-profile',{
       method:'POST',
       headers:{
         'Content-Type':'application/json',
@@ -83,7 +83,7 @@ console.log("parse",parse_username)
   {
     let item={firstName,lastName,emailId,city,contactNumber,district,latitude,longitude,address,mandal,pincode,username}
     console.warn("item",item)
-    fetch('http://avasol.ameyalabs.com:5000/user-update', {
+    fetch('http://100.20.33.222:5000/user/profile-update', {
       method:'PUT',
       headers:{
         'Accept':'application/json',

@@ -52,30 +52,7 @@ const Service_ReqPage = () => {
     </>
     
   )
-//   return (
-//     <>
-        // <Row>
-        //     <Col>
-        //         <hr/>
-        //         <Tabs defaultActiveKey="battery">
-        //             <Tab eventKey="battery" title="BATTERY">
-        //                 <PostNewBattery/>
-        //             </Tab>
-        //             <Tab eventKey="location" title="LOCATION">
-        //                 <LocationPage/>
-        //             </Tab>
-        //             <Tab eventKey="confirm" title="CONFIRM">
-        //                 <h2> Confirmation Page</h2>
-        //                 {/* <PaymentSuccess/> */}
-        //             </Tab>
-        //             <Tab eventKey="payment" title="PAYMENT">
-        //                 <Payment/>
-        //             </Tab>
-        //         </Tabs>
-        //     </Col>
-        // </Row>
-//   </>
-// )
+
 
 }
 

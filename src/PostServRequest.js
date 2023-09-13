@@ -42,7 +42,7 @@ const head={
   }
 
 // Send the JSON data to another URL (replace 'url' with the actual URL)
-fetch('http://avasol.ameyalabs.com:5000/post-service-request',{
+fetch('http://100.20.33.222:5000/user/add-service-request',{
   method:'POST',
   headers:head,
   body: jsonData,

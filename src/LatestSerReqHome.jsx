@@ -16,7 +16,7 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 
 const access_token =GetToken()
-const apiUrl = 'http://avasol.ameyalabs.com:5000/latest-service-requests'; 
+const apiUrl = 'http://100.20.33.222:5000/user/latest-service-requests'; 
 const user_name=localStorage.getItem('username')
 const parse_username=JSON.parse(user_name)
 let batteryId_value;
@@ -50,58 +50,58 @@ function LatestServReqHome({Toggle}) {
     getLatestRequests();
   }, [])
 
-  function handleClick(batteryId){
-    setDisplayDetails(true)
-    batteryId_value = batteryId;
-    console.log(batteryId);
-  }
+  // function handleClick(batteryId){
+  //   setDisplayDetails(true)
+  //   batteryId_value = batteryId;
+  //   console.log(batteryId);
+  // }
 
-  function Display(){
-    console.log(batteryId_value)
-    let BatteryInfo = []
-    for (let i=0 ; i<latestRequests.length ; i++){
-      if(batteryId_value === latestRequests[i].batteryId){
-        BatteryInfo = latestRequests[i];
-        console.log(BatteryInfo);
-      }
-    }
+  // function Display(){
+  //   console.log(batteryId_value)
+  //   let BatteryInfo = []
+  //   for (let i=0 ; i<latestRequests.length ; i++){
+  //     if(batteryId_value === latestRequests[i].batteryId){
+  //       BatteryInfo = latestRequests[i];
+  //       console.log(BatteryInfo);
+  //     }
+  //   }
 
-    return(
-      <PostDisplayDetails/>
-    )
-  }
+  //   return(
+  //     <PostDisplayDetails/>
+  //   )
+  // }
 
  
 
-  function handleDelete(){
+  // function handleDelete(){
     
-    let BatteryInfo = [];
-    for (let i=0 ; i<latestRequests.length ; i++){
-      if(batteryId_value === latestRequests[i].batteryId){
-        BatteryInfo = latestRequests[i];
-        console.log(BatteryInfo);
-      }
-    }
+  //   let BatteryInfo = [];
+  //   for (let i=0 ; i<latestRequests.length ; i++){
+  //     if(batteryId_value === latestRequests[i].batteryId){
+  //       BatteryInfo = latestRequests[i];
+  //       console.log(BatteryInfo);
+  //     }
+  //   }
 
-    fetch('http://avasol.ameyalabs.com:5000/delete-service-request',{
-            method:'DELETE',
-            headers:{
-                'Content-Type':'application/json',
-                'Authorization':"Bearer "+access_token,
-            },
-            body : JSON.stringify(BatteryInfo),
-        }).then((response) => response.json())
-        .then((Data) =>{
-          setDisplayDetails(false);
-            alert("Details are successfully Deleted");
-            console.log(Data);
-            navigate('/latest_serv_request')
+  //   fetch('http://avasol.ameyalabs.com:5000/delete-service-request',{
+  //           method:'DELETE',
+  //           headers:{
+  //               'Content-Type':'application/json',
+  //               'Authorization':"Bearer "+access_token,
+  //           },
+  //           body : JSON.stringify(BatteryInfo),
+  //       }).then((response) => response.json())
+  //       .then((Data) =>{
+  //         setDisplayDetails(false);
+  //           alert("Details are successfully Deleted");
+  //           console.log(Data);
+  //           navigate('/latest_serv_request')
             
-        })
-        .catch((error) => {
-            console.log(error)
-        });
-  }
+  //       })
+  //       .catch((error) => {
+  //           console.log(error)
+  //       });
+  // }
 
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {

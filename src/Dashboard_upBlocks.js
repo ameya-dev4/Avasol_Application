@@ -50,26 +50,6 @@ function Dashboard_upBlocks() {
                        
                     </div>
                 </div>
-                <div className='col-md-3 dashboard-stat green-haze'>
-                    <div className='p-3 shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#44B6A6'}}>
-                        <Row>
-                            <Col>
-                                <h6 className='fs-1'>2580</h6>
-                            </Col>
-                            <Col>
-                                <small className='fs-6'>My Profile</small>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <i className='fa fa-users p-3 fs-1'></i>
-                            <a className='text-dark text-decoration-none' href='/user_profile'>
-                            view more
-                            <i className='feather icon-chevron-right'></i>
-                            </a>
-                        </Row>
-                       
-                    </div>
-                </div>
                 <div className='col-md-3 dashboard-stat purple-pulm'>
                     <div className='p-3  shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#8775A7'}}>
                         <Row>
@@ -88,6 +68,29 @@ function Dashboard_upBlocks() {
                             </a>
                         </Row>
                         
+                    </div>
+                </div>
+                <div className='col-md-3 dashboard-stat green-haze'>
+                    <div className='p-3 shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#44B6A6'}}>
+                        <Row style={{marginLeft:'8px'}}>
+                            <Col >
+                                
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col style={{marginTop:'65px'}}>
+                            <small className='fs-6'>My Profile</small>
+                            </Col>
+                            <Col>
+                            <i className='fa fa-users p-3 fs-1'></i>
+                            <a className='text-dark text-decoration-none' href='/user_profile'>
+                            view more
+                            <i className='feather icon-chevron-right'></i>
+                            </a>
+                            </Col>
+                            
+                        </Row>
+                       
                     </div>
                 </div>
             </div>

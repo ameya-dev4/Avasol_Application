@@ -4,8 +4,9 @@ import Popup from './Popup';
 import { useNavigate } from 'react-router-dom';
 import { GetToken } from './Api/auth';
 
-const apiUrl = 'http://avasol.ameyalabs.com:5000/latest-service-requests';
+const apiUrl = 'http://100.20.33.222:5000/user/latest-service-requests';
 const access_token = GetToken();
+console.log(access_token)
 
 function DisplayBattery() {
   const navigate = useNavigate();
@@ -62,18 +63,30 @@ function DisplayBattery() {
     getLatestBattery();
   }, []);
 
-  const handleDelete = (batteryId) => {
-    fetch(`http://avasol.ameyalabs.com:5000/delete-service-request`, {
+  const handleDelete = (input_value) => {
+    let batteryInfo;
+    let batteryId = input_value;
+    for(let i=0; i<latestBattery.length ; i++){
+      if(batteryId === latestBattery[i].batteryId){
+         batteryInfo = latestBattery[i]
+        latestBattery.pop(batteryInfo);
+      }
+    }
+   
+    fetch('http://100.20.33.222:5000/user/delete-service-request', {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${access_token}`,
         'Content-Type': 'application/json',
       },
+      body:JSON.stringify(selectedBattery)
     })
       .then((response) => {
         if (response.ok) {
           console.log('DELETE request successful.');
+          setIsOpen(!isOpen)
           alert('Deleted Successfully');
+          
           navigate('/latest_serv_request');
         } else {
           console.error('DELETE request failed.');
@@ -141,7 +154,7 @@ function DisplayBattery() {
       amount,
     };
 
-    fetch(`http://avasol.ameyalabs.com:5000/update-service-request`, {
+    fetch(`http://100.20.33.222:5000/user/update-service-request`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -231,9 +244,8 @@ function DisplayBattery() {
             ))}
           </tbody>
         </table>
-      </Container>
-
-      {selectedBattery && isOpen && (
+      </Container>         
+      {selectedBattery && isOpen?(
         <Popup
           content={
             <Container>
@@ -335,7 +347,7 @@ function DisplayBattery() {
           }
           handleClose={togglePopup}
         />
-      )}
+      ):("")}
     </div>
   );
 }
