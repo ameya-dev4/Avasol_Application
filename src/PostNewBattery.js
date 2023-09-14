@@ -141,7 +141,6 @@ const PostNewBattery = () => {
     //               })
     //           }
              
-    console.log("batteryId",details)
   return (
     
         <Row className="m-3">

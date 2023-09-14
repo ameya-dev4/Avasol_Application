@@ -24,7 +24,10 @@ const SignUp1=()=>{
           mandal:"",
           areaName:"",
           pincode:"",
-          status:0
+          status:0,
+          state:"",
+          photo:"",
+          termsofservices:true
           
         }
     });
@@ -133,7 +136,10 @@ const SignUp1=()=>{
     //     // Function to handle token retrieval from the server response
 
     // }
-
+    const [agree,setAgree]=useState(false)
+    const checkboxHandler=()=>{
+        setAgree(!agree)
+    }
 
         return(
           <>
@@ -204,6 +210,12 @@ const SignUp1=()=>{
                             </Col>
                         </Row>
                         <Row className="mb-2" >
+                        <Col>
+                                <Form.Label>State</Form.Label>
+                                <Form.Control type="text" {...register('state',{
+                          required:'missing state or invalid'
+                        })} ></Form.Control>
+                            </Col>
                             
                             <Col>
                                 <Form.Label>Mandal</Form.Label>
@@ -254,7 +266,11 @@ const SignUp1=()=>{
                         required:"Invalid number"
                       })} ></Form.Control>
                             </Col>
-                        </Row>
+                        </Row><br/>
+                        <div style={{textAlign:'center'}}>
+                            <input type="checkbox" id="agree" onChange={checkboxHandler} />
+                            <label htmlFor="agree" > I agree to <a  href='#' style={{fontWeight:'bold',color:'blue',textDecoration:'none'}} className='text-primary'>terms and conditions</a></label>
+                        </div>
                         <Row className="mb-2" >
                             <Col md={3}>
                                 
@@ -266,7 +282,7 @@ const SignUp1=()=>{
                                     <Button  variant='danger'onClick={()=>navigate('/userMyBatteries')} className="feather icon-x"> Cancle</Button>
                                 </Col>
                                 <Col>
-                                    <Button variant='primary' onClick={handleSubmit(SubmitHandler)}><i className="fa fa-edit"> Submit</i> </Button>
+                                    <Button variant='primary' disabled={!agree} onClick={handleSubmit(SubmitHandler)}><i className="fa fa-edit"> Submit</i> </Button>
                                 </Col>    
                             
                             </Col>

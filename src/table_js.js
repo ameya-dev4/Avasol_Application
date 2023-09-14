@@ -216,13 +216,13 @@ function DisplayBattery() {
             {latestBattery.map((record) => (
               <tr key={record.batteryId}>
                 <td>
-                  <Button
-                    style={{ backgroundColor: 'lightseagreen', border: 'none' }}
+                  <a href='#'
+                    style={{ color: 'lightseagreen',fontWeight:'bold' ,textDecoration:'none'}}
                     className="btn-sm"
                     onClick={() => handleEdit(record)}
                   >
                     {record.shortDescription}
-                  </Button>
+                  </a>
                 </td>
                 <td>{FormatDate(record.openDate)}</td>
                 <td>{FormatDate(record.assignedDate)}</td>

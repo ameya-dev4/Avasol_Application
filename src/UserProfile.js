@@ -26,14 +26,14 @@ const UserProfile = () => {
       }
       console.log("jsondata",jsonData)
     fetch("http://100.20.33.222:5000/user/get-profile",{
-      method:'POST',
+      method:'GET',
       headers:{
         'Accept':'application/json',
         'Access-Control-Allow-Origin':'https://localhost:3000',
         'Authorization':`Bearer ${access_token}`,
         'Content-Type':'application/json'
       },
-      body:JSON.stringify(jsonData),
+    //   body:JSON.stringify(jsonData),
 
     }) 
     .then(response=>response.json())

@@ -49,12 +49,12 @@ console.log("parse",parse_username)
   
     function getUser(){
       fetch('http://100.20.33.222:5000/user/get-profile',{
-      method:'POST',
+      method:'GET',
       headers:{
         'Content-Type':'application/json',
         'Authorization':`Bearer ${access_token}`
       },
-      body:JSON.stringify(detailName)
+      // body:JSON.stringify(detailName)
   
     }).then(response=>response.json())
     .then(data=>{
@@ -95,6 +95,7 @@ console.log("parse",parse_username)
       result.json().then((resp) => {
         console.warn("updated value:",resp)
         getUser()
+        navigate('/user_profile')
       })
     })
   }
