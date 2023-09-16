@@ -1,13 +1,12 @@
 import React,{useState} from 'react'
-import {GetToken} from '../src/Api/auth'
+import {GetToken} from './Api/auth'
 import Cookies from 'js-cookie'
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header'
-import Sidebar from './Sidebar'
-import Admin_sidebar from './Admin_sidebar';
+import SE_Sidebar from './SE_Sidebar';
 
-const Admin_Logout= (event)=>{
+const Admin_Logout= ()=>{
     const navigate=useNavigate();
     const access_token=GetToken();
     console.log(access_token)
@@ -17,13 +16,13 @@ const Admin_Logout= (event)=>{
     document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     window.localStorage.clear()
     // alert("do you want to logout")
-    fetch('http://100.20.33.222:5000/admin/logout',{
+    fetch('http://100.20.33.222:5000/se/logout',{
             method:'POST',
             mode:'cors',
             headers:{
                 'Content-Type': 'application/json',
             },
-            body:JSON.stringify(event)
+            
         })
 
         const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -36,7 +35,7 @@ const Admin_Logout= (event)=>{
       
     <div className='grid-container'>
       <Header OpenSidebar={OpenSidebar}/>
-      <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+      <SE_Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className="main-container">
       <div >
                 <div className=" position-absolute top-50 start-50 translate-middle col-6 shadow p-3 bg-body-tertiary rounded ">
@@ -62,9 +61,7 @@ const Admin_Logout= (event)=>{
       </main> 
 
         
-          </div>
-
-            
+          </div>    
     
     </>
     

@@ -72,7 +72,7 @@ function Dashboard_upBlocks() {
                                 
                         </Row>
                         <Row >
-                        <i className='fa fa-tasks p-3 fs-1 '></i>
+                        <i className='fa fa-tasks p-3 fs-1 opacity-25' ></i>
                             <a className='text-dark text-decoration-none' href='/userMyBatteries'>
                             view more
                             <i className='feather icon-chevron-right'></i>

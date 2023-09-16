@@ -31,6 +31,13 @@ import Admin_logout from './Admin_logout'
 import Admin_Edit_Profile from './Admin_Edit_Profile'
 import Ticket from './Ticket'
 import SeUpdate from './SeUpdateTable'
+import SE_MyDashboard from './SE_MyDashboard'
+import SE_TicketsToday from './SE_TodayTickets'
+import SE_OpenTickets from './SE_openTickets'
+import SE_TotalTickets from './SE_TotalTickets'
+import SE_Dash_upblocks from './SE_Dash_upblocks'
+import SE_MyProfile from './SE_myProfile'
+import SE_TicketPage from './SE_TicketPage'
 
 
 
@@ -71,6 +78,16 @@ function App() {
             <Route path='admin_profile_update' element={<Admin_Edit_Profile/>}/>
             <Route path='update_ticket_details' element={<Ticket/>}/>
             <Route path='update_se' element={<SeUpdate/>}/>
+
+            <Route exact path="/se_myDashboard" element={<SE_MyDashboard  />} />
+            <Route exact path='/se_todayTickets' element={<SE_TicketsToday  />} />
+            <Route exact path='/se_openTickets' element={<SE_OpenTickets />} />
+            <Route exact path='/se_totalTickets' element={<SE_TotalTickets />} />
+            <Route exact path='/se_pendingAmount' element={<SE_Dash_upblocks />} />
+            <Route exact path='/se_Earnings' element={<SE_Dash_upblocks />} />
+            <Route exact path='/se_myProfile' element={<SE_MyProfile />} />
+            <Route exact path='/se_logout' element={<Logout /> } />
+            <Route exact path='/se_update_ticket_details' element = {<SE_TicketPage/>} />
 
             
             
