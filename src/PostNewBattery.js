@@ -11,7 +11,7 @@ const PostNewBattery = () => {
     const user_name=localStorage.getItem('username')
     const parse_username=JSON.parse(user_name)
     console.log("parse",parse_username)
-    const [check,setCheck]=useState(false);
+    const [warranty,setWarranty]=useState(false);
     
     const form=useForm({
             defaultValues:{
@@ -30,7 +30,7 @@ const PostNewBattery = () => {
         status:6,
         trasactionId:1,
         username:parse_username,
-        warranty:check ? 'yes':'no',
+        warranty:"",
         selfDeclaration:true
         
             }
@@ -64,6 +64,7 @@ const PostNewBattery = () => {
 
     
     const SubmitHandler= async (event)=>{
+        event.warranty=warranty?"yes":"no"
         console.log(event)
         try {
           const response = await fetch('http://100.20.33.222:5000/user/add-service-request', {
@@ -119,27 +120,6 @@ const PostNewBattery = () => {
           console.error('Network error:', error);
         }
       };
-
-    // const submitHandler = (data)=>{
-    //               fetch("http://avasol.ameyalabs.com:5000/post-service-request",{
-    //                 method :'POST',
-    //                 headers : {
-    //                     // 'Accept':'application/json',
-    //                     'Authorization':`Bearer ${access_token}`,
-    //                     'Content-Type' :'application/json',
-    //                   },
-            
-    //                 body : JSON.stringify(data),
-            
-    //               }).then(response => response.json())
-    //                 .then(data =>{
-    //                   console.log(data);
-            
-    //               })
-    //               .catch(error =>{
-    //                   console.log(error)
-    //               })
-    //           }
              
   return (
     
@@ -173,29 +153,12 @@ const PostNewBattery = () => {
                         </Form.Control><br/>
                         <p className="error">{errors.selectBattery?.message}</p>
                     </div>
-                    {/* <Form.Group> */}
-                        <Form.Check
-                            // custom
-                            type="checkbox"
-                            id="checkbox1"
-                            label="warranty"
-                            checked={check}
-                            value={check ?'Yes':'No'}
-                            onChange={(e)=>setCheck(e.target.checked)}
-                            /><br/>
-
-                            {/* //onClick={(e)=>{
-                            //     if (check) {
-                            //       setCheck(false);
-                            //     }
-                            //     if (!check) {
-                            //       setCheck(true);
-                            //     }
-
-                            //     // setCheck(e.target.value)
-                            //     console.log(check)
-                            // }} */}
-
+                    <Form.Check
+                      type="checkbox"
+                      label="warranty"
+                      checked={warranty} 
+                      onChange={(e) => setWarranty(e.target.checked)}
+                    /><br/>
                         <div>
                             <Form.Control type="text" {...register('batteryNumber',{
                                 required:'enter battery number'

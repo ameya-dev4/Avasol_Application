@@ -1,8 +1,58 @@
-import React from 'react'
+import React ,{useState,useEffect}from 'react'
 import {Row,Col, Breadcrumb} from "react-bootstrap"
-
+import { GetToken } from './Api/auth';
 
 function Dashboard_upBlocks() {
+    const [batteries, setBatteries] = useState([]);
+    const [latestRequests,setLatestRequests]=useState([])
+    const access_token=GetToken();
+
+    useEffect(() => {
+        // Function to make the GET request
+        async function getLatestRequests() {
+          try {
+            const response = await fetch('http://100.20.33.222:5000/user/get-battery-list',{
+                method:"GET",
+                headers:{
+                    'Content-Type':"application/json",
+                    "Authorization": "Bearer " + access_token,
+                },
+            });
+            const data = await response.json();
+            setBatteries(data);
+            // console.log(data)
+          } catch (error) {
+            console.error('Error fetching latest requests:', error);
+          }
+        }
+    
+        // Call the function to get and display the latest service requests on page load
+        getLatestRequests();
+      }, [])
+
+      //manage Latest Service Requests
+      useEffect(() => {
+        // Function to make the GET request
+        async function getLatestRequests() {
+          try {
+            const response = await fetch('http://100.20.33.222:5000/user/latest-service-requests',{
+                method:"GET",
+                headers:{
+                    'Content-Type':"application/json",
+                    "Authorization": "Bearer " + access_token,
+                },
+            });
+            const data = await response.json();
+            setLatestRequests(data);
+          } catch (error) {
+            console.error('Error fetching latest requests:', error);
+          }
+        }
+    
+        // Call the function to get and display the latest service requests on page load
+        getLatestRequests();
+      }, [])
+    
   return (
     <>
     <Breadcrumb/>
@@ -12,11 +62,12 @@ function Dashboard_upBlocks() {
                 <div className='col-md-3 dashboard-stat red-intense' >
                     <div className='p-3 shadow-sm d-flex justify-content-around align-items-center rounded ' style={{backgroundColor:'#E35B5A'}}>
                         <Row>
-                            <Col>
-                                <h6 className='fs-1'>230</h6>
+                            <Col md={9}>
+                                <h6 className='fs-1'>{batteries && batteries.length}</h6>
+                                <small className='fs-6'>My Batteries</small>
                             </Col>
                             <Col>
-                            <small className='fs-6'>My Batteries</small>
+
                             </Col>
                                 
                         </Row>
@@ -33,11 +84,12 @@ function Dashboard_upBlocks() {
                 <div className='col-md-3 bg-blue-madison bg-font-blue-madison'>
                     <div className='p-3  shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#578EBE'}}>
                         <Row>
-                            <Col>
-                            <h6 className='fs-1'>2321</h6>
+                            <Col md={9}>
+                            <h6 className='fs-1'>{latestRequests && latestRequests.length}</h6>
+                            <small className='fs-6'>My Service Tickets</small>
                             </Col>
                             <Col>
-                                <small className='fs-6'>My Service Tickets</small>
+                                
                             </Col>
                         </Row>
                         <Row>
@@ -53,11 +105,11 @@ function Dashboard_upBlocks() {
                 <div className='col-md-3 dashboard-stat purple-pulm'>
                     <div className='p-3  shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#8775A7'}}>
                         <Row>
-                            <Col>
-                                <h6 className='fs-1'>2345</h6>
+                            <Col md={9}>
+                                <h6 className='fs-1'>--</h6>
+                                <small className='fs-6'>My Payments</small>
                             </Col>
                             <Col>
-                                <small className='fs-6'>My Payments</small>
                             </Col>
                         </Row>
                         <Row>
@@ -72,13 +124,13 @@ function Dashboard_upBlocks() {
                 </div>
                 <div className='col-md-3 dashboard-stat green-haze'>
                     <div className='p-3 shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#44B6A6'}}>
-                        <Row style={{marginLeft:'8px'}}>
+                        {/* <Row style={{marginLeft:'8px'}}>
                             <Col >
                                 
                             </Col>
                         </Row>
                         <Row>
-                            <Col style={{marginTop:'65px'}}>
+                            <Col style={{marginTop:'70px'}}>
                             <small className='fs-6'>My Profile</small>
                             </Col>
                             <Col>
@@ -89,6 +141,21 @@ function Dashboard_upBlocks() {
                             </a>
                             </Col>
                             
+                        </Row> */}
+                        <Row>
+                            <Col md={9} style={{marginTop:'47px'}}>
+                                <h6 className='fs-1 '></h6>
+                                <small className='fs-6'>My Profile</small>
+                            </Col>
+                            <Col>
+                            </Col>
+                        </Row>
+                        <Row >
+                            <i className='fa fa-users p-3 fs-1'></i>
+                            <a className='text-dark text-decoration-none' href='/user_profile'>
+                            view more
+                            <i className='feather icon-chevron-right'></i>
+                            </a>
                         </Row>
                        
                     </div>

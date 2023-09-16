@@ -51,7 +51,7 @@ const Logout= (event)=>{
                                 <Button style={{backgroundColor:'#3598DC',color:'white',border:'none'}} onClick={()=>navigate('/auth/service_signup')}>Service Engineer </Button>
                             </Row><br/>
                             <Row>
-                                <Button style={{backgroundColor:'#BF55EC',color:'white',border:'none'}}>Admin</Button>
+                                <Button style={{backgroundColor:'#BF55EC',color:'white',border:'none'}} onClick={()=>navigate('/signin')}>Admin</Button>
                             </Row>
                             
                     </div>

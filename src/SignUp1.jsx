@@ -27,7 +27,7 @@ const SignUp1=()=>{
           status:0,
           state:"",
           photo:"",
-          termsofservices:true
+          tos:true
           
         }
     });
@@ -37,13 +37,12 @@ const SignUp1=()=>{
     const [success,setSuccess]=useState(false)
     const {register,formState,handleSubmit}=form
     const {errors}=formState
-    const register_url='http://avasol.ameyalabs.com:5000/signup'
     
     const SubmitHandler= async (event)=>{
      
 
       try {
-        const response = await fetch('http://avasol.ameyalabs.com:5000/signup', {
+        const response = await fetch('http://100.20.33.222:5000/user/signup', {
           method: 'POST',
           mode:'cors',
           headers: {
@@ -152,7 +151,7 @@ const SignUp1=()=>{
 
             ):(
                 <div className='m-2'>
-                    <form action="/auth/signin-1" noValidate >
+                    <form  onClick={handleSubmit(SubmitHandler)} noValidate >
                         <Container >
                 <div className="bg-primary rounded mb-3 m-2 p-2 px-3">
                     <header className='text-white'>User Signup</header>
@@ -176,13 +175,13 @@ const SignUp1=()=>{
                         <Row className="mb-2" >
                             <Col>
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text"{...register('username',{
+                                <Form.Control type="text" {...register('username',{
                                   required:'missing username'
                                 })} ></Form.Control>
                             </Col>
                             <Col>
                                 <Form.Label>Email ID</Form.Label>
-                                <Form.Control type="text" {...register('username',{
+                                <Form.Control type="email" {...register('emailId',{
                                   pattern:{
                                     value:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                                     message:"Invalid Email"
@@ -282,7 +281,7 @@ const SignUp1=()=>{
                                     <Button  variant='danger'onClick={()=>navigate('/userMyBatteries')} className="feather icon-x"> Cancle</Button>
                                 </Col>
                                 <Col>
-                                    <Button variant='primary' disabled={!agree} onClick={handleSubmit(SubmitHandler)}><i className="fa fa-edit"> Submit</i> </Button>
+                                    <Button variant='primary' disabled={!agree} ><i className="fa fa-edit"> Submit</i> </Button>
                                 </Col>    
                             
                             </Col>

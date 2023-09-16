@@ -51,7 +51,10 @@ const BatteryAdd = () => {
       const [select,setSelected]=useState('');
       
     const submitHandler=(data)=>{
+        data.warranty=warranty?"yes":"no"
         const jsonData=JSON.stringify(data)
+        
+        console.log("data",data.warranty)
         
         fetch('http://100.20.33.222:5000/user/add-new-battery',{
             mode:'cors',
@@ -84,6 +87,7 @@ const BatteryAdd = () => {
     const [warranty,serwarranty]=useState(false)
     const checkboxHandler=()=>{
         serwarranty(!warranty)
+        
     }
 console.log(warranty)
       return (
@@ -148,6 +152,19 @@ console.log(warranty)
                     </Row>
                     <Row className="mb-2" >
                         <Col>
+                            <Form.Label>Enter Purchase Date</Form.Label>
+                            <Form.Control type='text'  {...register('purchaseDate',{
+                                required:'missing Date'
+                            })} placeholder='Enter Date'/>
+                            <p className='error'>{errors.purchaseDate?.message}</p>
+                        </Col>
+                        <Col>
+                            <Form.Label>invoice upload</Form.Label>
+                            <Form.Control type='text'  {...register('invoiceUploaded')} placeholder='invoice upload'/>
+                        </Col>
+                    </Row>
+                    <Row className="mb-2" >
+                        <Col>
                             <Form.Label>Principal Company</Form.Label>
                             <Form.Control as="select">
                                 <option>principal Company</option>
@@ -182,45 +199,34 @@ console.log(warranty)
                             }
                         </Col>
 
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label>Enter Purchase Date</Form.Label>
-                            <Form.Control type='text'  {...register('purchaseDate',{
-                                required:'missing Date'
-                            })} placeholder='Enter Date'/>
-                            <p className='error'>{errors.purchaseDate?.message}</p>
-                        </Col>
-                        <Col>
-                            <Form.Label>invoice upload</Form.Label>
-                            <Form.Control type='text'  {...register('invoiceUploaded')} placeholder='invoice upload'/>
-                        </Col>
-                    </Row>
+                    </Row><br/>
                     <Row>
                     <Col md={3}>
                             <Form.Control type="text"  {...register('name')} placeholder="Enter Name" />
                     </Col>
                     <Col md={3}>
-                    <div style={{textAlign:'center'}}>
-                            <input type="checkbox" id="agree" onChange={checkboxHandler}/>
+                    <div style={{textAlign:'center',marginTop:'10px'}}>
+                            <input type="checkbox" checked={warranty} id="agree" onChange={checkboxHandler}/>
                             <label htmlFor="agree" ><b>  warranty</b> </label>
                         </div>
                     </Col>
 
                                 
                     </Row>
-                    <Row className="mb-2" >
-                        <Col md={6}>
-                        </Col>
-                        <Col md={3} className="d-flex flex-row-reverse mt-4">
-                            <Col>
+                    
+                    <Row className="mb-2"  >
+                        
+                        {/* <Col  className="d-flex flex-row-reverse mt-4" > */}
+                            <Col md={8}>
+                            </Col>
+                            <Col md={2}>
                                 <Button  variant='danger'onClick={()=>navigate('/userMyBatteries')} className="feather icon-x"> Cancle</Button>
                             </Col>
-                            <Col>
+                            <Col md={2}>
                                 <Button variant="success"  onClick={handleSubmit(submitHandler)}><i className="fa fa-edit"> Save</i> </Button>
                             </Col>    
                         
-                        </Col>
+                        {/* </Col> */}
                     </Row>
                 </Col>
             </Card>

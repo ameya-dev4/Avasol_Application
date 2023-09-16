@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Form, Row, Col, Card } from 'react-bootstrap';
+import { Container, Form, Row, Col, Card } from 'react-bootstrap';
 import Popup from './Popup';
 import { useNavigate } from 'react-router-dom';
 import { GetToken } from './Api/auth';
+
+import {Link, TableHead } from "@mui/material";
+import {
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+  Button
+} from '@mui/material';
 
 const apiUrl = 'http://100.20.33.222:5000/user/get-battery-list';
 const access_token = GetToken();
@@ -38,6 +49,15 @@ function DisplayBattery() {
   const [purchaseDate, setPurchaseDate] = useState('');
   const [warranty, setwarranty] = useState('');
   const [status, setStatus]=useState('')
+  const [BatteryName, setBatteryName]=useState('')
+  const [warrantyYears, setWarrentyYears]=useState('')
+  const [delearAddress, setDealerAddress]=useState('')
+  const [subDealerAddress, setsubDealerAddress]=useState('')
+  const [BatteryNumber, setBatteryNumber]=useState('')
+  const [vechicleType, setVehicleType]=useState('')
+  const [DealerContact, setDealerContact]=useState('')
+  const [subDealerContact, setSubDealerContact]=useState('')
+
 
   useEffect(() => {
     async function getLatestBattery() {
@@ -131,6 +151,15 @@ function DisplayBattery() {
     setwarranty(battery.warranty)
     setPurchaseDate(battery.purchaseDate)
     setStatus(battery.status)
+    setBatteryName(battery.batteryName)
+    setWarrentyYears(battery.warrantyYears)
+    setDealerAddress(battery.delearAddress)
+    setsubDealerAddress(battery.subDealerAddress)
+    setBatteryNumber(battery.BatteryNumber)
+    setVehicleType(battery.vechicleType)
+    setDealerContact(battery.dealerContact)
+    setSubDealerContact(battery.subDealerContact)
+
 
 
   };
@@ -201,38 +230,36 @@ function DisplayBattery() {
 
   return (
     <div>
-      <Container>
+      <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%' , mt:10}}>
       {/* backgroundColor: '#BFCAD1' */}
-        <table className="table caption-top  table-hover rounded mt-3 px-3" style={{ backgroundColor: '#FAFAFA' }}>
-          <thead>
-            <tr>
-              <th scope="col">Battery Name</th>
-              <th scope="col">Battery Number</th>
-              <th scope="col">Battery Make</th>
-              <th scope="col">Battery Model</th>
-              <th scope="col">Warrenty</th>
-              <th scope="col">Status</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table >
+          <TableHead>
+              <TableCell  style={{fontSize:'18px'}}>Battery Name</TableCell>
+              <TableCell style={{fontSize:'18px'}}>Battery Number</TableCell>
+              <TableCell style={{fontSize:'18px'}}>Battery Make</TableCell>
+              <TableCell style={{fontSize:'18px'}}>Battery Model</TableCell>
+              <TableCell style={{fontSize:'18px'}}>Warrenty</TableCell>
+              <TableCell style={{fontSize:'18px'}}>Status</TableCell>
+              <TableCell style={{fontSize:'18px'}}>Delete</TableCell>
+          </TableHead>
+          <TableBody>
             {latestBattery.map((record) => (
-              <tr key={record.batteryId}>
-                <th scope="row">{record.batteryName}</th>
-                <td>
+              <TableRow key={record.batteryId}>
+                <TableCell style={{fontSize:'18px'}}>{record.batteryName}</TableCell>
+                <TableCell style={{fontSize:'18px'}}>
                   <Button
-                    variant="success"
-                    className="btn-sm"
+                    variant='contained'
+                    
                     onClick={() => handleEdit(record)}
                   >
                     {record.batteryId}
                   </Button>
-                </td>
-                <td>{record.make}</td>
-                <td>{record.model}</td>
-                <td>{record.warranty}</td>
-                <td>{record.status}</td>
-                <td>
+                </TableCell >
+                <TableCell style={{fontSize:'18px'}}>{record.make}</TableCell>
+                <TableCell style={{fontSize:'18px'}}>{record.model}</TableCell>
+                <TableCell style={{fontSize:'18px'}}>{record.warranty}</TableCell>
+                <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
+                <TableCell style={{fontSize:'18px'}}>
                   <a
                     href="#"
                     className="text-decoration-none"
@@ -240,12 +267,12 @@ function DisplayBattery() {
                   >
                     Delete
                   </a>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-      </Container>
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       {(selectedBattery && isOpen)?(
         <div className='popup-container'>
@@ -260,76 +287,23 @@ function DisplayBattery() {
                   <Col className="m-3 mt-2 col">
                     <Row className="mb-2">
                       <Col>
-                        <Form.Label>Username</Form.Label>
+                        <Form.Label>Battery Name</Form.Label>
                         <Form.Control
                           type="text"
-                          value={selectedBattery.username}
-                          readOnly
+                          value={BatteryName}
+                          onChange={(e)=>setBatteryName(e.target.value)}
                         />
                       </Col>
                       <Col>
-                        <Form.Label>Battery ID</Form.Label>
+                        <Form.Label>Battery Number</Form.Label>
                         <Form.Control
                           type="text"
-                          value={selectedBattery.batteryId}
-                          readOnly
+                          value={BatteryNumber}
+                          onChange={(e)=>setBatteryNumber(e.target.value)}
+                
                         />
                       </Col>
                     </Row>
-                    <Row className="mb-2">
-                      <Col>
-                        <Form.Label>Battery Capacity</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={batteryCapacity}
-                          onChange={(e) => setBatteryCapacity(e.target.value)}
-                        />
-                      </Col>
-                      <Col>
-                        <Form.Label>Battery Voltage</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={batteryVoltage}
-                          onChange={(e) => setBatteryVoltage(e.target.value)}
-                        />
-                      </Col>
-                      <Col>
-                        <Form.Label>Battery Current</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={batteryCurrent}
-                          onChange={(e) => setBatteryCurrent(e.target.value)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row className="mb-2">
-                      <Col>
-                        <Form.Label>Dealer ID</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={dealerId}
-                          readOnly
-                        />
-                      </Col>
-                      <Col>
-                        <Form.Label>Principal ID</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={principalId}
-                          readOnly
-                        />
-                      </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                          <Col>
-                              <Form.Label>Invoice Number</Form.Label>
-                              <Form.Control type="text" value={invoiceNumber} readOnly  ></Form.Control>
-                          </Col>
-                          <Col>
-                              <Form.Label>Invoice Uploaded</Form.Label>
-                              <Form.Control type="text" value={invoiceUploaded} readOnly ></Form.Control>
-                          </Col>
-                      </Row>
                     <Row className="mb-2">
                       <Col>
                         <Form.Label>Make</Form.Label>
@@ -348,6 +322,24 @@ function DisplayBattery() {
                         />
                       </Col>
                     </Row>
+                    <Row className="mb-2">
+                      <Col>
+                        <Form.Label>Battery Voltage</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={batteryVoltage}
+                          onChange={(e) => setBatteryVoltage(e.target.value)}
+                        />
+                      </Col>
+                      <Col>
+                        <Form.Label>Battery Current</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={batteryCurrent}
+                          onChange={(e) => setBatteryCurrent(e.target.value)}
+                        />
+                      </Col>
+                    </Row>
                     <Row className="mb-2" >
                           <Col>
                               <Form.Label>PurchaseDate</Form.Label>
@@ -357,21 +349,82 @@ function DisplayBattery() {
                               <Form.Label>Warrenty</Form.Label>
                               <Form.Control type="text" value={warranty} readOnly ></Form.Control>
                           </Col>
+                      </Row>
+                      <Row className="mb-2">
+                      <Col>
+                        <Form.Label>Warrenty Years</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={warrantyYears}
+                          onChange={(e) => setWarrentyYears(e.target.value)}                         
+                        />
+                      </Col>
+                      <Col>
+                        <Form.Label>Vechicle Type</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={vechicleType}
+                          onChange={(e) => setVehicleType(e.target.value)}
+                        />
+                      </Col>
+                    </Row>
+
+                    <Row className="mb-2">
+                      <Col>
+                        <Form.Label>Dealer Name & Address</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={delearAddress}
+                          onChange={(e) => setDealerAddress(e.target.value)}
+                        />
+                      </Col>
+                      <Col>
+                        <Form.Label>Dealer Contact</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={DealerContact}
+                          onChange={(e) => setDealerContact(e.target.value)}
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-2">
+                      <Col>
+                        <Form.Label>Sub_Dealer Name & Address</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={subDealerAddress}
+                          onChange={(e) => setsubDealerAddress(e.target.value)}
+                        />
+                      </Col>
+                      <Col>
+                        <Form.Label>Sub_Dealer Contact</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={subDealerContact}
+                          onChange={(e) => setSubDealerContact(e.target.value)}
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mb-2" >
                           <Col>
                               <Form.Label>Status</Form.Label>
-                              <Form.Control type="text" value={status} readOnly ></Form.Control>
-                          </Col>
-                      </Row>
+                              <Form.Control as='select' value={status} onChange={(e)=>setStatus(e.target.value)} >
+                                  <option value='active'>Active</option>
+                                  <option value='inactive'>iInactive</option>
+                              </Form.Control>
+                          </Col> 
+                    </Row>
                     <Row className="mb-2">
                       <Col md={6} className="d-flex mt-4">
                         <Col>
-                          <Button variant="success" type="submit" onClick={handleUpdateBattery}>
+                          <Button variant="contained" style={{color:'white',backgroundColor:'darkgreen'}} type="submit" onClick={handleUpdateBattery}>
                             Update
                           </Button>
                         </Col>
                         <Col>
                           <Button
-                            variant="danger"
+                            variant="contained"
+                            style={{color:'white',backgroundColor:'red'}} 
                             onClick={() => handleDelete(selectedBattery.batteryId)}
                           >
                             Delete Battery
