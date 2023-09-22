@@ -16,8 +16,7 @@ const authToken = GetToken();
 const userName = localStorage.getItem('username');
 
 //const locationUrl = `https://google.com/maps?q=${lat},${long}`
-const display_details = localStorage.getItem('display_details');
-console.log(display_details);
+
 
 
 
@@ -30,6 +29,49 @@ function Ticket(){
   const [attendedDate, setAttendedDate] = useState('');
   const [otp, setOtp] = useState(0);
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
+
+  //battery Details
+  // const [latestBattery, setLatestBattery] = useState([]);
+  // const [selectedBattery, setSelectedBattery] = useState(null);
+  // const [isOpen, setIsOpen] = useState(false);
+
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem('display_details');
+  //   if (storedData) {
+  //     setLatestBattery(JSON.parse(storedData));
+  //   }
+  // }, []);
+
+  // // Save the latestBattery data to localStorage whenever it changes
+  // useEffect(() => {
+  //   localStorage.setItem('display_details', JSON.stringify(latestBattery));
+  // }, [latestBattery]);
+
+  // useEffect(() => {
+  //   async function getLatestBattery() {
+  //     try {
+  //       const response = await fetch('http://100.20.33.222:5000/user/get-battery-list', {
+  //         method: 'GET',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': 'Bearer ' + authToken,
+  //         },
+  //       });
+  //       const data = await response.json(); 
+  //       console.log("view_batteries",data)
+  //       setLatestBattery(data);
+  //       localStorage.setItem('display_details', JSON.stringify(data));
+  //     } catch (error) {
+  //       console.error('Error fetching latest Battery:', error);
+  //     }
+  //   }
+  //   getLatestBattery();
+  // }, []);
+  // console.log("battery Data",selectedBattery)
+
+
+  const display_details = localStorage.getItem('display_details');
+  console.log("hello",display_details);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,6 +90,9 @@ function Ticket(){
   const data = {
     username : userName
   }
+
+  
+
   /*
   useEffect (() =>{ async function fetchDetails(){
     const response = await fetch(url,{

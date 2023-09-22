@@ -5,6 +5,8 @@ import {Row,Col,Button,Card} from 'react-bootstrap'
 import AdminDash_upblock from './AdminDash_upblock'
 import Header from './Header'
 import Admin_sidebar from './Admin_sidebar'
+import UpdateTicket from "./UpdateAssignedTicket";
+import UpdateNewTickets from "./UpdateNewTicket";
 
 const authToken = GetToken();
 
@@ -95,7 +97,7 @@ function AssignedTickets(){
             </Col>
             </Row>
 
-    { TicketDetails && TicketDetails.length > 0 ? <Table_Tickets array_Details={TicketDetails} /> : 
+    { TicketDetails && TicketDetails.length > 0 ? <UpdateNewTickets array_Details={TicketDetails} /> : 
       <h2 className="mx-3 mt-3">  No Assigned Tickets </h2>}
     </main>
     </div>

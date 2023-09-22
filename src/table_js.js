@@ -4,6 +4,9 @@ import Popup from './Popup';
 import { useNavigate } from 'react-router-dom';
 import { GetToken } from './Api/auth';
 import {Link, TableHead } from "@mui/material";
+import {Grid,Box,Typography} from '@mui/material';
+import FormField from './Update/InputFormField';
+
 import {
   TableContainer,
   Table,
@@ -13,10 +16,14 @@ import {
   Paper,
   Button
 } from '@mui/material';
+import DropDownField from './Update/DropDownField';
+import { red } from '@mui/material/colors';
 
 const apiUrl = 'http://100.20.33.222:5000/user/latest-service-requests';
 const access_token = GetToken();
 console.log(access_token)
+
+const Rating = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
 function DisplayBattery() {
   const navigate = useNavigate();
@@ -285,11 +292,11 @@ function DisplayBattery() {
       {selectedBattery && isOpen?(
         <Popup
           content={
-            <Container>
-              <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
+            <Container style={{margin:'50px 0px'}}>
+              {/* <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
                 <header>Edit Service Details</header>
-              </div>
-              <Card className="shadow p-3 mb-5 bg-body-tertiary rounded">
+              </div> */}
+              {/* <Card className="shadow p-3 mb-5 bg-body-tertiary rounded">
                 <Col className="m-3 mt-2 col">
                   <Row className="mb-2">
                     
@@ -362,7 +369,6 @@ function DisplayBattery() {
                   <Row className="mb-2">
                     <Col>
                       <Form.Label>Under Warrenty</Form.Label>
-                      {/* <Form.Control type="text" value={FormatDate(purchaseDate)} readOnly /> */}
                       <Form.Control as='select' >
                         <option value='yes'>Yes</option>
                         <option value='No'>No</option>
@@ -449,7 +455,107 @@ function DisplayBattery() {
                     </Col>
                   </Row>
                 </Col>
-              </Card>
+              </Card> */}
+              <form noValidate>
+        <Table sx={{border:'1px solid black',p:2,mt:3,backgroundColor:'white'}}>
+        <Grid container spacing={2} sx={{border:'1px black'}}>
+        <Grid item xs={12}>
+              <Button
+                variant="contained"
+                size="large"
+                color='primary'
+                fullWidth
+                sx={{ mb: 3  }}
+                
+              >
+                <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Service Details</Typography>
+              </Button>
+            </Grid>
+       
+        {/* Row 1 */}
+        <FormField label="Battery ID" name="batteryId" value={selectedBattery.batteryId}  />
+        <FormField  label="Description" name="description"  value={shortDescription} onChange={(e)=>setShortDescription(e.target.value)}  />
+
+        {/* Row 2 */}
+        <FormField label="Make" name="make" onChange={(e)=>setMake(e.target.value)} value={make}/>
+        <FormField label="Model" name="model" onChange={(e)=>setModel(e.target.value)}  value={model}/>
+
+        {/* Row 3 */}
+        <FormField label="Battery Voltage" name="batteryVoltage" onChange={(e)=>setVoltage(e.target.value)} value={voltage}/>
+        <FormField label="Battery Current" name="batteryCurrent" onChange={(e)=>setCurrent(e.target.value)}  value={current}/>
+
+        {/* Row 4 */}
+        <FormField label="Vehicle Type" name="vehicleType" onChange={(e)=>setVehicleType(e.target.value)} value={vehicleType}/>
+        <FormField label="Service Location" name="serviceLocation" onChange={(e)=>setServiceLocation(e.target.value)}  value={service_location}/>
+
+        {/* Row 5 */}
+        <FormField label="Date Opened" name="openDate" onChange={(e)=>setOpenDate(e.target.value)} value={openDate}/>
+        <FormField label="NoteToServiceEngineer" name="NoteToServiceEngineer" onChange={(e)=>setNoteToServiceEngineer(e.target.value)} value={noteToServiceEngineer}/>
+
+        {/* Row 6 */}
+        <FormField label="Under Warrenty" name="underWarrenty" />
+        <FormField label="self Declaration" placeholder='I agree terms & conditions'/>
+
+        {/* Row 7 */}
+        <FormField label="Status" name="status" onChange={(e)=>setStatus(e.target.value)}  value={status}/>
+        <FormField label="Last Status Updated" name="lastStatusUpdated" onChange={(e)=>setLastUpdated(e.target.value)} value={laststatusUpdated}/>
+
+        <FormField label="Visit Amount" name="visitAmount" onChange={(e)=>setAmount(e.target.value)}  value={amount}/>
+        <FormField label="Visit Amount Paid" name="visitAmountPaid" onChange={(e)=>setVisitAmountPaid(e.target.value)} value={visitAmountPaid}/>
+        
+        <FormField label="Service Date" name="serviceDate" onChange={(e)=>setServiceDate(e.target.value)}  value={serviceDate}/>
+        <FormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={(e)=>setServiceEngineerNotes(e.target.value)} value={serviceEngineerNotes}/>
+
+        <FormField label="Service Amount" name="serviceAmount" onChange={(e)=>setServiceAmount(e.target.value)}  value={ServiceAmount}/>
+        <FormField label="service Amount Paid" name="serviceAmountPaid" onChange={(e)=>setServiceAmountPaid(e.target.value)} value={serviceAmountPaid}/>
+            
+        <DropDownField label="Customer Rating" name="customerRating" onChange={(e)=>setRating(e.target.value)}  value={rating} options={Rating}/>
+        
+        </Grid>
+        <Grid container spacing={3} sx={{p:3}}>
+        <Grid item xs={3}>
+              <Button
+                variant="contained"
+                size="large"
+                fullWidth
+                sx={{ mb:2}}
+                onClick={() => navigate(-1)}
+              >
+               close
+              </Button>
+            </Grid>
+        <Grid item xs={3}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                size="large"
+                fullWidth
+                sx={{mb:2  }}
+                onClick={handleUpdateBattery}
+              >
+                Update
+              </Button>
+            </Grid>
+            <Grid item xs={3}>
+              <Button
+                
+                variant="contained"
+                size="large"
+                fullWidth
+                color='error'
+                sx={{mb:2}}
+                onClick={() => handleDelete(selectedBattery.batteryId)}
+              >
+                Delete Service
+              </Button>
+            </Grid>
+
+        </Grid>
+        
+        
+        </Table>
+      </form>
             </Container>
           }
           handleClose={togglePopup}

@@ -4,6 +4,7 @@ import Header from './Sidebar'
 import Sidebar from './Admin_sidebar'
 import { useState ,useEffect} from "react";
 import { GetToken } from "./Api/auth";
+import Admin_sidebar from "./Admin_sidebar";
 
 const userName = localStorage.getItem('username');
 console.log(userName);
@@ -45,7 +46,7 @@ function TotalTickets(){
     <>
     <div className='grid-container'>
       <Header OpenSidebar={OpenSidebar}/>
-      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+      <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className="main-container">
       <AdminDash_upblock/>
       {TicketDetails.length > 1 ? <Table_comp array_Details={TicketDetails} /> : 

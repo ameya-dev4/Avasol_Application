@@ -6,7 +6,7 @@ import { GetToken } from './Api/auth';
 
 function AdminDash_upblock() {
     const [TicketDetails, setTicketDetails] = useState([]);
-    const [All_serv_engg ,setAll_Serv_engg]=useState();
+    const [All_serv_engg ,setAll_Serv_engg]=useState([]);
     const authToken=GetToken()
     //Manage New Tickets 
     useEffect (()=> {
@@ -35,7 +35,7 @@ function AdminDash_upblock() {
                     'Authorization' : `Bearer ${authToken}`,
                     'Content-type': 'application/json',
                 },
-                body : JSON.stringify({status:3}),
+                body : JSON.stringify({status:2}),
             }).then((response) => response.json())
             .then((array_Details) =>{
                 setAll_Serv_engg(array_Details);
@@ -60,7 +60,6 @@ function AdminDash_upblock() {
                             <Col md={9}>
                                 <h6 className='fs-1'>{TicketDetails && TicketDetails.length}</h6>
                                 <small className='fs-6'>Manage Tickets</small>
-
                             </Col>
                             <Col>
                             </Col>

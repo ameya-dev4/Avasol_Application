@@ -31,7 +31,6 @@ function Table_SE({array_Details}){
           navigate('/update_se', {state : {updateArray : record}})
         };
         
-
         
       
         return (

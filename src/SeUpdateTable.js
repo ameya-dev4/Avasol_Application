@@ -92,6 +92,7 @@ function hanldeOtp(e){
 
 
 function handleSubmit(event){
+    
   fetch('http://100.20.33.222:5000/admin/update-service-engineer',{
     method:'PUT',
     headers : {
@@ -142,7 +143,7 @@ function handleSubmit(event){
           <TableCell sx={{border : 'none'}}><Typography sx={{fontSize:'22px', fontWeight:'500',width:'50%',mr:0}} >Enrolled Date </Typography></TableCell>
           <TableCell sx={{border : 'none'}}> <Input  value={details.approvedDate.slice(0,10)} size="lg" style={{padding:'10', width: '80%', ml:0 }} variant="soft" /></TableCell>
           <TableCell sx={{border : 'none'}}><Typography sx={{fontSize:'22px', fontWeight:'500',width:'80%'}}> Training </Typography></TableCell>
-          <TableCell sx={{border : 'none'}}><Input value={details.trainingDetails} variant="soft" size="lg" style={{padding:'10', width: '80%',ml:0}}/></TableCell>
+          <TableCell sx={{border : 'none'}}><Input value={details.trainingDetails.value} variant="soft" size="lg" style={{padding:'10', width: '80%',ml:0}}/></TableCell>
         </TableRow>
 
         <TableRow >

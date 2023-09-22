@@ -7,6 +7,8 @@ import Header from './Header'
 import {Row,Col,Button,Card} from 'react-bootstrap'
 import { GetToken } from "./Api/auth";
 import NewTickets_Table from "./NewTickets_Table";
+import Table_comp from "./Table_Componenet";
+import UpdateNewTickets from "./UpdateNewTicket";
 
 const authToken = GetToken();
 

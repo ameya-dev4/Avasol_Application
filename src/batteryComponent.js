@@ -3,6 +3,7 @@ import { Container, Form, Row, Col, Card } from 'react-bootstrap';
 import Popup from './Popup';
 import { useNavigate } from 'react-router-dom';
 import { GetToken } from './Api/auth';
+import {Grid,Box,Typography} from '@mui/material';
 
 import {Link, TableHead } from "@mui/material";
 import {
@@ -14,9 +15,15 @@ import {
   Paper,
   Button
 } from '@mui/material';
+import FormField from './Update/InputFormField';
+import DropDownField from './Update/DropDownField';
+import styled from '@emotion/styled';
 
 const apiUrl = 'http://100.20.33.222:5000/user/get-battery-list';
 const access_token = GetToken();
+
+const Rating = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+const warrantyType=[{label:'Yes',value:'yes'},{label:'No',value:'no'}]
 
 function DisplayBattery() {
   const navigate = useNavigate();
@@ -278,12 +285,12 @@ function DisplayBattery() {
         <div className='popup-container'>
         <Popup
           content={
-            <Container>
+            <Container style={{margin:'50px 0px',marginBottom:'60px'}}>
               {/* <h3 className='text-dark'>Edit Battery Details</h3> */}
-              <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
+              {/* <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
                 <header>Edit Battery Details</header>
-            </div>
-                <Card className="shadow p-3 mb-5 bg-body-tertiary rounded">
+            </div> */}
+                {/* <Card className="shadow p-3 mb-5 bg-body-tertiary rounded">
                   <Col className="m-3 mt-2 col">
                     <Row className="mb-2">
                       <Col>
@@ -433,12 +440,101 @@ function DisplayBattery() {
                       </Col>
                     </Row>
                   </Col>
-                </Card>
+                </Card> */}
+                <form noValidate>
+        <Table sx={{border:'1px solid black',p:2,mt:3}}>
+        <Grid container spacing={2} sx={{border:'1px black'}}>
+        <Grid item xs={12}>
+              <Button
+                variant="contained"
+                size="large"
+                color='primary'
+                fullWidth
+                sx={{ mb: 3  }}
+                
+              >
+                <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Battery Details</Typography>
+              </Button>
+            </Grid>
+       
+        {/* Row 1 */}
+        <FormField label="Battery Name" name="batteryName" value={BatteryName} onChange={(e)=>setBatteryName(e.target.value)} />
+        <FormField  label="Battery Number" name="batteryNumber"  value={BatteryNumber} onChange={(e)=>setBatteryNumber(e.target.value)}  />
+
+        {/* Row 2 */}
+        <FormField label="Make" name="make" onChange={(e)=>setMake(e.target.value)} value={make}/>
+        <FormField label="Model" name="model" onChange={(e)=>setModel(e.target.value)}  value={model}/>
+
+        {/* Row 3 */}
+        <FormField label="Battery Voltage" name="batteryVoltage" onChange={(e)=>setBatteryVoltage(e.target.value)} value={batteryVoltage}/>
+        <FormField label="Battery Current" name="batteryCurrent" onChange={(e)=>setBatteryCurrent(e.target.value)}  value={batteryCurrent}/>
+
+        {/* Row 4 */}
+        <FormField label="Purchase Date" name="purchaseDate" onChange={(e)=>setPurchaseDate(e.target.value)} value={purchaseDate} disabled={false} />
+        <DropDownField label="Warrenty" name="warrenty" onChange={(e)=>setwarranty(e.target.value)} options={warrantyType} value={warranty}/>
+
+        {/* Row 5 */}
+        <FormField label="Warranty Years" name="warrantyYears" onChange={(e)=>setWarrentyYears(e.target.value)} value={warrantyYears}/>
+        <FormField label="Vechicle Type" name="vechicleType" onChange={(e)=>setVehicleType(e.target.value)} value={vechicleType}/>
+
+        {/* Row 6 */}
+        <FormField label="DealerName & Addrees" name="dealerName&address" onChange={(e)=>setDealerAddress(e.target.value)} value={delearAddress}/>
+        <FormField label="Dealer Contact" name="Dealer Contact" onChange={(e)=>setDealerContact(e.target.value)} value={DealerContact}/>
+
+        {/* Row 7 */}
+        <FormField label="SubDealerName & Address" name="subDealerName&address" onChange={(e)=>setsubDealerAddress(e.target.value)}  value={subDealerAddress}/>
+        <FormField label="SubDealer Contact" name="subDealer Contact" onChange={(e)=>setSubDealerContact(e.target.value)} value={subDealerContact}/>
+
+        {/* Row 8 */}
+        <DropDownField label="Status" name=""onChange={(e)=>setStatus(e.target.value)}  options={Rating} value={status}/>
+    
+        </Grid>
+        <Grid container spacing={3} sx={{p:3}}>
+        <Grid item xs={3}>
+              <Button
+                variant="contained"
+                size="large"
+                fullWidth
+                sx={{ mt: 5,mb:2}}
+                onClick={() => navigate(-1)}
+              >
+               close
+              </Button>
+            </Grid>
+        <Grid item xs={3}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                size="large"
+                fullWidth
+                sx={{ mt: 5,mb:2  }}
+                onClick={handleUpdateBattery}
+              >
+                Save Changes
+              </Button>
+            </Grid>
+            <Grid item xs={3}>
+              <Button
+                
+                variant="contained"
+                size="large"
+                fullWidth
+                color='error'
+                sx={{ mt: 5,mb:2  }}
+                onClick={() => handleDelete(selectedBattery.batteryId)}
+              >
+                Delete Battery
+              </Button>
+            </Grid>
+        </Grid>
+        </Table>
+      </form>
               
             </Container>
-          }
+           }
           handleClose={togglePopup}
-        />
+        /> 
         </div>
       ):("")}
     </div>
@@ -446,368 +542,3 @@ function DisplayBattery() {
 }
 
 export default DisplayBattery;
-
-// import React, { useState, useEffect } from 'react';
-// import { Button, Container, Form, Row, Col, Card } from 'react-bootstrap';
-// import { useNavigate } from 'react-router-dom';
-// import { GetToken } from './Api/auth';
-// import Popup from './Popup';
-// const apiUrl = 'http://avasol.ameyalabs.com:5000/view-batteries';
-// const access_token = GetToken();
-
-// function DisplayBattery() {
-//   const navigate = useNavigate();
-//   const [latestBattery, setLatestBattery] = useState([]);
-//   const [selectedBattery, setSelectedBattery] = useState(null);
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   // Refactor input state handling
-//   const [formData, setFormData] = useState({
-//     batteryCapacity: '',
-//     batteryVoltage: '',
-//     batteryCurrent: '',
-//     make: '',
-//     model: '',
-//     dealerId: '',
-//     invoice: '',
-//     invoiceNumber: '',
-//     invoiceUploaded: '',
-//     principalId: '',
-//     purchaseDate: '',
-//     warranty: '',
-//     status: '',
-//   });
-
-//   useEffect(() => {
-//     const storedData = localStorage.getItem('batteryData');
-//     if (storedData) {
-//       setLatestBattery(JSON.parse(storedData));
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     async function getLatestBatteryData() {
-//       try {
-//         const response = await fetch(apiUrl, {
-//           method: 'GET',
-//           headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': 'Bearer ' + access_token,
-//           },
-//         });
-//         const data = await response.json();
-//         console.log('view_batteries', data);
-//         setLatestBattery(data);
-//         localStorage.setItem('batteryTables', JSON.stringify(data));
-//       } catch (error) {
-//         console.error('Error fetching latest Battery:', error);
-//       }
-//     }
-//     getLatestBatteryData();
-//   }, []);
-
-//   const handleDelete = (batteryId) => {
-//     const batteryInfo = latestBattery.find((battery) => battery.batteryId === batteryId);
-//     if (!batteryInfo) {
-//       console.error('Battery not found');
-//       return;
-//     }
-
-//     fetch('http://avasol.ameyalabs.com:5000/delete-battery', {
-//       method: 'DELETE',
-//       headers: {
-//         'Authorization': `Bearer ${access_token}`,
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(batteryInfo),
-//     })
-//       .then((response) => {
-//         if (response.ok) {
-//           console.log('DELETE request successful.');
-//           alert('Deleted Successfully');
-//           navigate('/userMyBatteries');
-//         } else {
-//           console.error('DELETE request failed.');
-//         }
-//       })
-//       .catch((error) => {
-//         console.error('Error occurred during DELETE request:', error);
-//       });
-//   };
-
-//   const handleEdit = (battery) => {
-//     setSelectedBattery(battery);
-//     setIsOpen(true);
-//     // Set the form data for editing
-//     setFormData({
-//       ...formData,
-//       batteryCapacity: battery.batteryCapacity,
-//       batteryVoltage: battery.batteryVoltage,
-//       batteryCurrent: battery.batteryCurrent,
-//       make: battery.make,
-//       model: battery.model,
-//       dealerId: battery.dealerId,
-//       invoice: battery.invoice,
-//       invoiceNumber: battery.invoiceNumber,
-//       invoiceUploaded: battery.invoiceUploaded,
-//       principalId: battery.principalId,
-//       purchaseDate: battery.purchaseDate,
-//       warranty: battery.warranty,
-//       status: battery.status,
-//     });
-//   };
-
-//   const handleUpdateBattery = () => {
-//     fetch(`http://avasol.ameyalabs.com:5000/update-battery`, {
-//       method: 'PUT',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${access_token}`,
-//       },
-//       body: JSON.stringify({
-//         batteryId: selectedBattery.batteryId,
-//         ...formData,
-//         status: 0,
-//         username: selectedBattery.username,
-//       }),
-//     })
-//       .then((response) => {
-//         if (response.ok) {
-//           console.log('PUT request successful.');
-//           alert('Updated Successfully');
-//           setSelectedBattery(null);
-//           setIsOpen(false);
-//           // Update the latestBattery array with the updated data
-//           setLatestBattery((prevLatestBattery) =>
-//             prevLatestBattery.map((battery) =>
-//               battery.batteryId === selectedBattery.batteryId
-//                 ? { ...battery, ...formData }
-//                 : battery
-//             )
-//           );
-//           navigate('/userMyBatteries');
-//         } else {
-//           console.error('PUT request failed:', response.status);
-//         }
-//       })
-//       .catch((error) => {
-//         console.error('Error occurred during PUT request:', error);
-//       });
-//   };
-
-//   const togglePopup = () => {
-//     setIsOpen(!isOpen);
-//   };
-
-//   return (
-//     <div>
-       
-//             <Container>
-//         <table className="table caption-top  table-hover rounded mt-3 px-3" style={{ backgroundColor: '#BFCAD1' }}>
-//           <thead>
-//             <tr>
-//               <th scope="col">Battery Name</th>
-//               <th scope="col">Battery Number</th>
-//               <th scope="col">Battery Make</th>
-//               <th scope="col">Battery Model</th>
-//               <th scope="col">Warrenty</th>
-//               <th scope="col">Status</th>
-//               <th scope="col">Delete</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {latestBattery.map((record) => (
-//               <tr key={record.batteryId}>
-//                 <th scope="row">{record.BatteryName}</th>
-//                 <td>
-//                   <Button
-//                     variant="success"
-//                     className="btn-sm"
-//                     onClick={() => handleEdit(record)}
-//                   >
-//                     {record.batteryId}
-//                   </Button>
-//                 </td>
-//                 <td>{record.make}</td>
-//                 <td>{record.model}</td>
-//                 <td>{record.warranty}</td>
-//                 <td>{record.status}</td>
-//                 <td>
-//                   <a
-//                     href="#"
-//                     className="text-decoration-none"
-//                     onClick={() => handleDelete(record.batteryId)}
-//                   >
-//                     Delete
-//                   </a>
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </Container>
-
-//       {selectedBattery && isOpen && (
-  //       <div className="popup-container">
-  //         <Popup
-  //         content={
-  //           <Container>
-  //           <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
-  //             <header>Edit Battery Details</header>
-  //           </div>
-  //           <Card className="shadow p-3 mb-5 bg-body-tertiary rounded">
-  //             <Col className="m-3 mt-2 col">
-  //               <Row className="mb-2">
-  //                 <Col>
-  //                   <Form.Label>Username</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={selectedBattery.username}
-  //                     readOnly
-  //                   />
-  //                 </Col>
-  //                 <Col>
-  //                   <Form.Label>Battery ID</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={selectedBattery.batteryId}
-  //                     readOnly
-  //                   />
-  //                 </Col>
-  //               </Row>
-  //               <Row className="mb-2">
-  //                 <Col>
-  //                   <Form.Label>Battery Capacity</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={formData.batteryCapacity} 
-  //                     onChange={(e) => setFormData({ ...formData, batteryCapacity: e.target.value })}
-  //                   />
-  //                 </Col>
-  //                 <Col>
-  //                   <Form.Label>Battery Voltage</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={formData.batteryVoltage} 
-  //                     onChange={(e) => setFormData({ ...formData, batteryVoltage: e.target.value })}
-  //                   />
-  //                 </Col>
-  //                 <Col>
-  //                   <Form.Label>Battery Current</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={formData.batteryCurrent} 
-  //                     onChange={(e) => setFormData({ ...formData, batteryCurrent: e.target.value })}
-  //                   />
-  //                 </Col>
-  //               </Row>
-  //               <Row className="mb-2">
-  //                 <Col>
-  //                   <Form.Label>Dealer ID</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={selectedBattery.dealerId}
-  //                     readOnly
-  //                   />
-  //                 </Col>
-  //                 <Col>
-  //                   <Form.Label>Principal ID</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={selectedBattery.principalId}
-  //                     readOnly
-  //                   />
-  //                 </Col>
-  //               </Row>
-  //               <Row className="mb-2" >
-  //                 <Col>
-  //                   <Form.Label>Invoice Number</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={selectedBattery.invoiceNumber}
-  //                     readOnly
-  //                   />
-  //                 </Col>
-  //                 <Col>
-  //                   <Form.Label>Invoice Uploaded</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={selectedBattery.invoiceUploaded}
-  //                     readOnly
-  //                   />
-  //                 </Col>
-  //               </Row>
-  //               <Row className="mb-2">
-  //                 <Col>
-  //                   <Form.Label>Make</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={formData.make} 
-  //                     onChange={(e) => setFormData({ ...formData, make: e.target.value })}
-  //                   />
-  //                 </Col>
-  //                 <Col>
-  //                   <Form.Label>Model</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={formData.model} 
-  //                     onChange={(e) => setFormData({ ...formData, model: e.target.value })}
-  //                   />
-  //                 </Col>
-  //               </Row>
-  //               <Row className="mb-2" >
-  //                 <Col>
-  //                   <Form.Label>PurchaseDate</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={selectedBattery.purchaseDate}
-  //                     readOnly
-  //                   />
-  //                 </Col>
-  //                 <Col>
-  //                   <Form.Label>Warrenty</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={selectedBattery.warranty}
-  //                     readOnly
-  //                   />
-  //                 </Col>
-  //                 <Col>
-  //                   <Form.Label>Status</Form.Label>
-  //                   <Form.Control
-  //                     type="text"
-  //                     value={selectedBattery.status}
-  //                     readOnly
-  //                   />
-  //                 </Col>
-  //               </Row>
-  //               <Row className="mb-2">
-  //                 <Col md={6} className="d-flex mt-4">
-  //                   <Col>
-  //                     <Button variant="success" type="submit" onClick={handleUpdateBattery}>
-  //                       Update
-  //                     </Button>
-  //                   </Col>
-  //                   <Col>
-  //                     <Button
-  //                       variant="danger"
-  //                       onClick={() => handleDelete(selectedBattery.batteryId)}
-  //                     >
-  //                       Delete Battery
-  //                     </Button>
-  //                   </Col>
-  //                 </Col>
-  //               </Row>
-  //             </Col>
-  //           </Card>
-  //         </Container>
-  //       }
-  //       handleClose={togglePopup}
-  // />
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default DisplayBattery;

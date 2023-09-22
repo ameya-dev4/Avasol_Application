@@ -35,7 +35,7 @@ function AllServiceEngineers(){
                   'Authorization' : `Bearer ${authToken}`,
                   'Content-type': 'application/json',
               },
-              body : JSON.stringify({status:3}),
+              body : JSON.stringify({status:2}),
           }).then((response) => response.json())
           .then((array_Details) =>{
               setTicketDetails(array_Details);
@@ -61,6 +61,7 @@ function AllServiceEngineers(){
 }
 
 export default AllServiceEngineers;
+
 
 // import React ,{useState} from "react";
 // import {Row,Col,Card,Form, Button, Container} from 'react-bootstrap'

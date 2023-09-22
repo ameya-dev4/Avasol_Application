@@ -60,8 +60,9 @@ function Dashboard_upBlocks() {
         <div className='container-fluid px-1'> 
             <div className='row g-3 my-2'>
                 <div className='col-md-3 dashboard-stat red-intense' >
-                    <div className='p-3 shadow-sm d-flex justify-content-around align-items-center rounded ' style={{backgroundColor:'#E35B5A'}}>
-                        <Row>
+                    <div className='p-3 shadow-sm h-100 rounded ' style={{backgroundColor:'#E35B5A'}}>
+                    <i className='fa fa-tasks p-3 fs-1 opacity-25  ' aria-hidden="true" ></i>
+                        {/* <Row>
                             <Col md={9}>
                                 <h6 className='fs-1'>{batteries && batteries.length}</h6>
                                 <small className='fs-6'>My Batteries</small>
@@ -77,7 +78,8 @@ function Dashboard_upBlocks() {
                             view more
                             <i className='feather icon-chevron-right'></i>
                             </a>
-                        </Row>
+                        </Row> */}
+
                         
                     </div>
                 </div>

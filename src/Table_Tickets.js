@@ -9,9 +9,8 @@ import {
   TableCell,
   Paper,
 } from '@mui/material';
-import TicketPage from '../src/TicketPage';
 import { GetToken } from './Api/auth';
-import { Row } from 'react-bootstrap';
+import TicketPage from './TicketPage';
 
 
 const authToken = GetToken();
@@ -22,7 +21,7 @@ async function fetchDataAndEnhanceArray({array_Details}){
       const data = {
         username : item.username,
       }
-      const response = await fetch('http://100.20.33.222:5000/admin/get-user',{
+      const response = await fetch('http://100.20.33.222:5000/admin/get-ticket-details',{
         method : 'POST',
         headers : {
           'Authorization' : `Bearer ${authToken}`,
@@ -58,7 +57,7 @@ function Table_Tickets({array_Details}){
         const handleTicketClick = ({record}) => {
           console.log(record)
           localStorage.setItem('display_details',record);
-          navigate('/update_ticket_details',{state:{updateArray:record}});
+          navigate('/update_ticket_details',{state:{ticketId:record.requestId}});
         };
         
 
@@ -82,7 +81,8 @@ function Table_Tickets({array_Details}){
       
     return (
       <>
-        <TableContainer component={Paper} sx={{m:2,bgcolor:'white',maxWidth:'97%',mt:4}}>
+      
+        <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%',mt:10}}>
           <Table>
               <TableRow>
                 <TableCell><h5>ID</h5></TableCell>

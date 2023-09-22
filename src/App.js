@@ -38,6 +38,12 @@ import SE_TotalTickets from './SE_TotalTickets'
 import SE_Dash_upblocks from './SE_Dash_upblocks'
 import SE_MyProfile from './SE_myProfile'
 import SE_TicketPage from './SE_TicketPage'
+import SE_signUp from './SE_signup'
+import SE_Update from './SE_updateComp'
+import Se_Update from './SE_updateComp'
+import UpdateTicket from './UpdateAssignedTicket'
+import UpdateNewTickets from './UpdateNewTicket'
+import Update from './SE_updateComp'
 
 
 
@@ -76,9 +82,14 @@ function App() {
             <Route path='admin_mydash' element={<AdminMyDashboard/>}/>
             <Route path='admin_logout' element={<Admin_logout/>}/>
             <Route path='admin_profile_update' element={<Admin_Edit_Profile/>}/>
-            <Route path='update_ticket_details' element={<Ticket/>}/>
-            <Route path='update_se' element={<SeUpdate/>}/>
+            <Route path='update_ticket_details' element={<UpdateNewTickets/>}/>
+            <Route path='update_se' element={<Update/>}/>
+            <Route path='update_asigned_ticket' element={<UpdateNewTickets/>}/>
+            <Route path='update_new_ticket' element={<UpdateNewTickets/>}/>
 
+
+
+            <Route exact path="/se_signup" element={<SE_signUp/>} />
             <Route exact path="/se_myDashboard" element={<SE_MyDashboard  />} />
             <Route exact path='/se_todayTickets' element={<SE_TicketsToday  />} />
             <Route exact path='/se_openTickets' element={<SE_OpenTickets />} />

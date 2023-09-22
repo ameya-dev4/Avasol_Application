@@ -21,7 +21,7 @@ async function fetchDataAndEnhanceArray({array_Details}){
       const data = {
         username : item.username,
       }
-      const response = await fetch('http://avasol.ameyalabs.com:5000/get-user-details',{
+      const response = await fetch('http://avasol.ameyalabs.com:5000/admin/get-user',{
         method : 'POST',
         headers : {
           'Authorization' : `Bearer ${authToken}`,
@@ -56,7 +56,7 @@ function Table_comp({array_Details}){
         const handleTicketClick = ({record}) => {
           console.log(record)
           localStorage.setItem('display_details',record);
-          navigate('/update-ticket-details',{state:{updateArray:record}});
+          navigate('/update_ticket_details',{state:{updateArray:record}});
         };
         
 
@@ -65,13 +65,13 @@ function Table_comp({array_Details}){
         return (
           <>
            <TableRow >
-            <TableCell style={{fontSize:'18px'}}>{record.requestId}</TableCell>
-            <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.username}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.customerDetails.contactNumber}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.customerDetails.city}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerNotes}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
+            <TableCell style={{fontSize:'12px'}}>{record.requestId}</TableCell>
+            <TableCell style={{fontSize:'12px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
+            <TableCell style={{fontSize:'12px'}}>{record.username}</TableCell>
+            <TableCell style={{fontSize:'12px'}}>{record.customerDetails.contactNumber}</TableCell>
+            <TableCell style={{fontSize:'12px'}}>{record.customerDetails.city}</TableCell>
+            <TableCell style={{fontSize:'12px'}}>{record.serviceEngineerNotes}</TableCell>
+            <TableCell style={{fontSize:'12px'}}>{record.status}</TableCell>
 
             </TableRow>
                     

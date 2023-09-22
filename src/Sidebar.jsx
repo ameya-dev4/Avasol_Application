@@ -26,6 +26,12 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
                 </Link>
             </li>
             <li className='sidebar-list-item'>
+                <Link to='/se_signup'>
+                    {/* <BsGrid1X2Fill className='icon'/> Dashboard */}
+                    <i className='feather icon-users'> SE_SignUp</i>
+                </Link>
+            </li>
+            <li className='sidebar-list-item'>
                 <Link to='/signup'>
                     {/* <BsGrid1X2Fill className='icon'/> Dashboard */}
                     <i className='feather icon-users'> SignUp</i>
