@@ -10,7 +10,7 @@ import {
   Paper,
 } from '@mui/material';
 import { GetToken } from './Api/auth';
-import TicketPage from './TicketPage';
+//import TicketPage from '../TicketComponents/TicketPage';
 
 
 const authToken = GetToken();
@@ -21,7 +21,7 @@ async function fetchDataAndEnhanceArray({array_Details}){
       const data = {
         username : item.username,
       }
-      const response = await fetch('http://100.20.33.222:5000/admin/get-ticket-details',{
+      const response = await fetch('http://100.20.33.222:5000/admin/get-user',{
         method : 'POST',
         headers : {
           'Authorization' : `Bearer ${authToken}`,
@@ -57,7 +57,7 @@ function Table_Tickets({array_Details}){
         const handleTicketClick = ({record}) => {
           console.log(record)
           localStorage.setItem('display_details',record);
-          navigate('/update_ticket_details',{state:{ticketId:record.requestId}});
+          navigate('/update-ticket-details',{state:{ticketId:record.requestId}});
         };
         
 
@@ -103,3 +103,9 @@ function Table_Tickets({array_Details}){
 
 }
 export default Table_Tickets;
+
+
+
+
+
+

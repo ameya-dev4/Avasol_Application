@@ -11,7 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 const authToken = GetToken();
 
-const url = "http://avasol.ameyalabs.com:5000/get-se-details";
+const url = "http://100.20.33.222:5000/se/get-profile";
 const userName = localStorage.getItem('username');
 
 
@@ -20,18 +20,14 @@ const userName = localStorage.getItem('username');
 function SE_MyProfile(){
   const [user_Details,setUserDetails] = useState([]);
   const navigate = useNavigate();
-  const data = {
-    username : 'setest'
-  }
   useEffect (() =>{ async function fetchDetails(){
     const response = await fetch(url,{
-        method : 'POST',
+        method : 'GET',
         headers : {
             'Authorization' : `Bearer ${authToken}`,
             'Content-type': 'application/json',
             "Access-Control-Allow-Origin": "*",
         },
-        body : JSON.stringify(data)
     }).then((response) => response.json())
     .then((user_Details) =>{
       setUserDetails(user_Details);

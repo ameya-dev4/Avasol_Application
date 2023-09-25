@@ -15,45 +15,10 @@ import { GetToken } from './Api/auth';
 
 const authToken = GetToken();
 
-async function fetchDataAndEnhanceArray({array_Details}){
-  const enhancedArray = await Promise.all(
-    array_Details.map(async (item) => {
-      const data = {
-        username : item.username,
-      }
-      const response = await fetch('http://avasol.ameyalabs.com:5000/get-user-details',{
-        method : 'POST',
-        headers : {
-          'Authorization' : `Bearer ${authToken}`,
-          'Content-Type' : 'application/json',
-        },
-        body : JSON.stringify(data)
-      })
-      const outPut_value = await response.json();
-      
-      return { ...item, customerDetails: outPut_value };
-    })
-  )
-  return enhancedArray ; 
-}
 
 function SE_Table_comp({array_Details}){  
   const navigate = useNavigate();
-  let element1 = {
-    requestId : 2,
-    shortDescription : "Battery Heating Up",
-    username : 'ameya',
-    serviceEngineerNotes : 'I need to change the battery  ',
-    status : 2,
-  }
-  array_Details.push(element1);
-  const [enhancedArray, setEnhancedArray ] = useState([]);
 
-  useEffect(() => {fetchDataAndEnhanceArray({array_Details : array_Details }).then((result) => {
-    setEnhancedArray(result);
-  });
-  },[])
-  console.log(enhancedArray);
    const Row = ({ record }) => {
         const [showDetails, setShowDetails] = useState(false);
       
@@ -103,7 +68,7 @@ function SE_Table_comp({array_Details}){
               </TableRow>
             </TableHead>
             <TableBody>
-              {enhancedArray.map((record) => (
+              {array_Details.map((record) => (
               <Row key={record.id} record={record} />))}
             </TableBody>  
            </Table>

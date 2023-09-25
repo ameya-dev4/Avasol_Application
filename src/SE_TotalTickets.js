@@ -8,7 +8,7 @@ import SE_Table_comp from "./SE_Table_comp";
 
 const userName = localStorage.getItem('username');
 console.log(userName);
-const url = 'http://avasol.ameyalabs.com:5000/get-ticket-details'
+const url = 'http://100.20.33.222:5000/se/get-service-request-details'
 
 
 function SE_TotalTickets(){
@@ -39,7 +39,7 @@ function SE_TotalTickets(){
         })
       }
       fetchDetails();
-  },[TicketDetails]) 
+  },[]) ;
   
 
     return (

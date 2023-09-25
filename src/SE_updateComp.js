@@ -47,13 +47,12 @@ function Update() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://100.20.33.222:5000/admin/get-se', {
-          method: 'POST',
+        const response = await fetch('http://100.20.33.222:5000/se/get-profile', {
+          method: 'GET',
           headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ username: ServiceEngineerName })
         });
         if (response.ok) {
           const data = await response.json();
@@ -101,7 +100,7 @@ function Update() {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch('http://100.20.33.222:5000/admin/update-service-engineer',{
+    fetch('http://100.20.33.222:5000/se/update-profile',{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,

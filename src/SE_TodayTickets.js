@@ -18,7 +18,7 @@ function getCurrentDate() {
 }
 
 const currentDate = getCurrentDate();
-const url = 'http://avasol.ameyalabs.com:5000/get-ticket-details'
+const url = 'http://100.20.33.222:5000/se/get-service-request-details'
 
 function SE_TicketsToday(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -48,7 +48,7 @@ function SE_TicketsToday(){
           })
         }
         fetchDetails();
-    },[TicketDetails])
+    },[])
 
     return <>
     <div className='grid-container'>

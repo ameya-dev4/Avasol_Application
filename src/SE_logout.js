@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header'
 import SE_Sidebar from './SE_Sidebar';
 
-const Admin_Logout= ()=>{
+const token = GetToken();
+
+const SE_Logout= ()=>{
     const navigate=useNavigate();
     const access_token=GetToken();
     console.log(access_token)
@@ -18,9 +20,9 @@ const Admin_Logout= ()=>{
     // alert("do you want to logout")
     fetch('http://100.20.33.222:5000/se/logout',{
             method:'POST',
-            mode:'cors',
             headers:{
                 'Content-Type': 'application/json',
+                'Authorization':`Bearer ${token}`,
             },
             
         })
@@ -68,4 +70,4 @@ const Admin_Logout= ()=>{
   )
 }
 
-export default Admin_Logout
+export default SE_Logout

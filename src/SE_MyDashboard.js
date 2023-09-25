@@ -9,7 +9,7 @@ import SE_Table_comp from "./SE_Table_comp";
 
 const userName = localStorage.getItem('username');
 console.log(userName);
-const url = 'http://avasol.ameyalabs.com:5000/get-ticket-details'
+const url = 'http://100.20.33.222:5000/se/latest-service-requests'
 
 function error_func(){
     return <h2>Failed to fetch</h2>
@@ -24,21 +24,18 @@ function SE_MyDashboard(){
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
-  let data = {
-    username :'ameya',
-  }
+  
  
     try{
         useEffect (()=> {
         async function fetchDetails(){
             const response = await fetch(url,{
-                method : 'POST',
+                method : 'GET',
                 headers : {
                     'Authorization' : `Bearer ${authToken}`,
                     'Content-type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body : JSON.stringify(data)
             }).then((response) => response.json())
             .then((array_Details) =>{
                 setTicketDetails(array_Details);

@@ -7,6 +7,7 @@ import Header from './Header'
 import Admin_sidebar from './Admin_sidebar'
 import UpdateTicket from "./UpdateAssignedTicket";
 import UpdateNewTickets from "./UpdateNewTicket";
+import Table_comp from "./Table_Componenet";
 
 const authToken = GetToken();
 
@@ -97,7 +98,7 @@ function AssignedTickets(){
             </Col>
             </Row>
 
-    { TicketDetails && TicketDetails.length > 0 ? <UpdateNewTickets array_Details={TicketDetails} /> : 
+    { TicketDetails && TicketDetails.length > 0 ? <Table_Tickets array_Details={TicketDetails} /> : 
       <h2 className="mx-3 mt-3">  No Assigned Tickets </h2>}
     </main>
     </div>

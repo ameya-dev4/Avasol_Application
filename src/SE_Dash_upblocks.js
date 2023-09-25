@@ -9,6 +9,7 @@ function SE_Dash_upblocks() {
     const [All_serv_engg ,setAll_Serv_engg]=useState();
     const authToken=GetToken()
     //Manage New Tickets 
+    {/*
     useEffect (()=> {
         async function fetchDetails(){
             const response = await fetch('http://100.20.33.222:5000/admin/get-new-tickets',{
@@ -45,6 +46,8 @@ function SE_Dash_upblocks() {
           }
           fetchDetails();
       },[])
+
+    */}
 
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const OpenSidebar = () => {
