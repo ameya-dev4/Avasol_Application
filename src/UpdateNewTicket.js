@@ -118,7 +118,7 @@ function UpdateNewTickets() {
         <FormField label="Battery Model" name="batteryModel" onChange={handleInputChange}  value={formData.batteryModel}/>
 
         {/* Row 3 */}
-        <FormField label="Date Opened" name="date" onChange={handleInputChange} value={formData}/>
+        <FormField label="Date Opened" name="date" onChange={handleInputChange} value={formData.openDate}/>
         <FormField label="Service Location" name="serviceArea" onChange={handleInputChange}  value={formData.serviceArea}/>
 
         {/*Row 4 */}

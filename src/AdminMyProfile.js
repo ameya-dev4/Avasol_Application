@@ -6,6 +6,7 @@ import { json, useNavigate } from "react-router-dom";
 import { GetToken } from "./Api/auth";
 
 const AdminMyProfile = () => {
+    const [isdetails, setIsdetails]=useState(false)
     const access_token=GetToken()
     const navigate=useNavigate()
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -26,6 +27,7 @@ const AdminMyProfile = () => {
         .then(resp=> resp.json())
         .then(data=>{
             console.log("data",data)
+            setIsdetails(true)
             localStorage.setItem('admin_details',JSON.stringify(data))
         })
 
@@ -50,7 +52,9 @@ const AdminMyProfile = () => {
             <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
                 <header>My Profile</header>
             </div>
-            <Card className="shadow p-2 mb-5 bg-body-tertiary rounded">
+            {isdetails?
+            (
+                <Card className="shadow p-2 mb-5 bg-body-tertiary rounded">
                 <h4> Personal Info</h4>
                 <hr></hr>
                 <Col className="m-3 mt-3 col" >
@@ -184,6 +188,21 @@ const AdminMyProfile = () => {
                     </Row>
                 </Col>
             </Card>
+            ):(
+                <Container style={{width:'100%',height:'100%',backgroundColor:'white'}}>
+              <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
+                    
+                      <div className="text-center d-flex justify-content-center py-2 px-2">
+                      <div className="spinner-border text-primary " role="status">
+                        <span className="visually-hidden ">Loading...</span>
+                      </div> 
+                      </div>  
+                            
+                    </div>
+
+                </Container>
+            )}
+
         </Container>
 
             </div>

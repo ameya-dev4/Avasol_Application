@@ -11,8 +11,8 @@ function SE_Sidebar({openSidebarToggle, OpenSidebar}) {
   return (
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
         <div className='sidebar-title'>
-            <div className='sidebar-brand'>
-                <GiMechanicGarage  className='icon_header'/> AMEYA
+            <div className='sidebar-brand text-white'>
+                <GiMechanicGarage  className='icon_header '/> AMEYA
             </div>
             <span className='icon close_icon' onClick={OpenSidebar}>X</span>
         </div>

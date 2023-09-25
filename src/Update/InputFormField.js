@@ -1,7 +1,9 @@
 import {Grid , Box,Typography,TextField} from '@mui/material';
 
-function FormField({ label, name, value, onChange ,changeType=true}) {
-    return (
+function FormField({ label, name, value, onChange ,changeType=false}) {
+    console.log("value",value)
+  
+    return  (
       <>
         <Grid item xs={12} sm={6}>
           <Box>
@@ -14,9 +16,9 @@ function FormField({ label, name, value, onChange ,changeType=true}) {
           onChange={onChange}
           fullWidth
           sx={{width:'80%',ml:3,fontSize:'12',fontWeight:'500',}}
-          InputProps={{
-            readOnly:{changeType}, // Set this to true to make the TextField read-only
-          }}
+          // InputProps={{
+          //   readOnly:{changeType}, // Set this to true to make the TextField read-only
+          // }}
           // disabled={disabled}
           // Add any additional attributes or styling here
         />

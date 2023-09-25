@@ -4,7 +4,7 @@ import Header from './Header'
 import Sidebar from './Admin_sidebar'
 import { useState ,useEffect} from "react";
 import { GetToken } from "./Api/auth";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography,Container } from "@mui/material";
 import { Card,Row } from "react-bootstrap";
 import AdminDash_upblock from "./AdminDash_upblock";
 
@@ -54,11 +54,25 @@ function AdminMyDashboard(){
       <main className="main-container">
       <AdminDash_upblock />
       { TicketDetails && TicketDetails.length > 0 ? <Table_comp array_Details={TicketDetails} /> : 
+      <>
       <Box>
         <Typography variant="h4" className="mx-3 mt-3">
           No Ticket Details
         </Typography>
         </Box>
+        <Container style={{width:'100%',height:'100%',backgroundColor:'white'}}>
+        <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
+              
+                <div className="text-center d-flex justify-content-center py-2 px-2">
+                <div className="spinner-border text-primary " role="status">
+                  <span className="visually-hidden ">Loading...</span>
+                </div> 
+                </div>  
+                      
+              </div>
+
+          </Container>
+          </>
     }
       
       </main>

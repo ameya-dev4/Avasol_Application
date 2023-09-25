@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header'
 import SE_Sidebar from './SE_Sidebar';
 
-const Admin_Logout= ()=>{
+const Se_Logout= ()=>{
     const navigate=useNavigate();
     const access_token=GetToken();
     console.log(access_token)
@@ -68,4 +68,4 @@ const Admin_Logout= ()=>{
   )
 }
 
-export default Admin_Logout
+export default Se_Logout

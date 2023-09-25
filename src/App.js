@@ -44,6 +44,9 @@ import Se_Update from './SE_updateComp'
 import UpdateTicket from './UpdateAssignedTicket'
 import UpdateNewTickets from './UpdateNewTicket'
 import Update from './SE_updateComp'
+import UpdateBattery from './UpdateBattery'
+import Se_Logout from './SE_logout'
+import SE_Edit_Profile from './SE_EditProfile'
 
 
 
@@ -70,6 +73,8 @@ function App() {
             <Route path='logout' element={<Logout/>}/>
             <Route path='edit_profile' element={<EditProfile/>}/>
             <Route path='user_profile' element={<UserProfile/>}/>
+            <Route path='update_battery' element={<UpdateBattery/>}/>
+
 
             <Route path='Admin_signup' element={<AdminSignUp/>}/>
             <Route path='admin_home' element={<Admin_Home/>}/>
@@ -97,8 +102,10 @@ function App() {
             <Route exact path='/se_pendingAmount' element={<SE_Dash_upblocks />} />
             <Route exact path='/se_Earnings' element={<SE_Dash_upblocks />} />
             <Route exact path='/se_myProfile' element={<SE_MyProfile />} />
-            <Route exact path='/se_logout' element={<Logout /> } />
+            <Route exact path='/se_logout' element={<Se_Logout/> } />
             <Route exact path='/se_update_ticket_details' element = {<SE_TicketPage/>} />
+            <Route path='se_profile_update' element={<SE_Edit_Profile/>}/>
+
 
             
             

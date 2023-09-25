@@ -7,6 +7,7 @@ import Header from "./Header";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const UserProfile = () => {
+    const [isdetails, setIsdetails]=useState(false);
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
@@ -40,6 +41,7 @@ const UserProfile = () => {
       .then(data=>{
         console.log(data)
         setDetails(data)
+        setIsdetails(true)
         localStorage.setItem('userdetails',JSON.stringify(data))
         
         
@@ -71,83 +73,101 @@ const UserProfile = () => {
             <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
                 <header>UserProfile</header>
             </div>
+            {isdetails?
+            (
             <Card className="shadow p-3 mb-5 bg-body-tertiary rounded">
-                <Col className="m-3 mt-5 col" >
-                    <Row className="mb-2" >
+            <Col className="m-3 mt-5 col" >
+                <Row className="mb-2" >
+                    <Col>
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control type="text" value={showdetails.firstName} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                    <Col>
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control type="text" value={showdetails.lastName} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                </Row>
+                <Row className="mb-2" >
+                    <Col>
+                        <Form.Label>Email ID</Form.Label>
+                        <Form.Control type="text" value={showdetails.emailId} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                    <Col>
+                        <Form.Label>Mobile Number</Form.Label>
+                        <Form.Control type="text" value={showdetails.contactNumber} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                </Row>
+                <Row className="mb-2" >
+                    <Col>
+                        <Form.Label>House No</Form.Label>
+                        <Form.Control type="text" value={showdetails.address} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                    <Col>
+                        <Form.Label>Area Name</Form.Label>
+                        <Form.Control type="text" value={showdetails.city} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                </Row>
+                <Row className="mb-2" >
+                    <Col>
+                        <Form.Label>District</Form.Label>
+                        <Form.Control type="text" value={showdetails.district} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                    <Col>
+                        <Form.Label>Mandal</Form.Label>
+                        <Form.Control type="text" value={showdetails.mandal} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                </Row>
+                <Row className="mb-2" >
+                    <Col>
+                        <Form.Label>Latitude</Form.Label>
+                        <Form.Control type="text" value={showdetails.latitude} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                    <Col>
+                        <Form.Label>Longitude</Form.Label>
+                        <Form.Control type="text" value={showdetails.longitude} readOnly style={{cursor:'not-allowed'}} ></Form.Control>
+                    </Col>
+                </Row>
+                <Row className="mb-2" >
+                    <Col>
+                        <Form.Label>Pincode</Form.Label>
+                        <Form.Control type="text" value={showdetails.pincode} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                    </Col>
+                </Row>
+                <Row className="mb-2" >
+                    <Col >
+                        <Form.Label>Current Password</Form.Label>
+                        <Form.Control type="password" value={parse_password} readOnly style={{cursor:'not-allowed'}} ></Form.Control>
+                    </Col>
+                    <Col md={6}>
+                    </Col>
+                    <Col md={3} className="d-flex flex-row-reverse mt-4">
                         <Col>
-                            <Form.Label>First Name</Form.Label>
-                            <Form.Control type="text" value={showdetails.firstName} readOnly style={{cursor:'not-allowed'}}></Form.Control>
+                            <Button  variant='danger'onClick={()=>navigate('/latest_serv_request')} className="feather icon-x"> Cancle</Button>
                         </Col>
                         <Col>
-                            <Form.Label>Last Name</Form.Label>
-                            <Form.Control type="text" value={showdetails.lastName} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label>Email ID</Form.Label>
-                            <Form.Control type="text" value={showdetails.emailId} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-                        </Col>
-                        <Col>
-                            <Form.Label>Mobile Number</Form.Label>
-                            <Form.Control type="text" value={showdetails.contactNumber} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label>House No</Form.Label>
-                            <Form.Control type="text" value={showdetails.address} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-                        </Col>
-                        <Col>
-                            <Form.Label>Area Name</Form.Label>
-                            <Form.Control type="text" value={showdetails.city} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label>District</Form.Label>
-                            <Form.Control type="text" value={showdetails.district} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-                        </Col>
-                        <Col>
-                            <Form.Label>Mandal</Form.Label>
-                            <Form.Control type="text" value={showdetails.mandal} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label>Latitude</Form.Label>
-                            <Form.Control type="text" value={showdetails.latitude} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-                        </Col>
-                        <Col>
-                            <Form.Label>Longitude</Form.Label>
-                            <Form.Control type="text" value={showdetails.longitude} readOnly style={{cursor:'not-allowed'}} ></Form.Control>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label>Pincode</Form.Label>
-                            <Form.Control type="text" value={showdetails.pincode} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col >
-                            <Form.Label>Current Password</Form.Label>
-                            <Form.Control type="password" value={parse_password} readOnly style={{cursor:'not-allowed'}} ></Form.Control>
-                        </Col>
-                        <Col md={6}>
-                        </Col>
-                        <Col md={3} className="d-flex flex-row-reverse mt-4">
-                            <Col>
-                                <Button  variant='danger'onClick={()=>navigate('/latest_serv_request')} className="feather icon-x"> Cancle</Button>
-                            </Col>
-                            <Col>
-                                <Button variant="success" onClick={()=>navigate('/edit_profile')}><i className="fa fa-edit"> Edit</i> </Button>
-                            </Col>    
-                        
-                        </Col>
-                    </Row>
-                </Col>
+                            <Button variant="success" onClick={()=>navigate('/edit_profile')}><i className="fa fa-edit"> Edit</i> </Button>
+                        </Col>    
+                    
+                    </Col>
+                </Row>
+            </Col>
             </Card>
+   )
+         :(
+            <Container style={{width:'100%',height:'100%',backgroundColor:'white'}}>
+              <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
+                    
+                      <div className="text-center d-flex justify-content-center py-2 px-2">
+                      <div className="spinner-border text-primary " role="status">
+                        <span className="visually-hidden ">Loading...</span>
+                      </div> 
+                      </div>  
+                            
+                    </div>
+
+                </Container>
+         )
+         }
         </Container> 
        </main> 
  
@@ -160,117 +180,8 @@ const UserProfile = () => {
      
    )
 
-//   return (
-//         <>
-    //   <Container className="m-3 mt-5 col ">
-    //         <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
-    //             <header>UserProfile</header>
-    //         </div>
-    //         <Card className="shadow p-3 mb-5 bg-body-tertiary rounded">
-    //             <Col className="m-3 mt-5 col" >
-    //                 <Row className="mb-2" >
-    //                     <Col>
-    //                         <Form.Label>First Name</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.firstName} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                     <Col>
-    //                         <Form.Label>Last Name</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.lastName} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                 </Row>
-    //                 <Row className="mb-2" >
-    //                     <Col>
-    //                         <Form.Label>Email ID</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.emailId} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                     <Col>
-    //                         <Form.Label>Mobile Number</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.contactNumber} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                 </Row>
-    //                 <Row className="mb-2" >
-    //                     <Col>
-    //                         <Form.Label>House No</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.address} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                     <Col>
-    //                         <Form.Label>Area Name</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.city} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                 </Row>
-    //                 <Row className="mb-2" >
-    //                     <Col>
-    //                         <Form.Label>District</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.district} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                     <Col>
-    //                         <Form.Label>Mandal</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.mandal} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                 </Row>
-    //                 <Row className="mb-2" >
-    //                     <Col>
-    //                         <Form.Label>Latitude</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.latitude} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                     <Col>
-    //                         <Form.Label>Longitude</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.longitude} readOnly style={{cursor:'not-allowed'}} ></Form.Control>
-    //                     </Col>
-    //                 </Row>
-    //                 <Row className="mb-2" >
-    //                     <Col>
-    //                         <Form.Label>Pincode</Form.Label>
-    //                         <Form.Control type="text" value={showdetails.pincode} readOnly style={{cursor:'not-allowed'}}></Form.Control>
-    //                     </Col>
-    //                 </Row>
-    //                 <Row className="mb-2" >
-    //                     <Col >
-    //                         <Form.Label>Current Password</Form.Label>
-    //                         <Form.Control type="password" value={parse_password} readOnly style={{cursor:'not-allowed'}} ></Form.Control>
-    //                     </Col>
-    //                     <Col md={6}>
-    //                     </Col>
-    //                     <Col md={3} className="d-flex flex-row-reverse mt-4">
-    //                         <Col>
-    //                             <Button  variant='danger'onClick={()=>navigate('/')} className="feather icon-x"> Cancle</Button>
-    //                         </Col>
-    //                         <Col>
-    //                             <Button variant="success" onClick={()=>navigate('/edit_profile')}><i className="fa fa-edit"> Edit</i> </Button>
-    //                         </Col>    
-                        
-    //                     </Col>
-    //                 </Row>
-    //             </Col>
-    //         </Card>
-    //     </Container> 
-    
-
-            
-    
-//     </>
-// )
-   
-    // <Aux>
-    //     <div className='container-fluid bg-white min-vh-100' >
-    //     <div className='row'>
-    //      {toggle && <div className='col-3 col-md-2 bg-white vh-100 position-absolute'>
-    //         <Sidebar/>
-    //       </div>}
-    //       {toggle && <div className='col-3 col-md-2'></div>}
-    //       <div className='col'>
-    //         {/* <UserDashHome Toggle={Toggle}/> */}
-    //         <UserNav Toggle={Toggle}/>
-    //         
-             
-
-    //       </div>
-    //     </div>
-    //   </div>
-
-          
-        
-    // </Aux>
 }
 
 export default UserProfile
+
+

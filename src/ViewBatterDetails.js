@@ -56,7 +56,22 @@ function ViewBatteryDetails({Toggle}) {
       <Dashboard_upBlocks/><br/>
       {/* <UserDash_upblock/> */}
             <Typography variant='h4' sx={{mb:"2rem",px:'20px'}}>Battery Details <Button  variant='contained' style={{backgroundColor:'lightseagreen'}} onClick={()=>navigate('/battery_add')} sx={{ml:'700px'}} >Add Battery</Button> </Typography>
-            { latestRequests.length ===0 ? <Typography sx={{px:'20px'}}>No Recent Requests</Typography> : 
+            { latestRequests.length ===0 ?
+            <>
+                <Typography sx={{px:'20px'}}>No Recent Requests</Typography>
+                <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
+                                
+                <div className="text-center  py-1 px-2">
+                <div className="spinner-border text-primary " role="status">
+                  <span className="visually-hidden ">Loading...</span>
+                </div> 
+                <p className="text-dark d-flex justify-content-center">Loading....</p>
+                </div>  
+
+              </div>
+          </>
+            
+            : 
             <DisplayBattery />
               }
    </>
