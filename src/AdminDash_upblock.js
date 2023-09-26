@@ -35,7 +35,7 @@ function AdminDash_upblock() {
                     'Authorization' : `Bearer ${authToken}`,
                     'Content-type': 'application/json',
                 },
-                body : JSON.stringify({status:2}),
+                body : JSON.stringify({status:3}),
             }).then((response) => response.json())
             .then((array_Details) =>{
                 setAll_Serv_engg(array_Details);

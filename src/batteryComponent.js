@@ -389,14 +389,13 @@
 // export default DisplayBattery;
 
 
-import Table_Tickets from "./Table_Tickets";
+
 import React ,{useState,useEffect}from 'react'
 import AdminDash_upblock from './AdminDash_upblock'
 import Admin_sidebar from './Admin_sidebar'
 import Header from './Header'
 import {Row,Col,Button,Card} from 'react-bootstrap'
 import { GetToken } from "./Api/auth";
-import NewTickets_Table from "./NewTickets_Table";
 import Table_comp from "./Table_Componenet";
 import UpdateNewTickets from "./UpdateNewTicket";
 import Table_Batteries from "./Table_Batteries";
@@ -440,11 +439,7 @@ function DisplayBattery(){
     },[])
 
     return <>
-    {/* <div className='grid-container'>
-    <Header OpenSidebar={OpenSidebar}/>
-    <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
-    <main className="main-container " >
-    <AdminDash_upblock /><br/><br/> */}
+    
     <Row>
             <Col className='mx-3'>
                 <Button variant='success'><i className='fa fa-plus '> Add New</i></Button>
@@ -460,11 +455,26 @@ function DisplayBattery(){
             </Col>
         </Row>
         
-        {/* <NewTickets_Table/>  */}
     {TicketDetails.length > 0 ?<Table_Batteries array_Details={TicketDetails} /> : 
-      <h2 className="mx-3 mt-3">No New Batteries</h2>}
-    {/* </main>
-    </div> */}
+     
+      <>
+            <h2 className="mx-3 mt-3">No New Batteries</h2>
+           <br/>
+           <br/>
+           <br/>
+           <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
+                            
+                            <div className="text-center  py-1 px-2">
+                            <div className="spinner-border text-primary " role="status">
+                              <span className="visually-hidden ">Loading...</span>
+                            </div> 
+                            <p className="text-dark d-flex justify-content-center">Loading....</p>
+                            </div>  
+      
+                          </div>
+          </>
+        } 
+
     </>
 }
 

@@ -421,27 +421,49 @@ import TicketPage from './TicketPage';
 
 const authToken = GetToken();
 
-async function fetchDataAndEnhanceArray({array_Details}){
-  const enhancedArray = await Promise.all(
-    array_Details.map(async (item) => {
-      const data = {
-        username : item.username,
-      }
-      const response = await fetch('http://100.20.33.222:5000/user/latest-service-requests',{
-        method : 'GET',
-        headers : {
-          'Authorization' : `Bearer ${authToken}`,
-          'Content-Type' : 'application/json',
-        },
-        // body:JSON.stringify(data),
+
+async function fetchDataAndEnhanceArray({ array_Details }) {
+  try {
+    const timeout = 10000; // Set a timeout of 10 seconds
+    const enhancedArray = await Promise.all(
+      array_Details.map(async (item) => {
+        const data = {
+          username: item.username,
+        };
+        const responsePromise = fetch(
+          'http://100.20.33.222:5000/user/latest-service-requests',
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+              'Content-Type': 'application/json',
+            },
+            // body: JSON.stringify(data),
+          }
+        );
+
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('API request timed out')), timeout)
+        );
+
+        const response = await Promise.race([responsePromise, timeoutPromise]);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const outPut_value = await response.json();
+        console.log(outPut_value);
+
+        return { ...item, customerDetails: outPut_value };
       })
-      const outPut_value = await response.json();
-      console.log(outPut_value);
-      
-      return { ...item, customerDetails: outPut_value };
-    })
-  )
-  return enhancedArray ; 
+    );
+
+    return enhancedArray;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return [];
+  }
 }
 
 function DisplayBattery({array_Details}){  
@@ -455,7 +477,7 @@ function DisplayBattery({array_Details}){
     setEnhancedArray(result);
   });
   },[])
-  console.log(enhancedArray);
+  console.log("enhanced",enhancedArray);
    const Row = ({ record }) => {
         const [showDetails, setShowDetails] = useState(false);
       
@@ -481,28 +503,34 @@ function DisplayBattery({array_Details}){
             }
             
         
-            fetch("http://100.20.33.222:5000/user/delete-service-request",{
-              method : "DELETE",
-              headers : {
-                'Authorization':`Bearer ${authToken}`,
-                'Content-Type' : 'application/json',
+            fetch('http://100.20.33.222:5000/user/delete-service-request', {
+              method: 'DELETE',
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
               },
               body: JSON.stringify(batteryInfo),
-            }).then(response => {
-              if (response.ok) {
-                console.log('DELETE request successful.');
-                alert("Deleted Succesfully")
-                navigate('/latest_serv_request')
-                // Handle success or update the UI accordingly
-              } else {
-                console.error('DELETE request failed.');
-                // Handle error or update the UI accordingly
-              }
             })
-            .catch(error => {
-              console.error('Error occurred during DELETE request:', error);
-              // Handle error or update the UI accordingly
-            });
+              .then((response) => {
+                if (response.ok) {
+                  console.log('DELETE request successful.');
+                  alert('Deleted Successfully');
+
+                  // Remove the deleted item from enhancedArray
+                  setEnhancedArray((prevArray) =>
+                    prevArray.filter((item) => item.batteryId !== batteryId)
+                  );
+
+                  // Navigate or update UI as needed
+                } else {
+                  console.error('DELETE request failed.');
+                  // Handle error or update the UI accordingly
+                }
+              })
+              .catch((error) => {
+                console.error('Error occurred during DELETE request:', error);
+                // Handle error or update the UI accordingly
+              });
           }
         
           const FormatDate = (dateString)=>{

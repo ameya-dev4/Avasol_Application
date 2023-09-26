@@ -11,7 +11,6 @@ import Service_ReqPage from './Service_ReqPage'
 import PaymentSuccess from './PaymentSuccess'
 import NewRequest from './NewRequestPage'
 import LocationPage from './LocationPage'
-import LatestServReqHome from './LatestSerReqHome'
 import PostNewBattery from './PostNewBattery'
 import BatteryAdd from './BatteryAdd'
 import Logout from './Logout'
@@ -19,7 +18,7 @@ import EditProfile from './Edit_profile'
 import UserProfile from './UserProfile'
 import AdminSignUp from './Admin_signup'
 import Admin_Home from './Admin_Home'
-import Admin_mainpage from './Admin_mainpage'
+
 import AssignedTickets from './AssignedTickets'
 import NewTickets from './NewTickets'
 import NewServiceEngg from './NewServiceEngg'
@@ -29,7 +28,6 @@ import Manage_Users from './Manage_Users'
 import AdminMyDashboard from './AdminMyDashboard'
 import Admin_logout from './Admin_logout'
 import Admin_Edit_Profile from './Admin_Edit_Profile'
-import Ticket from './Ticket'
 
 //Service Engineer
 import SeUpdate from './SeUpdateTable'
@@ -41,14 +39,9 @@ import SE_Dash_upblocks from './SE_Dash_upblocks'
 import SE_MyProfile from './SE_myProfile'
 import SE_TicketPage from './SE_TicketPage'
 import SE_signUp from './SE_signup'
-import SE_Update from './SE_updateComp'
-import Se_Update from './SE_updateComp'
-import UpdateTicket from './UpdateAssignedTicket'
 import UpdateNewTickets from './UpdateNewTicket'
 import Update from './SE_updateComp'
 import UpdateBattery from './UpdateBattery'
-import Se_Logout from './SE_logout'
-import SE_Edit_Profile from './SE_EditProfile'
 import UpdateLatestServReq from './update_latest_serv_req'
 
 
@@ -76,6 +69,7 @@ function App() {
             <Route path='edit_profile' element={<EditProfile/>}/>
             <Route path='user_profile' element={<UserProfile/>}/>
             <Route path='update_latestServRequest' element={<UpdateLatestServReq/>}/>
+            <Route path='update_battery' element={<UpdateBattery/>}/>
 
             
             <Route path='Admin_signup' element={<AdminSignUp/>}/>

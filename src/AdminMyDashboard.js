@@ -57,7 +57,7 @@ function AdminMyDashboard(){
           No Ticket Details
         </Typography>
         </Box>
-        <Container style={{width:'100%',height:'100%',backgroundColor:'white'}}>
+        <Container >
         <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
               
                 <div className="text-center d-flex justify-content-center py-2 px-2">

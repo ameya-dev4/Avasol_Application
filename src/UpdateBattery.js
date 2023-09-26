@@ -27,36 +27,9 @@ function UpdateBattery() {
   const location = useLocation();
   const batteryDetails = location.state.batteryId
   console.log("**********");
-  console.log(batteryDetails);
+  console.log("data",batteryDetails);
   console.log("***********");
   const [formData, setFormData] = useState(batteryDetails);
-
-
-
-  // useEffect (()=> {
-  //   async function fetchDetails() {
-  //     try {
-  //       const response = await fetch('http://100.20.33.222:5000/user/get-battery-details', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Authorization': `Bearer ${authToken}`,
-  //           'Content-type': 'application/json',
-  //         },
-  //         body: JSON.stringify({ batteryId: batteryId }),
-  //       });
-
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-
-  //       const batteryDetails = await response.json();
-  //       setFormData(batteryDetails);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   }
-  //   fetchDetails();
-  // }, [batteryId, authToken]);
 
 
   console.log("formdata",formData)
@@ -80,42 +53,71 @@ function UpdateBattery() {
   };
 
 
+  //View Batteries
 
-//   const handleDelete = (input_value) =>{
-//     let batteryInfo;
-//     let batteryId = input_value;
-//     for(let i=0; i<latestBattery.length ; i++){
-//       if(batteryId === latestBattery[i].batteryId){
-//          batteryInfo = latestBattery[i]
-//         latestBattery.pop(batteryInfo);
-//       }
+  const [latestRequests, setLatestRequests] = useState([]);
+  const[displayDetails , setDisplayDetails] = useState(false);
 
-//     }
+  useEffect(() => {
+    // Function to make the GET request
+    async function getLatestRequests() {
+      try {
+        const response = await fetch('http://100.20.33.222:5000/user/get-battery-list',{
+            method:"GET",
+            headers:{
+                'Content-Type':"application/json",
+                "Authorization": "Bearer " + authToken,
+            },
+        });
+        const data = await response.json();
+        setLatestRequests(data);
+        // console.log(data)
+      } catch (error) {
+        console.error('Error fetching latest requests:', error);
+      }
+    }
+
+    // Call the function to get and display the latest service requests on page load
+    getLatestRequests();
+  }, []);
+
+
+
+            const handleDelete = (input_value) =>{
+              let batteryInfo;
+              let batteryId = input_value;
+              for(let i=0; i<latestRequests.length ; i++){
+                if(batteryId === latestRequests[i].batteryId){
+                  batteryInfo = latestRequests[i]
+                  latestRequests.pop(batteryInfo);
+                }
+
+              }
     
 
-//     fetch("http://100.20.33.222:5000/user/delete-battery",{
-//       method : "DELETE",
-//       headers : {
-//         'Authorization':`Bearer ${authToken}`,
-//         'Content-Type' : 'application/json',
-//       },
-//       body: JSON.stringify(batteryInfo),
-//     }).then(response => {
-//       if (response.ok) {
-//         console.log('DELETE request successful.');
-//         alert("Deleted Succesfully")
-//         navigate('/userMyBatteries')
-//         // Handle success or update the UI accordingly
-//       } else {
-//         console.error('DELETE request failed.');
-//         // Handle error or update the UI accordingly
-//       }
-//     })
-//     .catch(error => {
-//       console.error('Error occurred during DELETE request:', error);
-//       // Handle error or update the UI accordingly
-//     });
-//   }
+            fetch("http://100.20.33.222:5000/user/delete-battery",{
+              method : "DELETE",
+              headers : {
+                'Authorization':`Bearer ${authToken}`,
+                'Content-Type' : 'application/json',
+              },
+              body: JSON.stringify(batteryInfo),
+            }).then(response => {
+              if (response.ok) {
+                console.log('DELETE request successful.');
+                alert("Deleted Succesfully")
+                navigate('/userMyBatteries')
+                // Handle success or update the UI accordingly
+              } else {
+                console.error('DELETE request failed.');
+                // Handle error or update the UI accordingly
+              }
+            })
+            .catch(error => {
+              console.error('Error occurred during DELETE request:', error);
+              // Handle error or update the UI accordingly
+            });
+          }
 
 
   const FormatDate = (dateString)=>{
@@ -244,7 +246,7 @@ function UpdateBattery() {
                 fullWidth
                 color='error'
                 sx={{ mt: 5,mb:2  }}
-                // onClick={() => handleDelete(formData.batteryId)}
+                onClick={() => handleDelete(formData.batteryId)}
               >
                 Delete Battery
               </Button>

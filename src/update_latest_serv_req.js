@@ -80,59 +80,70 @@ function UpdateLatestServReq() {
     }));
   };
 
+  const [latestRequests, setLatestRequests] = useState([]);
+  const[displayDetails , setDisplayDetails] = useState(false);
 
-
-  const handleDelete = (input_value) =>{
-    let batteryInfo;
-    let batteryId = input_value;
-    for(let i=0; i<formData.length ; i++){
-      if(batteryId === formData[i].batteryId){
-         batteryInfo = formData[i]
-        formData.pop(batteryInfo);
+  useEffect(() => {
+    // Function to make the GET request
+    async function getLatestRequests() {
+      try {
+        const response = await fetch('http://100.20.33.222:5000/user/get-service-request-details',{
+            method:"GET",
+            headers:{
+                'Content-Type':"application/json",
+                "Authorization": "Bearer " + authToken,
+            },
+        });
+        const data = await response.json();
+        setLatestRequests(data);
+        // console.log(data)
+      } catch (error) {
+        console.error('Error fetching latest requests:', error);
       }
-
     }
+
+    // Call the function to get and display the latest service requests on page load
+    getLatestRequests();
+  }, []);
+
+
+
+            const handleDelete = (input_value) =>{
+              let batteryInfo;
+              let batteryId = input_value;
+              for(let i=0; i<latestRequests.length ; i++){
+                if(batteryId === latestRequests[i].batteryId){
+                  batteryInfo = latestRequests[i]
+                  latestRequests.pop(batteryInfo);
+                }
+
+              }
     
 
-    fetch("http://100.20.33.222:5000/user/delete-battery",{
-      method : "DELETE",
-      headers : {
-        'Authorization':`Bearer ${authToken}`,
-        'Content-Type' : 'application/json',
-      },
-      body: JSON.stringify(batteryInfo),
-    }).then(response => {
-      if (response.ok) {
-        console.log('DELETE request successful.');
-        alert("Deleted Succesfully")
-        navigate('/userMyBatteries')
-        // Handle success or update the UI accordingly
-      } else {
-        console.error('DELETE request failed.');
-        // Handle error or update the UI accordingly
-      }
-    })
-    .catch(error => {
-      console.error('Error occurred during DELETE request:', error);
-      // Handle error or update the UI accordingly
-    });
-  }
+            fetch("http://100.20.33.222:5000/user/delete-service-request",{
+              method : "DELETE",
+              headers : {
+                'Authorization':`Bearer ${authToken}`,
+                'Content-Type' : 'application/json',
+              },
+              body: JSON.stringify(batteryInfo),
+            }).then(response => {
+              if (response.ok) {
+                console.log('DELETE request successful.');
+                alert("Deleted Succesfully")
+                navigate('/userMyBatteries')
+                // Handle success or update the UI accordingly
+              } else {
+                console.error('DELETE request failed.');
+                // Handle error or update the UI accordingly
+              }
+            })
+            .catch(error => {
+              console.error('Error occurred during DELETE request:', error);
+              // Handle error or update the UI accordingly
+            });
+          }
 
-
-  const FormatDate = (dateString)=>{
-    const dateObject = new Date(dateString);
-    const formattedDate = dateObject.toLocaleString("en-US",{
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      // timeZoneName: "short",
-    });
-    return formattedDate;
-
-  }
 
 
   const onSubmit = (e) => {

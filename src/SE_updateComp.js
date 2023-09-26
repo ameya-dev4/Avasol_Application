@@ -220,12 +220,11 @@
 // export default Update;
 import React, { useEffect, useState } from 'react';
 import { GetToken } from './Api/auth';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import {Grid,Box,Typography, TextField,Button,Select,MenuItem,Table} from '@mui/material';
-import Header from "./Header";
-import NoMatch from './NoMatch';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {Grid,Typography,Button,Table} from '@mui/material';
 import AdminDash_upblock from './AdminDash_upblock';
-import Admin_sidebar from './Admin_sidebar';
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
 
@@ -267,12 +266,13 @@ function Update() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://100.20.33.222:5000/se/get-profile', {
-          method: 'GET',
+        const response = await fetch('http://100.20.33.222:5000/admin/get-se', {
+          method: 'POST',
           headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify({ username: ServiceEngineerName })
         });
         if (response.ok) {
           const data = await response.json();
@@ -320,7 +320,7 @@ function Update() {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch('http://100.20.33.222:5000/se/update-profile',{
+    fetch('http://100.20.33.222:5000/admin/update-service-engineer',{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
@@ -342,11 +342,11 @@ function Update() {
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
       {/* ... form rendering ... */}
       <Header OpenSidebar={OpenSidebar}/>
-      <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className='main-container'>
       <AdminDash_upblock />
       <form onSubmit={onSubmit}>
-        <Table sx={{border:'1px solid black',p:2,mt:10,backgroundColor:"white"}}>
+        <Table sx={{border:'1px solid black',p:2,mt:10,backgroundColor:'white'}}>
         <Grid container spacing={2} sx={{border:'1px black'}}>
         <Grid item xs={12}>
               <Button
