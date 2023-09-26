@@ -10,7 +10,6 @@ import AdminDash_upblock from "./AdminDash_upblock";
 
 const userName = localStorage.getItem('username');
 console.log(userName);
-const url = 'http://avasol.ameyalabs.com:5000/'
 
 
 function AdminMyDashboard(){
@@ -22,9 +21,7 @@ function AdminMyDashboard(){
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
-  let data = {
-    username :userName,
-  }
+  
   /*
   useEffect (()=> {
     async function fetchDetails(){

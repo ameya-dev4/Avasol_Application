@@ -29,7 +29,7 @@ function SE_Table_comp({array_Details}){
         const handleTicketClick = ({record}) => {
           console.log(record)
           localStorage.setItem('display_details',record);
-          navigate('/update-ticket-details',{state:{updateArray:record}});
+          navigate('se/update-ticket-details',{state:{updateArray:record}});
         };
         
 
@@ -41,8 +41,8 @@ function SE_Table_comp({array_Details}){
             <TableCell style={{fontSize:'18px'}}>{record.requestId}</TableCell>
             <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.username}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.customerDetails.contactNumber}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.customerDetails.city}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerNotes}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
 
