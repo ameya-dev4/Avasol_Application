@@ -6,13 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header'
 import SE_Sidebar from './SE_Sidebar';
 
-<<<<<<< HEAD
-const Se_Logout= ()=>{
-=======
-const token = GetToken();
 
 const SE_Logout= ()=>{
->>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd
     const navigate=useNavigate();
     const access_token=GetToken();
     console.log(access_token)
@@ -26,7 +21,7 @@ const SE_Logout= ()=>{
             method:'POST',
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization':`Bearer ${token}`,
+                'Authorization':`Bearer ${access_token}`,
             },
             
         })
@@ -74,8 +69,4 @@ const SE_Logout= ()=>{
   )
 }
 
-<<<<<<< HEAD
-export default Se_Logout
-=======
 export default SE_Logout
->>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd

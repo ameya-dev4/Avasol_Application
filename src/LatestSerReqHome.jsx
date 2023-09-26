@@ -14,6 +14,7 @@ import UserDash_upblock from './UserDash_upblock';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Header from './Header'
 import Sidebar from './Sidebar'
+import DisplayBattery from './table_js';
 
 const access_token =GetToken()
 const apiUrl = 'http://100.20.33.222:5000/user/latest-service-requests'; 
@@ -135,7 +136,7 @@ function LatestServReqHome({Toggle}) {
           </>
   
           : 
-          <PostDisplayDetails/>
+          <DisplayBattery  array_Details={latestRequests}/>
         }
       </Container>
 

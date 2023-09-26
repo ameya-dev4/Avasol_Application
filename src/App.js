@@ -46,16 +46,10 @@ import Se_Update from './SE_updateComp'
 import UpdateTicket from './UpdateAssignedTicket'
 import UpdateNewTickets from './UpdateNewTicket'
 import Update from './SE_updateComp'
-<<<<<<< HEAD
 import UpdateBattery from './UpdateBattery'
 import Se_Logout from './SE_logout'
 import SE_Edit_Profile from './SE_EditProfile'
-=======
-import SE_Logout from './SE_logout';
-import SE_UpdateTicket from './SE_UpdateTicket';
-import SE_Profile from "./SE_Profile";
->>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd
-
+import UpdateLatestServReq from './update_latest_serv_req'
 
 
 function App() {
@@ -81,9 +75,9 @@ function App() {
             <Route path='logout' element={<Logout/>}/>
             <Route path='edit_profile' element={<EditProfile/>}/>
             <Route path='user_profile' element={<UserProfile/>}/>
-            <Route path='update_battery' element={<UpdateBattery/>}/>
+            <Route path='update_latestServRequest' element={<UpdateLatestServReq/>}/>
 
-
+            
             <Route path='Admin_signup' element={<AdminSignUp/>}/>
             <Route path='admin_home' element={<Admin_Home/>}/>
             <Route path='assigned_tickets' element={<AssignedTickets/>}/>
@@ -95,6 +89,8 @@ function App() {
             <Route path='admin_mydash' element={<AdminMyDashboard/>}/>
             <Route path='admin_logout' element={<Admin_logout/>}/>
             <Route path='admin_profile_update' element={<Admin_Edit_Profile/>}/>
+            {/* <Route path='update_ticket_details' element={</>}/> */}
+            {/* <Route path='update_se' element={<SeUpdate/>}/> */}
             <Route path='update_ticket_details' element={<UpdateNewTickets/>}/>
             <Route path='update_se' element={<Update/>}/>
             <Route path='update_asigned_ticket' element={<UpdateNewTickets/>}/>
@@ -109,18 +105,9 @@ function App() {
             <Route exact path='/se_totalTickets' element={<SE_TotalTickets />} />
             <Route exact path='/se_pendingAmount' element={<SE_Dash_upblocks />} />
             <Route exact path='/se_Earnings' element={<SE_Dash_upblocks />} />
-<<<<<<< HEAD
             <Route exact path='/se_myProfile' element={<SE_MyProfile />} />
-            <Route exact path='/se_logout' element={<Se_Logout/> } />
+            <Route exact path='/se_logout' element={<Logout /> } />
             <Route exact path='/se_update_ticket_details' element = {<SE_TicketPage/>} />
-            <Route path='se_profile_update' element={<SE_Edit_Profile/>}/>
-
-=======
-            <Route exact path='/se_myProfile' element={<SE_Profile />} />
-            <Route exact path='/se_logout' element={<SE_Logout /> } />
-            <Route exact path='/se/update-ticket-details' element = {<SE_UpdateTicket/>} />
->>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd
-
             
             
           </Routes>      

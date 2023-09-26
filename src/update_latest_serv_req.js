@@ -17,7 +17,8 @@ const performanceOptions = [{label:'Average',value:'average'},{label:'Good',valu
 
 
 
-function UpdateBattery() {
+function UpdateLatestServReq() {
+    const Rating = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -25,7 +26,7 @@ function UpdateBattery() {
   }
 
   const location = useLocation();
-  const batteryDetails = location.state.batteryId
+  const batteryDetails = location.state.shortDescription
   console.log("**********");
   console.log(batteryDetails);
   console.log("***********");
@@ -81,41 +82,41 @@ function UpdateBattery() {
 
 
 
-//   const handleDelete = (input_value) =>{
-//     let batteryInfo;
-//     let batteryId = input_value;
-//     for(let i=0; i<latestBattery.length ; i++){
-//       if(batteryId === latestBattery[i].batteryId){
-//          batteryInfo = latestBattery[i]
-//         latestBattery.pop(batteryInfo);
-//       }
+  const handleDelete = (input_value) =>{
+    let batteryInfo;
+    let batteryId = input_value;
+    for(let i=0; i<formData.length ; i++){
+      if(batteryId === formData[i].batteryId){
+         batteryInfo = formData[i]
+        formData.pop(batteryInfo);
+      }
 
-//     }
+    }
     
 
-//     fetch("http://100.20.33.222:5000/user/delete-battery",{
-//       method : "DELETE",
-//       headers : {
-//         'Authorization':`Bearer ${authToken}`,
-//         'Content-Type' : 'application/json',
-//       },
-//       body: JSON.stringify(batteryInfo),
-//     }).then(response => {
-//       if (response.ok) {
-//         console.log('DELETE request successful.');
-//         alert("Deleted Succesfully")
-//         navigate('/userMyBatteries')
-//         // Handle success or update the UI accordingly
-//       } else {
-//         console.error('DELETE request failed.');
-//         // Handle error or update the UI accordingly
-//       }
-//     })
-//     .catch(error => {
-//       console.error('Error occurred during DELETE request:', error);
-//       // Handle error or update the UI accordingly
-//     });
-//   }
+    fetch("http://100.20.33.222:5000/user/delete-battery",{
+      method : "DELETE",
+      headers : {
+        'Authorization':`Bearer ${authToken}`,
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify(batteryInfo),
+    }).then(response => {
+      if (response.ok) {
+        console.log('DELETE request successful.');
+        alert("Deleted Succesfully")
+        navigate('/userMyBatteries')
+        // Handle success or update the UI accordingly
+      } else {
+        console.error('DELETE request failed.');
+        // Handle error or update the UI accordingly
+      }
+    })
+    .catch(error => {
+      console.error('Error occurred during DELETE request:', error);
+      // Handle error or update the UI accordingly
+    });
+  }
 
 
   const FormatDate = (dateString)=>{
@@ -163,8 +164,8 @@ function UpdateBattery() {
       <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className='main-container'>
       <Dashboard_upBlocks />
-      <Container style={{margin:'50px 0px',marginBottom:'60px'}}>
-                <form noValidate>
+      <Container style={{margin:'50px 0px'}}>
+              <form noValidate>
         <Table sx={{border:'1px solid black',p:2,mt:3,backgroundColor:'white'}}>
         <Grid container spacing={2} sx={{border:'1px black'}}>
         <Grid item xs={12}>
@@ -176,40 +177,49 @@ function UpdateBattery() {
                 sx={{ mb: 3  }}
                 
               >
-                <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Battery Details</Typography>
+                <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Service Details</Typography>
               </Button>
             </Grid>
        
         {/* Row 1 */}
-        <FormField label="Battery Name" name="batteryName" value={formData.batteryName} onChange={handleInputChange} />
-        <FormField  label="Battery Number" name="batteryNumber"  value={formData.batteryNumber} onChange={handleInputChange}  />
+        <FormField label="Battery ID" name="batteryId" value={formData.batteryId}  />
+        <FormField  label="Description" name="description"  value={formData.shortDescription} onChange={handleInputChange}  />
 
         {/* Row 2 */}
         <FormField label="Make" name="make" onChange={handleInputChange} value={formData.make}/>
         <FormField label="Model" name="model" onChange={handleInputChange}  value={formData.model}/>
 
         {/* Row 3 */}
-        <FormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.batteryVoltage}/>
-        <FormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange}  value={formData.batteryCurrent}/>
+        <FormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.voltage}/>
+        <FormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange}  value={formData.current}/>
 
         {/* Row 4 */}
-        <FormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)} disabled={false} />
-        <FormField label="Warrenty" name="warranty" onChange={handleInputChange}  value={formData.warranty}/>
-        
-        <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>
-        <FormField label="Vechicle Type" name="vechicleType" onChange={handleInputChange} value={formData.vechicleType}/>
+        <FormField label="Vehicle Type" name="vehicleType" onChange={handleInputChange} value={formData.vehicleType}/>
+        <FormField label="Service Location" name="serviceLocation" onChange={handleInputChange}  value={formData.service_location}/>
+
+        {/* Row 5 */}
+        <FormField label="Date Opened" name="openDate" onChange={handleInputChange} value={formData.openDate}/>
+        <FormField label="NoteToServiceEngineer" name="NoteToServiceEngineer" onChange={handleInputChange} value={formData.noteToServiceEngineer}/>
 
         {/* Row 6 */}
-        <FormField label="DealerName & Addrees" name="dealerName&address" onChange={handleInputChange} value={formData.delearAddress}/>
-        <FormField label="Dealer Contact" name="Dealer Contact" onChange={handleInputChange} value={formData.DealerContact}/>
+        <FormField label="Under Warrenty" name="underWarrenty" />
+        <FormField label="self Declaration" placeholder='I agree terms & conditions'/>
 
         {/* Row 7 */}
-        <FormField label="SubDealerName & Address" name="subDealerName&address" onChange={handleInputChange}  value={formData.subDealerAddress}/>
-        <FormField label="SubDealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/>
+        <FormField label="Status" name="status" onChange={handleInputChange}  value={formData.status}/>
+        <FormField label="Last Status Updated" name="lastStatusUpdated" onChange={handleInputChange} value={formData.laststatusUpdated}/>
 
-        {/* Row 8 */}
-        <FormField label="Status" name="status" onChange={handleInputChange}   value={formData.status}/>
-        {/* options={Rating} */}
+        <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange}  value={formData.amount}/>
+        <FormField label="Visit Amount Paid" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid}/>
+        
+        <FormField label="Service Date" name="serviceDate" onChange={handleInputChange}  value={formData.serviceDate}/>
+        <FormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
+
+        <FormField label="Service Amount" name="serviceAmount" onChange={handleInputChange}  value={formData.ServiceAmount}/>
+        <FormField label="service Amount Paid" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid}/>
+            
+        <DropDownField label="Customer Rating" name="customerRating" onChange={handleInputChange}  value={formData.rating} options={Rating}/>
+        
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>
         <Grid item xs={3}>
@@ -217,7 +227,7 @@ function UpdateBattery() {
                 variant="contained"
                 size="large"
                 fullWidth
-                sx={{ mt: 5,mb:2}}
+                sx={{ mb:2}}
                 onClick={() => navigate(-1)}
               >
                close
@@ -230,10 +240,10 @@ function UpdateBattery() {
                 color="success"
                 size="large"
                 fullWidth
-                sx={{ mt: 5,mb:2  }}
+                sx={{mb:2  }}
                 onClick={onSubmit}
               >
-                Save Changes
+                Update
               </Button>
             </Grid>
             <Grid item xs={3}>
@@ -243,16 +253,18 @@ function UpdateBattery() {
                 size="large"
                 fullWidth
                 color='error'
-                sx={{ mt: 5,mb:2  }}
-                // onClick={() => handleDelete(formData.batteryId)}
+                sx={{mb:2}}
+                onClick={() => handleDelete(formData.batteryId)}
               >
-                Delete Battery
+                Delete Service
               </Button>
             </Grid>
+
         </Grid>
+        
+        
         </Table>
       </form>
-              
             </Container>
       </main>
     </div>
@@ -260,4 +272,4 @@ function UpdateBattery() {
 }
 
 
-export default UpdateBattery;
+export default UpdateLatestServReq;

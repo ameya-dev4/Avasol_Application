@@ -145,11 +145,7 @@ function SE_Table_comp({array_Details}){
         const handleTicketClick = ({record}) => {
           console.log(record)
           localStorage.setItem('display_details',record);
-<<<<<<< HEAD
-          navigate('/se_update_ticket_details',{state:{updateArray:record}});
-=======
-          navigate('se/update-ticket-details',{state:{updateArray:record}});
->>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd
+          navigate('/se-update-ticket-details',{state:{updateArray:record}});
         };
         
 
@@ -158,7 +154,6 @@ function SE_Table_comp({array_Details}){
         return (
           <>
            <TableRow >
-<<<<<<< HEAD
             <TableCell style={{fontSize:'14px'}}>{record.requestId}</TableCell>
             <TableCell style={{fontSize:'14px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
             <TableCell style={{fontSize:'14px'}}>{record.username}</TableCell>
@@ -166,15 +161,6 @@ function SE_Table_comp({array_Details}){
             <TableCell style={{fontSize:'14px'}}>City</TableCell>
             <TableCell style={{fontSize:'14px'}}>{record.serviceEngineerNotes}</TableCell>
             <TableCell style={{fontSize:'14px'}}>{record.status}</TableCell>
-=======
-            <TableCell style={{fontSize:'18px'}}>{record.requestId}</TableCell>
-            <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.username}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerNotes}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
->>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd
 
             </TableRow>
                     

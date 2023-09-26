@@ -197,7 +197,7 @@ const SE_MyProfile = () => {
     setOpenSidebarToggle(!openSidebarToggle)
     }
 
-    try{
+    
         fetch('http://100.20.33.222:5000/se/get-profile',{
             method:'GET',
             mode:'cors',
@@ -215,215 +215,190 @@ const SE_MyProfile = () => {
             localStorage.setItem('SE_details',JSON.stringify(data))
         })
 
-<<<<<<< HEAD
-    }
-    catch(err){
-        console.error("fetching admin details error:",err)
-    }
-=======
 const url = "http://100.20.33.222:5000/se/get-profile";
 const userName = localStorage.getItem('username');
->>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd
 
     const admin_details=localStorage.getItem('SE_details')
     const parse_admin=JSON.parse(admin_details)
     console.log("se-details",parse_admin)
       
     return (
-      <>
-    <div className='grid-container'>
-      <Header OpenSidebar={OpenSidebar}/>
-      <SE_Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
-      <main className="main-container">
-      <div className="col">
-        <Container className="m-3 mt-3 col ">
-            <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
-                <header>My Profile</header>
-            </div>
-            {isdetails?(
-              <Card className="shadow p-2 mb-5 bg-body-tertiary rounded">
-              <h4> Personal Info</h4>
-              <hr></hr>
-              <Col className="m-3 mt-3 col" >
-                  <Row className="mb-2" >
-                      <Col>
-                          <Form.Label>First Name</Form.Label>
-                          <Form.Control type="text" value={parse_admin.firstName} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                      <Col>
-                          <Form.Label>Last Name</Form.Label>
-                          <Form.Control type="text" value={parse_admin.lastName} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                  </Row>
-                  <Row className="mb-2" >
-                      <Col>
-                          <Form.Label>Email ID</Form.Label>
-                          <Form.Control type="text" placeholder="Example@gmail.com" value={parse_admin.emailId} style={{cursor:'not-allowed'}}  readOnly ></Form.Control>
-                      </Col>
-                      <Col>
-                          <Form.Label>Mobile Number</Form.Label>
-                          <Form.Control type="text"  value={parse_admin.contactNumber} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                  </Row>
-                  <Row className="mb-2" >
-                      <Col>
-                          <Form.Label>Service State</Form.Label>
-                          <Form.Control type="text" placeholder="Delhi" value={parse_admin.firstName} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                      <Col>
-                          <Row  className="mt-5">
-                              <Col >
-                                  <Form.Label>Training Completed</Form.Label>
-                              </Col>
-                              <Col style={{cursor:'not-allowed'}}  readOnly>
-                                  <div className="form-check">
-                                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                                      <label className="form-check-label" for="flexRadioDefault1">
-                                          Yes
-                                      </label>
-                                  </div>
-                              </Col>
-                              <Col style={{cursor:'not-allowed'}}  readOnly>
-                                  <div className="form-check">
-                                  <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
-                                          <label className="form-check-label" for="flexRadioDefault2">
-                                              No
+        <>
+      <div className='grid-container'>
+        <Header OpenSidebar={OpenSidebar}/>
+        <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+        <main className="main-container">
+        <div className="col">
+          <Container className="m-3 mt-3 col ">
+              <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
+                  <header>My Profile</header>
+              </div>
+              {isdetails?
+              (
+                  <Card className="shadow p-2 mb-5 bg-body-tertiary rounded">
+                  <h4> Personal Info</h4>
+                  <hr></hr>
+                  <Col className="m-3 mt-3 col" >
+                      <Row className="mb-2" >
+                          <Col>
+                              <Form.Label>First Name</Form.Label>
+                              <Form.Control type="text" value={parse_admin.firstName} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                          <Col>
+                              <Form.Label>Last Name</Form.Label>
+                              <Form.Control type="text" value={parse_admin.lastName} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                      </Row>
+                      <Row className="mb-2" >
+                          <Col>
+                              <Form.Label>Email ID</Form.Label>
+                              <Form.Control type="text" placeholder="Example@gmail.com" value={parse_admin.emailId} style={{cursor:'not-allowed'}}  readOnly ></Form.Control>
+                          </Col>
+                          <Col>
+                              <Form.Label>Mobile Number</Form.Label>
+                              <Form.Control type="text"  value={parse_admin.contactNumber} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                      </Row>
+                      <Row className="mb-2" >
+                          <Col>
+                              <Form.Label>Service State</Form.Label>
+                              <Form.Control type="text" placeholder="Delhi" value={parse_admin.firstName} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                          <Col>
+                              <Row  className="mt-5">
+                                  <Col >
+                                      <Form.Label>Training Completed</Form.Label>
+                                  </Col>
+                                  <Col style={{cursor:'not-allowed'}}  readOnly>
+                                      <div className="form-check">
+                                          <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                                          <label className="form-check-label" for="flexRadioDefault1">
+                                              Yes
                                           </label>
-                                  </div>         
-                              </Col>
-                          </Row>
-                      </Col>
-                  </Row><br/>
-                  <h4> Address</h4>
-                  <hr></hr>
-                  <Row className="mb-2" >
-                      <Col>
-                          <Form.Label>Address 1</Form.Label>
-                          <Form.Control type="text" value={parse_admin.address} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                      <Col>
-                          <Form.Label>Address 2</Form.Label>
-                          <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly ></Form.Control>
-                      </Col>
-                  </Row>
-                  <Row className="mb-2" >
-                      <Col>
-                          <Form.Label>District</Form.Label>
-                          <Form.Control type="text" value={parse_admin.district} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                          {/* <select className="form-select" aria-label="Default select example" >
-                              <option selected>Select State</option>
-                              <option value="1">Telangana</option>
-                              <option value="2">Krishna</option>
-                              <option value="3">Guntur</option>
-                          </select> */}
-                      </Col>
-                      <Col>
-                          <Form.Label>Mandal</Form.Label>
-                          <Form.Control type="text" value={parse_admin.mandal} style={{cursor:'not-allowed'}}  readOnly ></Form.Control>
-                          {/* <select className="form-select" aria-label="Default select example">
-                              <option selected>Select District</option>
-                              <option value="1">khammam</option>
-                              <option value="2">Hyderabad</option>
-                              <option value="3">Warangal</option>
-                          </select> */}
-                      </Col>
-                  </Row>
-                  <Row className="mb-2" >
-                      <Col >
-                          <Form.Label>Area 1</Form.Label>
-                          <Form.Control type="text" value={parse_admin.city} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                      <Col >
-                          <Form.Label>Pincode</Form.Label>
-                          <Form.Control type="text" value={parse_admin.pincode} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                      
-                  </Row><br/>
-                  <h4>Bank Details</h4>
-                  <hr></hr>
-                  <Row>
-                      <Col>
-                          <Form.Label>Account Holder Name</Form.Label>
-                          <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                      <Col>
-                          <Form.Label>Account</Form.Label>
-                          <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                  </Row>
-                  <Row>
-                      <Col>
-                          <Form.Label>Bank Name</Form.Label>
-                          <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                      <Col>
-                          <Form.Label>IFSC Code</Form.Label>
-                          <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly></Form.Control>
-                      </Col>
-                  </Row>
-                  <Row>
-                      <Col md={9}></Col>   
-                      <Col md={3} className="d-flex flex-row-reverse mt-4">
-                              <Col>
-                                  <Button  variant='danger'onClick={()=>navigate('/se_myDashboard')} className="feather icon-x"> Cancle</Button>
-                              </Col>
-                              <Col>
-                                  <Button variant="success" onClick={()=>navigate('/se_profile_update')}><i className="fa fa-check">Update</i> </Button>
-                              </Col>    
+                                      </div>
+                                  </Col>
+                                  <Col style={{cursor:'not-allowed'}}  readOnly>
+                                      <div className="form-check">
+                                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
+                                              <label className="form-check-label" for="flexRadioDefault2">
+                                                  No
+                                              </label>
+                                      </div>         
+                                  </Col>
+                              </Row>
+                          </Col>
+                      </Row><br/>
+                      <h4> Address</h4>
+                      <hr></hr>
+                      <Row className="mb-2" >
+                          <Col>
+                              <Form.Label>Address 1</Form.Label>
+                              <Form.Control type="text" value={parse_admin.address} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                          <Col>
+                              <Form.Label>Address 2</Form.Label>
+                              <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly ></Form.Control>
+                          </Col>
+                      </Row>
+                      <Row className="mb-2" >
+                          <Col>
+                              <Form.Label>District</Form.Label>
+                              <Form.Control type="text" value={parse_admin.district} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                              {/* <select className="form-select" aria-label="Default select example" >
+                                  <option selected>Select State</option>
+                                  <option value="1">Telangana</option>
+                                  <option value="2">Krishna</option>
+                                  <option value="3">Guntur</option>
+                              </select> */}
+                          </Col>
+                          <Col>
+                              <Form.Label>Mandal</Form.Label>
+                              <Form.Control type="text" value={parse_admin.mandal} style={{cursor:'not-allowed'}}  readOnly ></Form.Control>
+                              {/* <select className="form-select" aria-label="Default select example">
+                                  <option selected>Select District</option>
+                                  <option value="1">khammam</option>
+                                  <option value="2">Hyderabad</option>
+                                  <option value="3">Warangal</option>
+                              </select> */}
+                          </Col>
+                      </Row>
+                      <Row className="mb-2" >
+                          <Col >
+                              <Form.Label>Area 1</Form.Label>
+                              <Form.Control type="text" value={parse_admin.city} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                          <Col >
+                              <Form.Label>Pincode</Form.Label>
+                              <Form.Control type="text" value={parse_admin.pincode} style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
                           
-                      </Col>
-                  </Row>
-              </Col>
-          </Card>
-            ):(
-              <Container style={{width:'100%',height:'100%',backgroundColor:'white'}}>
-              <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
-                    
-                      <div className="text-center d-flex justify-content-center py-2 px-2">
-                      <div className="spinner-border text-primary " role="status">
-                        <span className="visually-hidden ">Loading...</span>
-                      </div> 
-                      <p className="text-dark d-flex justify-content-center">Loading....</p>
-                      </div>  
-                            
-                    </div>
-
-                </Container>
-            )}
-        </Container>
-
-<<<<<<< HEAD
-            </div>
-=======
-
-function SE_MyProfile(){
-  const [user_Details,setUserDetails] = useState([]);
-  const navigate = useNavigate();
-  useEffect (() =>{ async function fetchDetails(){
-    const response = await fetch(url,{
-        method : 'GET',
-        headers : {
-            'Authorization' : `Bearer ${authToken}`,
-            'Content-type': 'application/json',
-            "Access-Control-Allow-Origin": "*",
-        },
-    }).then((response) => response.json())
-    .then((user_Details) =>{
-      setUserDetails(user_Details);
-      console.log(user_Details);
->>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd
-        
-        
+                      </Row><br/>
+                      <h4>Bank Details</h4>
+                      <hr></hr>
+                      <Row>
+                          <Col>
+                              <Form.Label>Account Holder Name</Form.Label>
+                              <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                          <Col>
+                              <Form.Label>Account</Form.Label>
+                              <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                      </Row>
+                      <Row>
+                          <Col>
+                              <Form.Label>Bank Name</Form.Label>
+                              <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                          <Col>
+                              <Form.Label>IFSC Code</Form.Label>
+                              <Form.Control type="text" style={{cursor:'not-allowed'}}  readOnly></Form.Control>
+                          </Col>
+                      </Row>
+                      <Row>
+                          <Col md={9}></Col>   
+                          <Col md={3} className="d-flex flex-row-reverse mt-4">
+                                  <Col>
+                                      <Button  variant='danger'onClick={()=>navigate('/admin_home')} className="feather icon-x"> Cancle</Button>
+                                  </Col>
+                                  <Col>
+                                      <Button variant="success" onClick={()=>navigate('/admin_profile_update')}><i className="fa fa-check">Update</i> </Button>
+                                  </Col>    
+                              
+                          </Col>
+                      </Row>
+                  </Col>
+              </Card>
+              ):(
+                  <Container style={{width:'100%',height:'100%',backgroundColor:'white'}}>
+                <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
+                      
+                        <div className="text-center d-flex justify-content-center py-2 px-2">
+                        <div className="spinner-border text-primary " role="status">
+                          <span className="visually-hidden ">Loading...</span>
+                        </div> 
+                        </div>  
+                              
+                      </div>
   
-      </main> 
-          </div>
+                  </Container>
+              )}
   
-            
+          </Container>
+  
+              </div>
+          
+          
     
-    </>
-
-  )
-}
-
+        </main> 
+            </div>
+    
+              
+      
+      </>
+  
+    )
+  }
+  
 export default SE_MyProfile
 
