@@ -215,10 +215,15 @@ const SE_MyProfile = () => {
             localStorage.setItem('SE_details',JSON.stringify(data))
         })
 
+<<<<<<< HEAD
     }
     catch(err){
         console.error("fetching admin details error:",err)
     }
+=======
+const url = "http://100.20.33.222:5000/se/get-profile";
+const userName = localStorage.getItem('username');
+>>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd
 
     const admin_details=localStorage.getItem('SE_details')
     const parse_admin=JSON.parse(admin_details)
@@ -387,7 +392,26 @@ const SE_MyProfile = () => {
             )}
         </Container>
 
+<<<<<<< HEAD
             </div>
+=======
+
+function SE_MyProfile(){
+  const [user_Details,setUserDetails] = useState([]);
+  const navigate = useNavigate();
+  useEffect (() =>{ async function fetchDetails(){
+    const response = await fetch(url,{
+        method : 'GET',
+        headers : {
+            'Authorization' : `Bearer ${authToken}`,
+            'Content-type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
+        },
+    }).then((response) => response.json())
+    .then((user_Details) =>{
+      setUserDetails(user_Details);
+      console.log(user_Details);
+>>>>>>> f35506af4a6494a1d1b6f2c4f0469481b1400bfd
         
         
   

@@ -21,7 +21,7 @@ async function fetchDataAndEnhanceArray({array_Details}){
       const data = {
         username : item.username,
       }
-      const response = await fetch('http://avasol.ameyalabs.com:5000/admin/get-user',{
+      const response = await fetch('http://100.20.33.222:5000/admin/get-user',{
         method : 'POST',
         headers : {
           'Authorization' : `Bearer ${authToken}`,
@@ -65,13 +65,13 @@ function Table_comp({array_Details}){
         return (
           <>
            <TableRow >
-            <TableCell style={{fontSize:'12px'}}>{record.requestId}</TableCell>
-            <TableCell style={{fontSize:'12px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
-            <TableCell style={{fontSize:'12px'}}>{record.username}</TableCell>
-            <TableCell style={{fontSize:'12px'}}>{record.customerDetails.contactNumber}</TableCell>
-            <TableCell style={{fontSize:'12px'}}>{record.customerDetails.city}</TableCell>
-            <TableCell style={{fontSize:'12px'}}>{record.serviceEngineerNotes}</TableCell>
-            <TableCell style={{fontSize:'12px'}}>{record.status}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.requestId}</TableCell>
+            <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.username}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.customerDetails.contactNumber}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.customerDetails.city}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerNotes}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
 
             </TableRow>
                     
@@ -85,13 +85,13 @@ function Table_comp({array_Details}){
           <Table>
             <>
               <TableRow>
-                <TableCell><h2>Ticket</h2></TableCell>
-                <TableCell><h2>Description</h2></TableCell>
-                <TableCell><h2>Customer Name </h2></TableCell>
-                <TableCell><h2>Mobile Number</h2></TableCell>
-                <TableCell><h2>Location</h2></TableCell>
-                <TableCell><h2>SE Notes </h2></TableCell>
-                <TableCell><h2>Status</h2></TableCell>
+                <TableCell><h5>Ticket</h5></TableCell>
+                <TableCell><h5>Description</h5></TableCell>
+                <TableCell><h5>Customer Name </h5></TableCell>
+                <TableCell><h5>Mobile Number</h5></TableCell>
+                <TableCell><h5>Location</h5></TableCell>
+                <TableCell><h5>SE Notes </h5></TableCell>
+                <TableCell><h5>Status</h5></TableCell>
               </TableRow>
             </>
             <TableBody>
