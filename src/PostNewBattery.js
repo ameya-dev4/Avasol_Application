@@ -5,12 +5,12 @@ import { GetToken } from "../src/Api/auth";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const PostNewBattery = () => { 
-    const user_batteries=localStorage.getItem('batteryTables')
-    const parse_batteries=JSON.parse(user_batteries)
+
+
     const [battery,setBattery]=useState('');
     const user_name=localStorage.getItem('username')
     const parse_username=JSON.parse(user_name)
-    console.log("parse",parse_username)
+
     const [warranty,setWarranty]=useState(false);
     
     const form=useForm({
@@ -37,12 +37,13 @@ const PostNewBattery = () => {
           });
 
     
+
     const [details,setDetails]=useState('')
     const {register,handleSubmit,formState} =form;
     const {errors }=formState
     const navigate=useNavigate()
    
-    const [selected,setSelected]=useState('');
+    const [batteries,setBatteries]=useState([]);
     const [name,setName]=useState(parse_username)
     const [otherProblem,isOtherProblem]=useState('')
     const [eachMake,setEachMake]=useState('')
@@ -61,6 +62,29 @@ const PostNewBattery = () => {
 
     }
     const battery_problem=['Battery Damage','warrenty expires','physicaldamage related','others']
+
+    useEffect(() => {
+        // Function to make the GET request
+        async function getLatestRequests() {
+          try {
+            const response = await fetch('http://100.20.33.222:5000/user/get-battery-list',{
+                method:"GET",
+                headers:{
+                    'Content-Type':"application/json",
+                    "Authorization": "Bearer " + access_token,
+                },
+            });
+            const data = await response.json();
+            setBatteries(data);
+            // console.log(data)
+          } catch (error) {
+            console.error('Error fetching latest requests:', error);
+          }
+        }
+    
+        // Call the function to get and display the latest service requests on page load
+        getLatestRequests();
+      }, []);
 
     
     const SubmitHandler= async (event)=>{
@@ -137,7 +161,7 @@ const PostNewBattery = () => {
                             <Form.Label>BatteryId</Form.Label>
                             {/* <Form.Control type="number" {...register('batteryId')}></Form.Control> */}
                             <Form.Control as='select' onChange={(e)=>setDetails(e.target.value)} {...register('batteryId')}>
-                                {user_batteries && parse_batteries.map(uniqueId=>{
+                                {batteries.length> 0 && batteries.map(uniqueId=>{
                                     return <option value={uniqueId.batteryId}>{uniqueId.batteryId}</option>
                                 })}
                             </Form.Control>

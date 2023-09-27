@@ -43,6 +43,7 @@ import UpdateNewTickets from './UpdateNewTicket'
 import Update from './SE_updateComp'
 import UpdateBattery from './UpdateBattery'
 import UpdateLatestServReq from './update_latest_serv_req'
+import EditSe_Profile from './SE_EditProfile'
 
 
 function App() {
@@ -102,6 +103,7 @@ function App() {
             <Route exact path='/se_myProfile' element={<SE_MyProfile />} />
             <Route exact path='/se_logout' element={<Logout /> } />
             <Route exact path='/se_update_ticket_details' element = {<SE_TicketPage/>} />
+            <Route exact path='/update-Profile' element={<EditSe_Profile/>} />
             
             
           </Routes>      

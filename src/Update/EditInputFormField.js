@@ -13,9 +13,6 @@ function FormField({ label, name, value, onChange}) {
           value={value}
           onChange={onChange}
           fullWidth
-          InputProps={{
-            readOnly:true
-          }}  
           sx={{width:'80%',ml:3,fontSize:'18',fontWeight:'500'}}
           // Add any additional attributes or styling here
         />

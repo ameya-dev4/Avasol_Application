@@ -74,7 +74,7 @@ const BatteryAdd = () => {
             })
 
         alert("Battery added successfully new")
-        // navigate('/userMyBatteries')
+        navigate('/userMyBatteries')
         
       }
 
