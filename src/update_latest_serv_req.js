@@ -87,7 +87,7 @@ function UpdateLatestServReq() {
     // Function to make the GET request
     async function getLatestRequests() {
       try {
-        const response = await fetch('http://100.20.33.222:5000/user/get-service-request-details',{
+        const response = await fetch('http://100.20.33.222:5000/user/latest-service-requests',{
             method:"GET",
             headers:{
                 'Content-Type':"application/json",
@@ -108,42 +108,42 @@ function UpdateLatestServReq() {
 
 
 
-            const handleDelete = (input_value) =>{
-              let batteryInfo;
-              let batteryId = input_value;
-              for(let i=0; i<latestRequests.length ; i++){
-                if(batteryId === latestRequests[i].batteryId){
-                  batteryInfo = latestRequests[i]
-                  latestRequests.pop(batteryInfo);
-                }
+  const handleDelete = (input_value) =>{
+    let batteryInfo;
+    let batteryId = input_value;
+    for(let i=0; i<latestRequests.length ; i++){
+      if(batteryId === latestRequests[i].batteryId){
+        batteryInfo = latestRequests[i]
+        latestRequests.pop(batteryInfo);
+      }
 
-              }
-    
+    }
 
-            fetch("http://100.20.33.222:5000/user/delete-service-request",{
-              method : "DELETE",
-              headers : {
-                'Authorization':`Bearer ${authToken}`,
-                'Content-Type' : 'application/json',
-              },
-              body: JSON.stringify(batteryInfo),
-            }).then(response => {
-              if (response.ok) {
-                console.log('DELETE request successful.');
-                alert("Deleted Succesfully")
-                navigate('/userMyBatteries')
-                // Handle success or update the UI accordingly
-              } else {
-                console.error('DELETE request failed.');
-                // Handle error or update the UI accordingly
-              }
-            })
-            .catch(error => {
-              console.error('Error occurred during DELETE request:', error);
-              // Handle error or update the UI accordingly
-            });
-          }
 
+      fetch("http://100.20.33.222:5000/user/delete-service-request",{
+        method : "DELETE",
+        headers : {
+          'Authorization':`Bearer ${authToken}`,
+          'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify(formData),
+      }).then(response => {
+        if (response.ok) {
+          console.log('DELETE request successful.');
+          alert("Deleted Succesfully")
+          navigate('/latest_serv_request')
+          // Handle success or update the UI accordingly
+        } else {
+          console.error('DELETE request failed.');
+          // Handle error or update the UI accordingly
+
+        }
+      })
+      .catch(error => {
+        console.error('Error occurred during DELETE request:', error);
+        // Handle error or update the UI accordingly
+      });
+    }
 
 
   const onSubmit = (e) => {

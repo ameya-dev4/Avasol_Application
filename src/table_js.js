@@ -421,63 +421,36 @@ import TicketPage from './TicketPage';
 
 const authToken = GetToken();
 
-
-async function fetchDataAndEnhanceArray({ array_Details }) {
-  try {
-    const timeout = 10000; // Set a timeout of 10 seconds
-    const enhancedArray = await Promise.all(
-      array_Details.map(async (item) => {
-        const data = {
-          username: item.username,
-        };
-        const responsePromise = fetch(
-          'http://100.20.33.222:5000/user/latest-service-requests',
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-              'Content-Type': 'application/json',
-            },
-            // body: JSON.stringify(data),
-          }
-        );
-
-        const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('API request timed out')), timeout)
-        );
-
-        const response = await Promise.race([responsePromise, timeoutPromise]);
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
-        const outPut_value = await response.json();
-        console.log(outPut_value);
-
-        return { ...item, customerDetails: outPut_value };
-      })
-    );
-
-    return enhancedArray;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return [];
-  }
-}
-
 function DisplayBattery({array_Details}){  
   const navigate = useNavigate();
   const [enhancedArray, setEnhancedArray ] = useState([]);
+  const [latestRequests, setLatestRequests]=useState([])
 
+  useEffect(() => {
+    // Function to make the GET request
+    async function getLatestRequests() {
+      try {
+        const response = await fetch('http://100.20.33.222:5000/user/latest-service-requests',{
+            method:"GET",
+            headers:{
+                'Content-Type':"application/json",
+                "Authorization": "Bearer " + authToken,
+            },
+        });
+        const data = await response.json();
+        setLatestRequests(data);
+        // console.log(data)
+      } catch (error) {
+        console.error('Error fetching latest requests:', error);
+      }
+    }
 
+    // Call the function to get and display the latest service requests on page load
+    getLatestRequests();
+  }, []);
 
+console.log("lates",latestRequests)
 
-  useEffect(() => {fetchDataAndEnhanceArray({array_Details : array_Details }).then((result) => {
-    setEnhancedArray(result);
-  });
-  },[])
-  console.log("enhanced",enhancedArray);
    const Row = ({ record }) => {
         const [showDetails, setShowDetails] = useState(false);
       
@@ -491,13 +464,15 @@ function DisplayBattery({array_Details}){
           navigate('/update_latestServRequest',{state:{shortDescription:record}});
         };
         
+
+console.log("record",record)
         const handleDelete = (input_value) =>{
             let batteryInfo;
             let batteryId = input_value;
-            for(let i=0; i<enhancedArray.length ; i++){
-              if(batteryId === enhancedArray[i].batteryId){
-                 batteryInfo = enhancedArray[i]
-                enhancedArray.pop(batteryInfo);
+            for(let i=0; i<latestRequests.length ; i++){
+              if(batteryId === latestRequests[i].batteryId){
+                 batteryInfo = latestRequests[i]
+                latestRequests.pop(batteryInfo);
               }
         
             }
@@ -506,7 +481,7 @@ function DisplayBattery({array_Details}){
             fetch('http://100.20.33.222:5000/user/delete-service-request', {
               method: 'DELETE',
               headers: {
-                Authorization: `Bearer ${authToken}`,
+                'Authorization': `Bearer ${authToken}`,
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify(batteryInfo),
@@ -547,7 +522,7 @@ function DisplayBattery({array_Details}){
             return formattedDate;
         
           }
-        
+      
       
         return (
           <>
@@ -572,11 +547,12 @@ function DisplayBattery({array_Details}){
     return (
       <>
       
-        <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%',mt:10}}>
+        <TableContainer component={Paper} sx={{bgcolor:'white',maxWidth:'100%',mt:10}}>
           <Table>
               <TableRow>
               <TableCell><h5>Description</h5></TableCell>
                 <TableCell><h5>Open Date</h5></TableCell>
+                <TableCell><h5>Assigned Date</h5></TableCell>
                 <TableCell><h5>Service Location </h5></TableCell>
                 <TableCell><h5>SE Name</h5></TableCell>
                 <TableCell><h5>SE Notes</h5></TableCell>
@@ -585,7 +561,7 @@ function DisplayBattery({array_Details}){
                 <TableCell><h5>Delete  </h5></TableCell>
               </TableRow>
             <TableBody>
-              {enhancedArray.map((record) => (
+              {array_Details.map((record) => (
               <Row key={record.id} record={record} />))}
             </TableBody>  
            </Table>
