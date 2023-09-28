@@ -92,10 +92,11 @@ import SE_Sidebar from "./SE_Sidebar";
 import { useState ,useEffect} from "react";
 import { GetToken } from "./Api/auth";
 import SE_Dash_upblocks from "./SE_Dash_upblocks";
+import SERVER_URL from "./Server/Server";
 
 const userName = localStorage.getItem('username');
 console.log(userName);
-const url = 'http://100.20.33.222:5000/se/latest-service-requests'
+const url = `${SERVER_URL}se/latest-service-requests`
 
 
 function SE_MyDashboard(){

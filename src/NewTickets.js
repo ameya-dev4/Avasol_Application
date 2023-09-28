@@ -7,7 +7,7 @@ import Header from './Header'
 import {Row,Col,Button,Card} from 'react-bootstrap'
 import { GetToken } from "./Api/auth";
 import Table_comp from "./Table_Componenet";
-
+import SERVER_URL from "./Server/Server";
 
 const authToken = GetToken();
 
@@ -21,7 +21,7 @@ function getCurrentDate() {
 }
 
 const currentDate = getCurrentDate();
-const url = 'http://100.20.33.222:5000/admin/get-new-tickets'
+const url = `${SERVER_URL}admin/get-new-tickets`
 
 function NewTickets(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)

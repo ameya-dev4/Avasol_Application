@@ -4,11 +4,12 @@ import { GetToken } from "./Api/auth";
 import { useEffect,useState } from "react";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useNavigate, useParams } from "react-router-dom";
+import SERVER_URL from "./Server/Server";
 
 
 const authToken = GetToken();
 let TicketDetails = []
-const url = "http://avasol.ameyalabs.com:5000/get-ticket-details";
+const url = `${SERVER_URL}get-ticket-details`;
 const userName = localStorage.getItem('username');
 let lat = 17.3984;
 let long = 78.5583;
@@ -116,7 +117,7 @@ function handlePayment(e){
           <TableCell sx={{border : 'none'}}><Typography sx={{fontSize:'22px', fontWeight:'500',width:'50%'}}>Service Location </Typography></TableCell>
           <TableCell sx={{border : 'none'}}> <Input placeholder="Type in here…" size="lg" style={{padding:'10', width: '80%', ml:0 }} variant="soft" /></TableCell>
           <TableCell sx={{border : 'none'}}><Typography sx={{fontSize:'22px', fontWeight:'500',width:'50%'}}><LocationOnIcon  style={{ fontSize: 60 }}/> Details</Typography></TableCell>
-          <TableCell sx={{border : 'none'}}><Link sx={{fontSize : '24px' , cursor:'pointer'}}  href={`${locationUrl}`} target='_blank'>Hello</Link></TableCell>
+          <TableCell sx={{border : 'none'}}><Link sx={{fontSize : '24px' , cursor:'pointer'}}  href={`${locationUrl}`} target='_blank'>User Location</Link></TableCell>
         </TableRow>
 
         <TableRow >

@@ -18,6 +18,7 @@ import {useForm} from 'react-hook-form'
 import {GetToken} from '../src/Api/auth'
 import { useNavigate } from 'react-router-dom';
 import UserGetDetails from './UserGetDetals';
+import SERVER_URL from './Server/Server';
 
 function Copyright(props) {
   return (
@@ -45,7 +46,6 @@ export default function SignIn() {
 });
 
 
-
 const navigate=useNavigate();
 // const [token,setToken]=useState(false);
 const [err,setErr]=useState(false)
@@ -59,13 +59,13 @@ const [loginType,setLoginType]=React.useState('user')
 console.log(loginType)
 let API_url;
 if (loginType==='admin'){
-  API_url='http://100.20.33.222:5000/admin/login'
+  API_url=`${SERVER_URL}admin/login`
 }
 else if(loginType==='user'){
-  API_url='http://100.20.33.222:5000/user/login'
+  API_url=`${SERVER_URL}user/login`
 }
 else{
-  API_url='http://100.20.33.222:5000/se/login'
+  API_url=`${SERVER_URL}se/login`
 }
 console.log(API_url)
 

@@ -6,6 +6,7 @@ import { Input, Typography, FormControl, Select, MenuItem, FormHelperText, Butto
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { GetToken } from './Api/auth';
+import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 
@@ -54,7 +55,7 @@ const SampleTicketPage = () => {
       payerId: 'payerId',
     };
 
-    fetch('http://100.20.33.222:5000/admin/update-ticket', {
+    fetch(`${SERVER_URL}admin/update-ticket`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${authToken}`,

@@ -13,9 +13,10 @@ import {Card,Col,Collapse, Row} from 'react-bootstrap'
 import DisplayBattery from './batteryComponent';
 import UserDash_upblock from './UserDash_upblock';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
+import SERVER_URL from './Server/Server';
 
 const access_token =GetToken()
-const apiUrl = 'http://100.20.33.222:5000/user/get-battery-list'; 
+const apiUrl = `${SERVER_URL}user/get-battery-list`; 
 
 
 
@@ -59,16 +60,7 @@ function ViewBatteryDetails({Toggle}) {
             { latestRequests.length ===0 ?
             <>
                 <Typography sx={{px:'20px'}}>No Recent Requests</Typography>
-                <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
-                                
-                <div className="text-center  py-1 px-2">
-                <div className="spinner-border text-primary " role="status">
-                  <span className="visually-hidden ">Loading...</span>
-                </div> 
-                <p className="text-dark d-flex justify-content-center">Loading....</p>
-                </div>  
-
-              </div>
+              
           </>
             
             : 

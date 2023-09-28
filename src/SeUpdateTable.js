@@ -46,25 +46,7 @@ function SeUpdate(){
   const data = {
     username : userName
   }
-  /*
-  useEffect (() =>{ async function fetchDetails(){
-    const response = await fetch(url,{
-        method : 'POST',
-        headers : {
-            'Authorization' : `Bearer ${authToken}`,
-            'Content-type': 'application/json',
-            "Access-Control-Allow-Origin": "*",
-        },
-        body : JSON.stringify(data)
-    }).then((response) => response.json())
-    .then((array_Details) =>{
-        TicketDetails = array_Details;
-    })
-  }
-  fetchDetails();
-},[])
-console.log(TicketDetails);
-*/
+ 
 function handleDate(e){
   setAttendedDate(e.target.value)
 }

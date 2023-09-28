@@ -2,14 +2,14 @@ import React ,{useState,useEffect} from 'react'
 import {Row,Col,Card} from 'react-bootstrap'
 import Header from './Header'
 import { GetToken } from './Api/auth';
-
+import SERVER_URL from './Server/Server';
 
 function SE_Dash_upblocks() {
     const [TicketDetails, setTicketDetails] = useState([]);
     const [All_serv_engg ,setAll_Serv_engg]=useState();
     const authToken=GetToken()
     const currentDate = getCurrentDate();
-    const url = 'http://100.20.33.222:5000/se/get-service-request-details'
+    const url = `${SERVER_URL}se/get-service-request-details`
     
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const OpenSidebar = () => {

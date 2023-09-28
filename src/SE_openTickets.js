@@ -81,9 +81,9 @@ import { GetToken } from "./Api/auth";
 import { useState,useEffect } from "react";
 import Table_comp from "./Table_Componenet";
 import SE_Dash_upblocks from "./SE_Dash_upblocks";
+import SERVER_URL from "./Server/Server";
 
-
-const url = 'http://100.20.33.222:5000/se/get-service-request-details'
+const url = `${SERVER_URL}se/get-service-request-details`
 
 function OpenTickets(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)

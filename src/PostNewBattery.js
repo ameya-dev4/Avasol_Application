@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form'
 import {Row,Col,Card,Form, Button} from 'react-bootstrap';
 import { GetToken } from "../src/Api/auth";
 import { Navigate, useNavigate } from "react-router-dom";
+import SERVER_URL from "./Server/Server";
 
 const PostNewBattery = () => { 
 
@@ -67,7 +68,7 @@ const PostNewBattery = () => {
         // Function to make the GET request
         async function getLatestRequests() {
           try {
-            const response = await fetch('http://100.20.33.222:5000/user/get-battery-list',{
+            const response = await fetch(`${SERVER_URL}user/get-battery-list`,{
                 method:"GET",
                 headers:{
                     'Content-Type':"application/json",
@@ -91,7 +92,7 @@ const PostNewBattery = () => {
         event.warranty=warranty?"yes":"no"
         console.log(event)
         try {
-          const response = await fetch('http://100.20.33.222:5000/user/add-service-request', {
+          const response = await fetch(`${SERVER_URL}user/add-service-request`, {
             method:'POST',
             mode:'cors',
             headers: {
@@ -114,24 +115,6 @@ const PostNewBattery = () => {
             alert('Request Successfully POST')
             navigate('/latest_serv_request')
 
-            // const accessToken = data.access_token;
-            // const refreshToken=data.refresh_token;
-            // // console.log("Access Token",accessToken)
-              
-            // // Store the access token in local storage
-            // document.cookie = `access_token=${accessToken}; path=/;`;
-            // document.cookie = `refresh_token=${refreshToken}; path=/;`;
-            
-            // localStorage.setItem('access_token', data.access_token);
-            // localStorage.setItem('refresh_token', data.refresh_token);
-            // const access_token=localStorage.getItem('access_token')
-            // // console.log(access_token)
-            // const refresh_token=localStorage.getItem('refresh_token')
-  
-            // console.log(refresh_token)
-            
-            // localStorage.setItem('access_token', accessToken);
-    
             // Redirect to the dashboard or home page after successful signup
             // window.location.href = '/LoginPage'; // Replace with your desired route
     

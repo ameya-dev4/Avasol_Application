@@ -118,7 +118,6 @@ import {
   Paper,
 } from '@mui/material';
 import { GetToken } from './Api/auth';
-//import TicketPage from './TicketComponents/TicketPage';
 
 
 const authToken = GetToken();

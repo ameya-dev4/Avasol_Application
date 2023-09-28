@@ -4,9 +4,9 @@ import { GetToken } from "./Api/auth";
 import { useState,useEffect } from "react";
 import Table_comp from "../Table_Component";
 import AdminDash_upblock from "./AdminDash_upblock";
+import SERVER_URL from "./Server/Server";
 
-
-const url = 'http://avasol.ameyalabs.com:5000/get-ticket-details'
+const url = `${SERVER_URL}get-ticket-details`
 
 function OpenTickets(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)

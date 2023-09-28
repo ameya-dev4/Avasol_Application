@@ -2,6 +2,7 @@ import React ,{useState,useEffect} from 'react'
 import {Row,Col,Card} from 'react-bootstrap'
 import Header from './Header'
 import { GetToken } from './Api/auth';
+import SERVER_URL from './Server/Server';
 
 
 function AdminDash_upblock() {
@@ -11,7 +12,7 @@ function AdminDash_upblock() {
     //Manage New Tickets 
     useEffect (()=> {
         async function fetchDetails(){
-            const response = await fetch('http://100.20.33.222:5000/admin/get-new-tickets',{
+            const response = await fetch(`${SERVER_URL}admin/get-new-tickets`,{
                 method : 'GET',
                 headers : {
                     'Authorization' : `Bearer ${authToken}`,
@@ -29,7 +30,7 @@ function AdminDash_upblock() {
       //Manage Service Engineers
       useEffect (()=> {
         async function fetchDetails(){
-            const response = await fetch('http://100.20.33.222:5000/admin/get-service-engineers',{
+            const response = await fetch(`${SERVER_URL}admin/get-service-engineers`,{
                 method : 'POST',
                 headers : {
                     'Authorization' : `Bearer ${authToken}`,

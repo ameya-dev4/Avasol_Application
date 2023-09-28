@@ -4,7 +4,7 @@ import { useState,useEffect } from "react";
 import { GetToken } from "./Api/auth";
 import Table_SE from "./Table_SE";
 import AdminDash_upblock from "./AdminDash_upblock";
-
+import SERVER_URL from "./Server/Server";
 const authToken = GetToken();
 
 function getCurrentDate() {
@@ -17,7 +17,7 @@ function getCurrentDate() {
 }
 
 const currentDate = getCurrentDate();
-const url = 'http://100.20.33.222:5000/admin/get-service-engineers'
+const url = `${SERVER_URL}admin/get-service-engineers`
 
 function AllServiceEngineers(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)

@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { AppBar, Button, Container, Toolbar, Typography ,Divider} from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { GetToken } from '../src/Api/auth';
 import { NavLink,Link, Navigate,BrowserRouter, useNavigate} from 'react-router-dom';
-import PostDisplayDetails from './table_js';
-import UserDash_upblock from './UserDash_upblock';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Header from './Header'
 import Sidebar from './Sidebar'
 import DisplayBattery from './table_js';
+import SERVER_URL from './Server/Server';
 
 const access_token =GetToken()
-const apiUrl = 'http://100.20.33.222:5000/user/latest-service-requests'; 
+const apiUrl = `${SERVER_URL}user/latest-service-requests`; 
 const user_name=localStorage.getItem('username')
 const parse_username=JSON.parse(user_name)
 let batteryId_value;

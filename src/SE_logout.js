@@ -5,6 +5,7 @@ import { Button, Card, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header'
 import SE_Sidebar from './SE_Sidebar';
+import SERVER_URL from './Server/Server';
 
 
 const SE_Logout= ()=>{
@@ -17,7 +18,7 @@ const SE_Logout= ()=>{
     document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     window.localStorage.clear()
     // alert("do you want to logout")
-    fetch('http://100.20.33.222:5000/se/logout',{
+    fetch(`${SERVER_URL}se/logout`,{
             method:'POST',
             headers:{
                 'Content-Type': 'application/json',

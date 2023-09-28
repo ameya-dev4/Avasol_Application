@@ -1,6 +1,7 @@
 import React ,{useState,useEffect}from 'react'
 import {Row,Col, Breadcrumb} from "react-bootstrap"
 import { GetToken } from './Api/auth';
+import SERVER_URL from './Server/Server';
 
 function Dashboard_upBlocks() {
     const [batteries, setBatteries] = useState([]);
@@ -11,7 +12,7 @@ function Dashboard_upBlocks() {
         // Function to make the GET request
         async function getLatestRequests() {
           try {
-            const response = await fetch('http://100.20.33.222:5000/user/get-battery-list',{
+            const response = await fetch(`${SERVER_URL}user/get-battery-list`,{
                 method:"GET",
                 headers:{
                     'Content-Type':"application/json",
@@ -35,7 +36,7 @@ function Dashboard_upBlocks() {
         // Function to make the GET request
         async function getLatestRequests() {
           try {
-            const response = await fetch('http://100.20.33.222:5000/user/latest-service-requests',{
+            const response = await fetch(`${SERVER_URL}user/latest-service-requests`,{
                 method:"GET",
                 headers:{
                     'Content-Type':"application/json",

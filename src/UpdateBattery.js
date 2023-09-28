@@ -9,6 +9,7 @@ import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
+import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 const SEoptions = [{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
@@ -62,7 +63,7 @@ function UpdateBattery() {
     // Function to make the GET request
     async function getLatestRequests() {
       try {
-        const response = await fetch('http://100.20.33.222:5000/user/get-battery-list',{
+        const response = await fetch(`${SERVER_URL}user/get-battery-list`,{
             method:"GET",
             headers:{
                 'Content-Type':"application/json",
@@ -95,7 +96,7 @@ function UpdateBattery() {
               }
     
 
-            fetch("http://100.20.33.222:5000/user/delete-battery",{
+            fetch(`${SERVER_URL}user/delete-battery`,{
               method : "DELETE",
               headers : {
                 'Authorization':`Bearer ${authToken}`,
@@ -140,7 +141,7 @@ function UpdateBattery() {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch('http://100.20.33.222:5000/user/update-battery',{
+    fetch(`${SERVER_URL}user/update-battery`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,

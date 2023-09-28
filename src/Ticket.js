@@ -8,7 +8,7 @@ import AdminDash_upblock from "./AdminDash_upblock";
 import Header from "./Header";
 import Admin_sidebar from "./Admin_sidebar";
 import { Container } from "react-bootstrap";
-
+import SERVER_URL from "./Server/Server";
 
 
 const authToken = GetToken();
@@ -30,48 +30,7 @@ function Ticket(){
   const [otp, setOtp] = useState(0);
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
 
-  //battery Details
-  // const [latestBattery, setLatestBattery] = useState([]);
-  // const [selectedBattery, setSelectedBattery] = useState(null);
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // useEffect(() => {
-  //   const storedData = localStorage.getItem('display_details');
-  //   if (storedData) {
-  //     setLatestBattery(JSON.parse(storedData));
-  //   }
-  // }, []);
-
-  // // Save the latestBattery data to localStorage whenever it changes
-  // useEffect(() => {
-  //   localStorage.setItem('display_details', JSON.stringify(latestBattery));
-  // }, [latestBattery]);
-
-  // useEffect(() => {
-  //   async function getLatestBattery() {
-  //     try {
-  //       const response = await fetch('http://100.20.33.222:5000/user/get-battery-list', {
-  //         method: 'GET',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'Authorization': 'Bearer ' + authToken,
-  //         },
-  //       });
-  //       const data = await response.json(); 
-  //       console.log("view_batteries",data)
-  //       setLatestBattery(data);
-  //       localStorage.setItem('display_details', JSON.stringify(data));
-  //     } catch (error) {
-  //       console.error('Error fetching latest Battery:', error);
-  //     }
-  //   }
-  //   getLatestBattery();
-  // }, []);
-  // console.log("battery Data",selectedBattery)
-
-
-  const display_details = localStorage.getItem('display_details');
-  console.log("hello",display_details);
+  
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -93,25 +52,6 @@ function Ticket(){
 
   
 
-  /*
-  useEffect (() =>{ async function fetchDetails(){
-    const response = await fetch(url,{
-        method : 'POST',
-        headers : {
-            'Authorization' : `Bearer ${authToken}`,
-            'Content-type': 'application/json',
-            "Access-Control-Allow-Origin": "*",
-        },
-        body : JSON.stringify(data)
-    }).then((response) => response.json())
-    .then((array_Details) =>{
-        TicketDetails = array_Details;
-    })
-  }
-  fetchDetails();
-},[])
-console.log(TicketDetails);
-*/
 function handleDate(e){
   setAttendedDate(e.target.value)
 }
@@ -161,7 +101,7 @@ const requestData = {
 }
 
 function handleSubmit(){
-  fetch('http://100.20.33.222:5000/admin/update-ticket',{
+  fetch(`${SERVER_URL}admin/update-ticket`,{
     method:'PUT',
     headers : {
       'Authorization':`Bearer ${authToken}`,

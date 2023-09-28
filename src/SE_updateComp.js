@@ -228,6 +228,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
+import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 const trainingOptions = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
@@ -267,7 +268,7 @@ function Update() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://100.20.33.222:5000/admin/get-se', {
+        const response = await fetch(`${SERVER_URL}admin/get-se`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${authToken}`,
@@ -321,7 +322,7 @@ function Update() {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch('http://100.20.33.222:5000/admin/update-service-engineer',{
+    fetch(`${SERVER_URL}admin/update-service-engineer`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,

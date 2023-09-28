@@ -227,6 +227,7 @@ import {Grid,Typography,Button,Table,Link,FormControl,FormControlLabel,Radio,Rad
 import Header from "./Header";
 import Sidebar from './Sidebar';
 import EditInputFormField from './Update/EditInputFormField';
+import SERVER_URL from './Server/Server';
 
 
 const authToken = GetToken();
@@ -244,7 +245,7 @@ function EditProfile() {
   }
   
   useEffect (() =>{ async function fetchDetails(){
-    const response = await fetch('http://100.20.33.222:5000/user/get-profile',{
+    const response = await fetch(`${SERVER_URL}user/get-profile`,{
         method : 'GET',
         headers : {
             'Authorization' : `Bearer ${authToken}`,
@@ -283,7 +284,7 @@ function EditProfile() {
     e.preventDefault();
     // formData contains the form values
     
-    fetch('http://100.20.33.222:5000/user/profile-update',{
+    fetch(`${SERVER_URL}user/profile-update`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,

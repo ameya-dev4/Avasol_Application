@@ -5,6 +5,7 @@ import { GetToken } from '../src/Api/auth';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import SERVER_URL from './Server/Server';
 
 const BatteryAdd = () => {
     const navigate=useNavigate()
@@ -56,7 +57,7 @@ const BatteryAdd = () => {
         
         console.log("data",data.warranty)
         
-        fetch('http://100.20.33.222:5000/user/add-new-battery',{
+        fetch(`${SERVER_URL}user/add-new-battery`,{
             mode:'cors',
             method:'POST',
             headers:{
@@ -96,11 +97,11 @@ console.log(warranty)
        <Header OpenSidebar={OpenSidebar}/>
        <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
        <main className="main-container">
-       <Container className="m-3 mt-5 col ">
+       <Container className=" col ">
             <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
                 <header>New Battery</header>
             </div>
-            <Card className="shadow p-3 mb-5 bg-body-tertiary rounded">
+            <Card className="shadow p-3 mb-5 bg-body-tertiary rounded text-dark">
                 <Col className="m-3 mt-5 col" >
                     <Row className="mb-2" >
                         <Col>

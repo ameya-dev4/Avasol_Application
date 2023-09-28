@@ -30,14 +30,12 @@ import Admin_logout from './Admin_logout'
 import Admin_Edit_Profile from './Admin_Edit_Profile'
 
 //Service Engineer
-import SeUpdate from './SeUpdateTable'
 import SE_MyDashboard from './SE_MyDashboard'
 import SE_TicketsToday from './SE_TodayTickets'
 import SE_OpenTickets from './SE_openTickets'
 import SE_TotalTickets from './SE_TotalTickets'
 import SE_Dash_upblocks from './SE_Dash_upblocks'
 import SE_MyProfile from './SE_myProfile'
-import SE_TicketPage from './SE_TicketPage'
 import SE_signUp from './SE_signup'
 import UpdateNewTickets from './UpdateNewTicket'
 import Update from './SE_updateComp'
@@ -85,8 +83,6 @@ function App() {
             <Route path='admin_mydash' element={<AdminMyDashboard/>}/>
             <Route path='admin_logout' element={<Admin_logout/>}/>
             <Route path='admin_profile_update' element={<Admin_Edit_Profile/>}/>
-            {/* <Route path='update_ticket_details' element={</>}/> */}
-            {/* <Route path='update_se' element={<SeUpdate/>}/> */}
             <Route path='update_ticket_details' element={<UpdateNewTickets/>}/>
             <Route path='update_se' element={<Update/>}/>
             <Route path='update_asigned_ticket' element={<UpdateNewTickets/>}/>

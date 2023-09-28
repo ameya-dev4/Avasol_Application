@@ -4,8 +4,7 @@ import { GetToken } from "./Api/auth";
 import { useEffect,useState } from "react";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-
-
+import SERVER_URL from "./Server/Server";
 const authToken = GetToken();
 
 const userName = localStorage.getItem('username');
@@ -92,7 +91,7 @@ const requestData = {
 }
 
 function handleSubmit(){
-  fetch('http://avasol.ameyalabs.com:5000/update-service-request',{
+  fetch(`${SERVER_URL}update-service-request`,{
     method:'PUT',
     headers : {
       'Authorization':`Bearer ${authToken}`,

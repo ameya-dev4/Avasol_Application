@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form'
 import '../Basic/latestServRequest.css'
 import postServpic from '../../../assets/images/latestServpic.jpg'
 import {GetToken} from '../../../Api/auth'
+import SERVER_URL from './Server/Server'
 
 const PostServRequest = () => {
     const user_name=localStorage.getItem('username')
@@ -42,7 +43,7 @@ const head={
   }
 
 // Send the JSON data to another URL (replace 'url' with the actual URL)
-fetch('http://100.20.33.222:5000/user/add-service-request',{
+fetch(`${SERVER_URL}user/add-service-request`,{
   method:'POST',
   headers:head,
   body: jsonData,

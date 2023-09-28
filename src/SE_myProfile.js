@@ -188,6 +188,7 @@ import Header from "./Header";
 import FormField from './Update/InputFormField';
 import SE_Sidebar from './SE_Sidebar';
 import SE_Dash_upblocks from './SE_Dash_upblocks';
+import SERVER_URL from './Server/Server';
 
 
 const authToken = GetToken();
@@ -203,7 +204,7 @@ function SE_MyProfile() {
   }
   
   useEffect (() =>{ async function fetchDetails(){
-    const response = await fetch('http://100.20.33.222:5000/se/get-profile',{
+    const response = await fetch(`${SERVER_URL}se/get-profile`,{
         method : 'GET',
         headers : {
             'Authorization' : `Bearer ${authToken}`,

@@ -4,11 +4,12 @@ import { useEffect,useState } from "react";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useNavigate, useParams } from "react-router-dom";
 import { GetToken } from "./Api/auth";
+import SERVER_URL from "./Server/Server";
 
 
 const authToken = GetToken();
 let TicketDetails = []
-const url = "http://100.20.33.222:5000/admin/get-ticket-details";
+const url = `${SERVER_URL}admin/get-ticket-details`;
 const userName = localStorage.getItem('username');
 let lat = 17.3984;
 let long = 78.5583;

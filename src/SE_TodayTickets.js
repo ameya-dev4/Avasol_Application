@@ -89,7 +89,7 @@ import Header from "./Header";
 import SE_Sidebar from "./SE_Sidebar";
 import { useState,useEffect } from "react";
 import { GetToken } from "./Api/auth";
-
+import SERVER_URL from "./Server/Server";
 const authToken = GetToken();
 
 function getCurrentDate() {
@@ -102,7 +102,7 @@ function getCurrentDate() {
 }
 
 const currentDate = getCurrentDate();
-const url = 'http://100.20.33.222:5000/se/get-service-request-details'
+const url = `${SERVER_URL}se/get-service-request-details`
 
 function SE_TicketsToday(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)

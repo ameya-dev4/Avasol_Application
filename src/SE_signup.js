@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
+import SERVER_URL from './Server/Server';
 
 
 
@@ -64,7 +65,7 @@ export default function SE_signUp() {
 
   const Submit = (RegisterData) => {
     console.log(RegisterData);
-    fetch('http://100.20.33.222:5000/se/signup',{
+    fetch(`${SERVER_URL}se/signup`,{
         method:'POST',
         headers:{ 
             'Content-Type':'application/json',

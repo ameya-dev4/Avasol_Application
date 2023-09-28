@@ -5,10 +5,11 @@ import Sidebar from './Admin_sidebar'
 import { useState ,useEffect} from "react";
 import { GetToken } from "./Api/auth";
 import Admin_sidebar from "./Admin_sidebar";
+import SERVER_URL from "./Server/Server";
 
 const userName = localStorage.getItem('username');
 console.log(userName);
-const url = 'http://avasol.ameyalabs.com:5000/get-ticket-details'
+const url = `${SERVER_URL}get-ticket-details`
 
 
 function TotalTickets(){

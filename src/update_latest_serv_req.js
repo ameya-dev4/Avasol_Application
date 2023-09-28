@@ -9,6 +9,7 @@ import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
+import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 const SEoptions = [{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
@@ -33,37 +34,7 @@ function UpdateLatestServReq() {
   const [formData, setFormData] = useState(batteryDetails);
 
 
-
-  // useEffect (()=> {
-  //   async function fetchDetails() {
-  //     try {
-  //       const response = await fetch('http://100.20.33.222:5000/user/get-battery-details', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Authorization': `Bearer ${authToken}`,
-  //           'Content-type': 'application/json',
-  //         },
-  //         body: JSON.stringify({ batteryId: batteryId }),
-  //       });
-
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-
-  //       const batteryDetails = await response.json();
-  //       setFormData(batteryDetails);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   }
-  //   fetchDetails();
-  // }, [batteryId, authToken]);
-
-
   console.log("formdata",formData)
-  // const fdata=JSON.stringify(formData)
-  // const parse_formdata=JSON.parse(fdata)
-  // console.log("parse",parse_formdata)
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -87,7 +58,7 @@ function UpdateLatestServReq() {
     // Function to make the GET request
     async function getLatestRequests() {
       try {
-        const response = await fetch('http://100.20.33.222:5000/user/latest-service-requests',{
+        const response = await fetch(`${SERVER_URL}user/latest-service-requests`,{
             method:"GET",
             headers:{
                 'Content-Type':"application/json",
@@ -120,7 +91,7 @@ function UpdateLatestServReq() {
     }
 
 
-      fetch("http://100.20.33.222:5000/user/delete-service-request",{
+      fetch(`${SERVER_URL}user/delete-service-request`,{
         method : "DELETE",
         headers : {
           'Authorization':`Bearer ${authToken}`,
@@ -150,7 +121,7 @@ function UpdateLatestServReq() {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch('http://100.20.33.222:5000/user/update-battery',{
+    fetch(`${SERVER_URL}user/update-battery`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,

@@ -391,13 +391,9 @@
 
 
 import React ,{useState,useEffect}from 'react'
-import AdminDash_upblock from './AdminDash_upblock'
-import Admin_sidebar from './Admin_sidebar'
-import Header from './Header'
 import {Row,Col,Button,Card} from 'react-bootstrap'
 import { GetToken } from "./Api/auth";
-import Table_comp from "./Table_Componenet";
-import UpdateNewTickets from "./UpdateNewTicket";
+import SERVER_URL from './Server/Server';
 import Table_Batteries from "./Table_Batteries";
 
 const authToken = GetToken();
@@ -412,7 +408,7 @@ function getCurrentDate() {
 }
 
 const currentDate = getCurrentDate();
-const url = 'http://100.20.33.222:5000/user/get-battery-list'
+const url = `${SERVER_URL}user/get-battery-list`
 
 function DisplayBattery(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -458,11 +454,8 @@ function DisplayBattery(){
     {TicketDetails.length > 0 ?<Table_Batteries array_Details={TicketDetails} /> : 
      
       <>
-            <h2 className="mx-3 mt-3">No New Batteries</h2>
-           <br/>
-           <br/>
-           <br/>
-           <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
+            <h2 className="mx-3">No New Batteries</h2>
+           <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-white rounded mt-5 ">
                             
                             <div className="text-center  py-1 px-2">
                             <div className="spinner-border text-primary " role="status">

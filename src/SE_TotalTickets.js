@@ -83,10 +83,11 @@ import { useState ,useEffect} from "react";
 import { GetToken } from "./Api/auth";
 import SE_Sidebar from "./SE_Sidebar";
 import SE_Dash_upblocks from "./SE_Dash_upblocks";
+import SERVER_URL from './Server/Server';
 
 const userName = localStorage.getItem('username');
 console.log(userName);
-const url = 'http://100.20.33.222:5000/se/get-service-request-details'
+const url = `${SERVER_URL}se/get-service-request-details`
 
 
 function SE_TotalTickets(){

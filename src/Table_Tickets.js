@@ -118,7 +118,7 @@ import {
   Paper,
 } from '@mui/material';
 import { GetToken } from './Api/auth';
-//import TicketPage from '../TicketComponents/TicketPage';
+import SERVER_URL from './Server/Server';
 
 
 const authToken = GetToken();
@@ -129,7 +129,7 @@ async function fetchDataAndEnhanceArray({array_Details}){
       const data = {
         username : item.username,
       }
-      const response = await fetch('http://100.20.33.222:5000/admin/get-user',{
+      const response = await fetch(`${SERVER_URL}admin/get-user`,{
         method : 'POST',
         headers : {
           'Authorization' : `Bearer ${authToken}`,

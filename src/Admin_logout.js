@@ -1,11 +1,11 @@
 import React,{useState} from 'react'
 import {GetToken} from '../src/Api/auth'
-import Cookies from 'js-cookie'
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header'
-import Sidebar from './Sidebar'
+
 import Admin_sidebar from './Admin_sidebar';
+import SERVER_URL from './Server/Server';
 
 const Admin_Logout= (event)=>{
     const navigate=useNavigate();
@@ -17,7 +17,7 @@ const Admin_Logout= (event)=>{
     document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     window.localStorage.clear()
     // alert("do you want to logout")
-    fetch('http://100.20.33.222:5000/admin/logout',{
+    fetch(`${SERVER_URL}admin/logout`,{
             method:'POST',
             mode:'cors',
             headers:{

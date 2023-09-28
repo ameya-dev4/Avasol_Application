@@ -7,6 +7,7 @@ import Header from "./Header";
 import Admin_sidebar from './Admin_sidebar';
 import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
+import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 const SEoptions = [{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
@@ -31,7 +32,7 @@ function UpdateTicket() {
 
   useEffect (()=> {
     async function fetchDetails(){
-        const response = await fetch('http://100.20.33.222:5000/admin/get-ticket-details',{
+        const response = await fetch(`${SERVER_URL}admin/get-ticket-details`,{
             method : 'POST',
             headers : {
                 'Authorization' : `Bearer ${authToken}`,
@@ -68,7 +69,7 @@ function UpdateTicket() {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch('http://100.20.33.222:5000/admin/update-ticket',{
+    fetch(`${SERVER_URL}admin/update-ticket`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,

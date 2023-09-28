@@ -176,13 +176,13 @@ import React, { useEffect, useState } from 'react';
 import { GetToken } from './Api/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {Grid,Typography,Button,Table,Link} from '@mui/material';
-//import AdminDash_upblock from "../../Pages/Admin_Upblocks";
 import Header from "./Header";
 import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EditInputFormField from './Update/EditInputFormField';
 import SE_Sidebar from './SE_Sidebar';
+import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 const trainingOptions = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
@@ -201,40 +201,6 @@ function SE_UpdateTicket() {
   const TicketDetails = location.state.updateArray;
   const [formData, setFormData] = useState(TicketDetails);
   
- 
-/*
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://100.20.33.222:5000/se/get-profile', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${authToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ username: ServiceEngineerName })
-        });
-        if (response.ok) {
-          const data = await response.json();
-          // Set form values using setFormData
-          setFormData({
-            ...data,
-          status : findselectedOption(data.status , statusOptions),
-          trainingDetails : findselectedOption(data.trainingDetails,trainingOptions),
-          performance : findselectedOption(data.performance ,performanceOptions),
-        });
-        } else {
-          // Handle error if API request fails
-        }
-      } catch (error) {
-        // Handle any other errors
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  */
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -262,7 +228,7 @@ function SE_UpdateTicket() {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch('http://100.20.33.222:5000/se/update-service-request',{
+    fetch(`${SERVER_URL}se/update-service-request`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,

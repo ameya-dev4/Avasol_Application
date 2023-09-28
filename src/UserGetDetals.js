@@ -2,7 +2,7 @@ import React ,{useState,useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 import {GetToken} from '../src/Api/auth'
 import {Col,Card,Row,Button} from 'react-bootstrap'
-
+import SERVER_URL from './Server/Server'
 
 function UserGetDetails(){
   const [showdetails,setDetails]=useState([])
@@ -15,7 +15,7 @@ function UserGetDetails(){
         username :parse_username,
       }
 
-    fetch("http://100.20.33.222:5000/user/get-profile",{
+    fetch(`${SERVER_URL}user/get-profile`,{
       method:'POST',
       headers:{
         'Accept':'application/json',

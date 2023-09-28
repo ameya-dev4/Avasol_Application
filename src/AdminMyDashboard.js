@@ -22,26 +22,6 @@ function AdminMyDashboard(){
     setOpenSidebarToggle(!openSidebarToggle)
   }
   
-  /*
-  useEffect (()=> {
-    async function fetchDetails(){
-        const response = await fetch(url,{
-            method : 'POST',
-            headers : {
-                'Authorization' : `Bearer ${authToken}`,
-                'Content-type': 'application/json',
-                "Access-Control-Allow-Origin": "*",
-            },
-            body : JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((array_Details) =>{
-            setTicketDetails(array_Details);
-            localStorage.setItem('DashboardTickets',array_Details);
-        })
-      }
-      fetchDetails();
-  },[]) 
-  */
   
     return (
     <>

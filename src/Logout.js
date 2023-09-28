@@ -5,24 +5,28 @@ import { Button, Card, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header'
 import Sidebar from './Sidebar'
+import SERVER_URL from './Server/Server';
 
 const Logout= (event)=>{
     const navigate=useNavigate();
     const access_token=GetToken();
     console.log(access_token)
+    const data={
+        access_token:access_token
+    }
     // Cookies.remove('access_token')
     // Cookies.remove('refresh_token')
     document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     window.localStorage.clear()
     // alert("do you want to logout")
-    fetch('http://100.20.33.222:5000/user/logout',{
+    fetch(`${SERVER_URL}user/logout`,{
             method:'POST',
             mode:'cors',
             headers:{
                 'Content-Type': 'application/json',
             },
-            body:JSON.stringify(event)
+            body:data
         })
 
         const [openSidebarToggle, setOpenSidebarToggle] = useState(false)

@@ -16,6 +16,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import SERVER_URL from './Server/Server';
 
 
 
@@ -56,7 +57,7 @@ const AdminSignUp=()=>{
      
 
       try {
-        const response = await fetch('http://100.20.33.222:5000/admin/signup', {
+        const response = await fetch(`${SERVER_URL}admin/signup`, {
           method: 'POST',
           mode:'cors',
           headers: {

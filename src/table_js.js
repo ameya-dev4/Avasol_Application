@@ -417,6 +417,7 @@ import {
 } from '@mui/material';
 import { GetToken } from './Api/auth';
 import TicketPage from './TicketPage';
+import SERVER_URL from './Server/Server';
 
 
 const authToken = GetToken();
@@ -430,7 +431,7 @@ function DisplayBattery({array_Details}){
     // Function to make the GET request
     async function getLatestRequests() {
       try {
-        const response = await fetch('http://100.20.33.222:5000/user/latest-service-requests',{
+        const response = await fetch(`${SERVER_URL}user/latest-service-requests`,{
             method:"GET",
             headers:{
                 'Content-Type':"application/json",
@@ -478,7 +479,7 @@ console.log("record",record)
             }
             
         
-            fetch('http://100.20.33.222:5000/user/delete-service-request', {
+            fetch(`${SERVER_URL}user/delete-service-request`, {
               method: 'DELETE',
               headers: {
                 'Authorization': `Bearer ${authToken}`,
@@ -529,15 +530,14 @@ console.log("record",record)
           
            <TableRow >
             <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.openDate}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.assignedDate}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.openDate.slice(0,10)}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.assignedDate.slice(0,10)}</TableCell>
             <TableCell style={{fontSize:'18px'}}>service_location</TableCell>
             <TableCell style={{fontSize:'18px'}}>SE_Name</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerNotes}</TableCell>
             <TableCell style={{fontSize:'18px'}}>target serviceDate</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
-
-            <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleDelete(record.batteryId)} > Delete</Link></TableCell>
+            {/* <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleDelete(record.batteryId)} > Delete</Link></TableCell> */}
 
             </TableRow>
                     
@@ -558,7 +558,7 @@ console.log("record",record)
                 <TableCell><h5>SE Notes</h5></TableCell>
                 <TableCell><h5>Target Service Date</h5></TableCell>
                 <TableCell><h5>Status  </h5></TableCell>
-                <TableCell><h5>Delete  </h5></TableCell>
+                {/* <TableCell><h5>Delete  </h5></TableCell> */}
               </TableRow>
             <TableBody>
               {array_Details.map((record) => (

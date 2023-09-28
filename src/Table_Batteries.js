@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { GetToken } from './Api/auth';
 import TicketPage from './TicketPage';
+import SERVER_URL from './Server/Server';
 
 
 const authToken = GetToken();
@@ -21,7 +22,7 @@ async function fetchDataAndEnhanceArray({array_Details}){
       const data = {
         username : item.username,
       }
-      const response = await fetch('http://100.20.33.222:5000/user/get-battery-list',{
+      const response = await fetch(`${SERVER_URL}user/get-battery-list`,{
         method : 'GET',
         headers : {
           'Authorization' : `Bearer ${authToken}`,
@@ -75,7 +76,7 @@ function Table_Batteries({array_Details}){
             }
             
         
-            fetch("http://100.20.33.222:5000/user/delete-battery",{
+            fetch(`${SERVER_URL}user/delete-battery`,{
               method : "DELETE",
               headers : {
                 'Authorization':`Bearer ${authToken}`,
