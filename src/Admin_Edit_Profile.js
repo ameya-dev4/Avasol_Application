@@ -635,7 +635,7 @@ function Admin_Edit_Profile() {
     .then((data) =>{
       console.log(data);
       alert('Details are Successfully Updated');
-      navigate(-1);
+      navigate('/admin_profile');
     }).catch((error) => {
       console.log(error);
     })
@@ -723,8 +723,8 @@ function Admin_Edit_Profile() {
         <EditInputFormField label="District" name="district" onChange={handleInputChange}  value={user_Details.district}/>
 
         {/* Row 6 */}
-        <EditInputFormField label="Area" name="area" onChange={handleInputChange} value={user_Details.area}/>
-        <EditInputFormField label="Postal Code" name="postalcode" onChange={handleInputChange}  value={user_Details.postalcode}/>
+        <EditInputFormField label="Area" name="area" onChange={handleInputChange} value={user_Details.city}/>
+        <EditInputFormField label="Postal Code" name="pincode" onChange={handleInputChange}  value={user_Details.pincode}/>
         
         
         <Grid item xs={12} sm={12}>

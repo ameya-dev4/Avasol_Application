@@ -78,14 +78,14 @@
 import Header from "./Header";
 import SE_Sidebar from "./SE_Sidebar";
 import { GetToken } from "./Api/auth";
-import SE_Dash_upblocks from "./SE_Dash_upblocks";
 import { useState,useEffect } from "react";
 import Table_comp from "./Table_Componenet";
+import SE_Dash_upblocks from "./SE_Dash_upblocks";
 
 
 const url = 'http://100.20.33.222:5000/se/get-service-request-details'
 
-function SE_OpenTickets(){
+function OpenTickets(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
     
@@ -125,26 +125,11 @@ function SE_OpenTickets(){
           <main className="main-container">
           <SE_Dash_upblocks/>
           {TicketDetails.length > 0 ? <Table_comp array_Details={TicketDetails} /> : 
-          <>
-          <h2 className="mx-3 mt-3">No  Recent Open Tasks </h2>
-          
-                  <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded mt-5 ">
-                        
-                          <div className="text-center  py-1 px-2">
-                          <div className="spinner-border text-primary " role="status">
-                            <span className="visually-hidden ">Loading...</span>
-                          </div> 
-                          <p className="text-dark d-flex justify-content-center">Loading....</p>
-                          </div>  
-    
-                        </div>
-
-        </>
-        }
+          <h2>No Tickets are Assigned</h2>}
           </main>
         </div>
          </>
     )
 }
 
-export default SE_OpenTickets;
+export default OpenTickets;

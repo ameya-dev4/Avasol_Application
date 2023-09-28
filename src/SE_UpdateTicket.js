@@ -182,6 +182,7 @@ import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EditInputFormField from './Update/EditInputFormField';
+import SE_Sidebar from './SE_Sidebar';
 
 const authToken = GetToken();
 const trainingOptions = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
@@ -190,7 +191,7 @@ const paymentOptions = [{label:'Paid',value:'paid'},{label:'Yet to be Paid',valu
 const userName = localStorage.getItem('username');
 
 
-function Update() {
+function SE_UpdateTicket() {
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -286,7 +287,7 @@ function Update() {
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
       {/* ... form rendering ... */}
       <Header OpenSidebar={OpenSidebar}/>
-      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+      <SE_Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className='main-container'>
      {/* <AdminDash_upblock /> */}
       <form onSubmit={onSubmit}>
@@ -380,4 +381,4 @@ function Update() {
   );
 }
 
-export default Update;
+export default SE_UpdateTicket;

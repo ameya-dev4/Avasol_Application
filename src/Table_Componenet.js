@@ -137,7 +137,7 @@ function Table_comp({array_Details}){
         const handleTicketClick = ({record}) => {
           console.log(record)
           localStorage.setItem('display_details',record);
-          navigate('/update-ticket-details',{state:{updateArray:record}});
+          navigate('/se_update_ticket_details',{state:{updateArray:record}});
         };
 
         return (

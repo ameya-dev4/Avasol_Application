@@ -360,7 +360,7 @@ function EditSe_Profile() {
     .then((data) =>{
       console.log(data);
       alert('Details are Successfully Updated');
-      navigate('/myDashboard');
+      navigate('/se_myDashboard');
     }).catch((error) => {
       console.log(error);
     })

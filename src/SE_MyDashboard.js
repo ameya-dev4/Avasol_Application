@@ -98,7 +98,7 @@ console.log(userName);
 const url = 'http://100.20.33.222:5000/se/latest-service-requests'
 
 
-function MyDashboard(){
+function SE_MyDashboard(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails , setTicketDetails] = useState([]);
     //const {authToken} = useAuth();
@@ -146,4 +146,4 @@ function MyDashboard(){
     )
 }
 
-export default MyDashboard;
+export default SE_MyDashboard;

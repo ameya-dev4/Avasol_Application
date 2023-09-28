@@ -282,23 +282,7 @@ function AdminMyProfile() {
   const onSubmit = (e) => {
     e.preventDefault();
     // formData contains the form values
-    
-    fetch('http://100.20.33.222:5000/admin/profile-update',{
-      method:'PUT',
-      headers:{
-        'Authorization':`Bearer ${authToken}`,
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify(user_Details)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
-      alert('Details are Successfully Updated');
-      navigate(-1);
-    }).catch((error) => {
-      console.log(error);
-    })
-    // Perform your form submission logic here
+    navigate('/admin_profile_update');
   };
 
   return (
@@ -382,8 +366,8 @@ function AdminMyProfile() {
         <FormField label="District" name="district" onChange={handleInputChange}  value={user_Details.district}/>
 
         {/* Row 6 */}
-        <FormField label="Area" name="area" onChange={handleInputChange} value={user_Details.area}/>
-        <FormField label="Postal Code" name="postalcode" onChange={handleInputChange}  value={user_Details.postalcode}/>
+        <FormField label="Area" name="area" onChange={handleInputChange} value={user_Details.city}/>
+        <FormField label="Postal Code" name="pincode" onChange={handleInputChange}  value={user_Details.pincode}/>
         
         
         <Grid item xs={12} sm={12}>
@@ -426,7 +410,7 @@ function AdminMyProfile() {
                 fullWidth
                 sx={{ ml: 45,mb:2,mt:7  }}
               >
-                Save Changes
+                Edit
               </Button>
             </Grid>
         </Grid>
