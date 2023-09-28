@@ -570,7 +570,7 @@ import AdminDash_upblock from './AdminDash_upblock';
 import Header from "./Header";
 import Admin_sidebar from './Admin_sidebar';
 import EditInputFormField from './Update/EditInputFormField';
-
+import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 
@@ -624,7 +624,7 @@ function Admin_Edit_Profile() {
     e.preventDefault();
     // formData contains the form values
     
-    fetch('http://100.20.33.222:5000/admin/profile-update',{
+    fetch(`${SERVER_URL}admin/profile-update`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,

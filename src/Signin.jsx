@@ -119,34 +119,6 @@ const handleChange = (event) => {
       // Handle any network errors
       console.error('Network error:', error);
     }
-  //     const user_name=localStorage.getItem('username')
-  //     const parse_username=JSON.parse(user_name)
-  //     console.log("user",parse_username)
-  //   const jsonData={
-  //     username :parse_username,
-  //   }
-
-  // fetch("http://avasol.ameyalabs.com:5000/get-user-details",{
-  //   method:'POST',
-  //   mode:'no-cors',
-  //   headers:{
-  //     // 'Accept':'application/json',
-  //     // 'Access-Control-Allow-Origin': '*',
-  //     'Authorization':`Bearer ${access_token}`,
-  //     'Content-Type':'application/json'
-  //   },
-  //   body:JSON.stringify(jsonData),
-
-  // }) 
-  // .then(response=>response.json())
-  //   .then(data=>{
-  //     console.log(data)
-  //     localStorage.setItem('userdetails',JSON.stringify(data))
-  //     setDetails(data)
-      
-  //   }).catch(error =>{
-  //     console.error(error)
-  //   })
 
 
   };
