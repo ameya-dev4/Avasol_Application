@@ -1,13 +1,13 @@
 import {Grid , Box,Typography,TextField} from '@mui/material';
 
-function FormField({ label, name, value, onChange}) {
+function FormField({ label, name, value, onChange,type='text'}) {
     return (
       <>
         <Grid item xs={12} sm={6}>
           <Box>
           <Typography variant='h5' sx={{color:'black' , mb:2,ml:3}}>{label}</Typography>
           <TextField
-          type="text"
+          type={type}
           variant='outlined'
           name={name}
           value={value}
@@ -16,7 +16,7 @@ function FormField({ label, name, value, onChange}) {
           InputProps={{
             readOnly:true
           }}  
-          sx={{width:'80%',ml:3,fontSize:'18',fontWeight:'500'}}
+          sx={{width:'80%',ml:3,fontSize:'14',fontWeight:'500',backgroundColor:'#EFEFEF'}}
           // Add any additional attributes or styling here
         />
         </Box>

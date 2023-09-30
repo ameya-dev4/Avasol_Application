@@ -1,244 +1,397 @@
-import React, { useState,} from 'react';
-import {useForm} from 'react-hook-form';
-import { Row, Col, Tabs, Tab,Form,Button,Card,Container } from 'react-bootstrap';
-import { GetToken } from '../src/Api/auth';
-import { useNavigate } from 'react-router-dom';
-import Header from './Header';
+// import React, { useState,} from 'react';
+// import {useForm} from 'react-hook-form';
+// // import { Row, Col, Tabs,Button, Tab,Form,Card,Container,Table } from 'react-bootstrap';
+// import { GetToken } from '../src/Api/auth';
+// import { useNavigate } from 'react-router-dom';
+// import Header from './Header';
+// import Sidebar from './Sidebar';
+// import SERVER_URL from './Server/Server';
+// import FormField from './Update/EditInputFormField';
+// import {Grid,Box,Typography,Button,Select,MenuItem,Table,Container} from '@mui/material';
+
+// const BatteryAdd = () => {
+//     const navigate=useNavigate()
+//     const user_name=localStorage.getItem('username')
+//     const parse_username=JSON.parse(user_name)
+//     const [check,setCheck]=useState(true);
+//     const access_token=GetToken()
+//     console.log(access_token)
+//     const form=useForm()
+//     const [formData,setFormData]=useState(
+        // {
+        //     selectBattery:"",
+        //   batteryCapacity: "",
+        //   batteryCurrent: "",
+        //   batteryId:"",
+        //   batteryVoltage: "",
+        //   dealerId:"dealerId",
+        //   invoice: "",
+        //   invoiceNumber: "invoice number",
+        //   invoiceUploaded: "",
+        //   make:"",
+        //   model: "",
+        //   principalId:"",
+        //   purchaseDate: "",
+        //   status:0,
+        //   username:parse_username,
+        //   warranty:"",
+        //   batteryNumber:"",
+        //   dealer:"",
+        //   subDealer:""
+    
+        // }
+//     )
+    
+//       const {register,handleSubmit,formState}=form;
+//       const {errors}=formState;
+      
+//       const dealer=['dealer1','dealer2','dealer3']
+//       const sub_dealer={
+//           'dealer1':['Telangana','AP','Tamilnadu'],
+//           'dealer2':['kerala','UP','odissa'],
+//           'dealer3':['delhi','goa','karnataka']
+  
+//       }  
+//       const [select,setSelected]=useState('');
+      
+//     const submitHandler=()=>{
+//         formData.warranty=warranty?"yes":"no"
+//         const jsonData=JSON.stringify(formData)
+        
+        
+//         fetch(`${SERVER_URL}user/add-new-battery`,{
+//             mode:'cors',
+//             method:'POST',
+//             headers:{
+//                 'Accept':'application/json',
+//                 'Content-type':'application/json',
+//                 'Authorization':`Bearer ${access_token}`
+//             },
+//             body:jsonData,
+//         }).then(response=>response.json())
+//             .then(data=>{
+//                 console.log(data)
+
+//             }).catch(err=>{
+//                 console.log(err)
+//             })
+
+//         alert("Battery added successfully new")
+//         navigate('/userMyBatteries')
+        
+//       }
+
+
+//       const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
+//       const OpenSidebar = () => {
+//         setOpenSidebarToggle(!openSidebarToggle)
+//       }
+    
+//     const [warranty,serwarranty]=useState(false)
+//     const checkboxHandler=()=>{
+//         serwarranty(!warranty)
+        
+//     }
+// console.log(warranty)
+//       return (
+//         <>
+//         <div className='grid-container'>
+//        <Header OpenSidebar={OpenSidebar}/>
+//        <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+//        <main className="main-container">
+//        <Container style={{margin:'50px 0px',marginBottom:'60px'}}>
+//                 <form noValidate onClick={handleSubmit(submitHandler)}>
+//         <Table sx={{border:'1px solid black',p:2,mt:3,backgroundColor:'white'}}>
+//         <Grid container spacing={2} sx={{border:'1px black'}}>
+//         <Grid item xs={12}>
+//               <Button
+//                 variant="contained"
+//                 size="large"
+//                 color='primary'
+//                 fullWidth
+//                 sx={{ mb: 3  }}
+                
+//               >
+//                 <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Battery Details</Typography>
+//               </Button>
+//             </Grid>
+       
+        
+//         <FormField label="Battery Name" name="batteryName" {...register('batteryNumber',{
+//                                 required:'misssing battery number'})}/> 
+//         <FormField  label="Battery Number" name="batteryNumber"    />
+
+       
+//         <FormField label="Make" name="make" {...register('make',{required:'missing make'})} placeholder="Enter Make" />
+//         <FormField label="Model" name="model" {...register('model',{required:'missing model' })} placeholder="Enter Model" />
+
+        
+//         <FormField label="Battery Voltage" name="batteryVoltage"  placeholder='Enter Battery Voltage' {...register('batteryVoltage',{
+//                                 required:'misssing battery voltage'
+//                             })}/>
+//         <FormField label="Battery Current" name="batteryCurrent"  placeholder='Enter Battery Current' {...register('batteryCurrent',{
+//                                 required:'misssing battery number'
+//                             })}/>
+
+        
+//         <FormField label="Purchase Date" name="purchaseDate" {...register('purchaseDate',{
+//                                 required:'missing Date'
+//                             })} placeholder='Enter Date'/>
+//         <FormField label="Warrenty" name="warranty"  {...register('warranty',{
+//                                 required:'misssing warrenty'
+//                             })}/>
+        
+//         <FormField label="Warranty Years" name="warrantyYears"  />
+//         <FormField label="Vechicle Type" name="vechicleType" />
+
+//         <FormField label="DealerName & Addrees" name="dealerName&address"/>
+//         <FormField label="Dealer Contact" name="Dealer Contact" />
+
+       
+//         <FormField label="SubDealerName & Address" name="subDealerName&address" />
+//         <FormField label="SubDealer Contact" name="subDealer Contact" />
+
+       
+//         <FormField label="Status" name="status" />
+        
+//         </Grid>
+//         <Grid container spacing={3} sx={{p:3}}>
+//         <Grid item xs={3}>
+//               <Button
+//                 variant="contained"
+//                 size="large"
+//                 fullWidth
+//                 sx={{ mt: 5,mb:2}}
+//                 onClick={() => navigate(-1)}
+//               >
+//                close
+//               </Button>
+//             </Grid>
+//         <Grid item xs={3}>
+//               <Button
+                
+//                 variant="contained"
+//                 color="success"
+//                 size="large"
+//                 fullWidth
+//                 sx={{ mt: 5,mb:2  }}
+//                 // onClick={handleSubmit(submitHandler)}
+//               >
+//                 Save Changes
+//               </Button>
+//             </Grid>
+            
+//         </Grid>
+//         </Table>
+//       </form>
+              
+//             </Container>
+
+//        </main> 
+ 
+         
+//            </div>
+//            </>
+//       )
+
+// }
+
+// export default BatteryAdd
+
+import React, { useEffect, useState } from 'react';
+import { GetToken } from './Api/auth';
+import {  useLocation, useNavigate } from 'react-router-dom';
+import {Grid,Box,Typography,Button,Select,MenuItem,Table,Container} from '@mui/material';
+import AdminDash_upblock from './AdminDash_upblock';
+import Header from "./Header";
+import Admin_sidebar from './Admin_sidebar';
+import FormField from './Update/EditInputFormField';
+import NoEditable from './Update/InputFormField'
+import DropDownField from './Update/DropDownField';
+import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 
-const BatteryAdd = () => {
-    const navigate=useNavigate()
-    const user_name=localStorage.getItem('username')
-    const parse_username=JSON.parse(user_name)
-    const [check,setCheck]=useState(true);
-    const access_token=GetToken()
-    console.log(access_token)
-    
-    const form=useForm({
-        defaultValues:{
-            selectBattery:"",
-          batteryCapacity: "",
-          batteryCurrent: "",
-          batteryId:"",
-          batteryVoltage: "",
-          dealerId:"dealerId",
-          invoice: "",
-          invoiceNumber: "invoice number",
-          invoiceUploaded: "",
-          make:"",
-          model: "",
-          principalId:"",
-          purchaseDate: "",
-          status:0,
-          username:parse_username,
-          warranty:"",
-          batteryNumber:"",
-          dealer:"",
-          subDealer:""
-    
-        }
-      });
-      const {register,handleSubmit,formState}=form;
-      const {errors}=formState;
-      
-      const dealer=['dealer1','dealer2','dealer3']
-      const sub_dealer={
-          'dealer1':['Telangana','AP','Tamilnadu'],
-          'dealer2':['kerala','UP','odissa'],
-          'dealer3':['delhi','goa','karnataka']
-  
-      }  
-      const [select,setSelected]=useState('');
-      
-    const submitHandler=(data)=>{
-        data.warranty=warranty?"yes":"no"
-        const jsonData=JSON.stringify(data)
+const authToken = GetToken();
+const warrantyType = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
+const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+
+
+
+function BatteryAdd() {
+    const Rating = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+  const navigate = useNavigate();
+  const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
+  const OpenSidebar = () => {
+    setOpenSidebarToggle(!openSidebarToggle)
+  }
+
+  const location = useLocation();
+
+
+  const username=localStorage.getItem('username')
+  const parse_username=JSON.parse(username)
+  const [formData, setFormData] = useState({
+    selectBattery:"",
+  batteryCapacity: "",
+  batteryCurrent: "",
+  batteryId:"",
+  batteryVoltage: "",
+  dealerId:"dealerId",
+  invoice: "",
+  invoiceNumber: "invoice number",
+  invoiceUploaded: "",
+  make:"",
+  model: "",
+  principalId:"",
+  purchaseDate: "",
+  status:Number(0),
+  username:parse_username,
+  warranty:"",
+  batteryNumber:"",
+  dealer:"",
+  subDealer:"",
+  batteryName:""
+
+});
+
+
+//   console.log("formdata",formData)
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSelectChange = (e) => {
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const [latestRequests, setLatestRequests] = useState([]);
+  const[displayDetails , setDisplayDetails] = useState(false);
+
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // formData contains the form values
+    console.log(formData);
+    fetch(`${SERVER_URL}user/add-new-battery`,{
+      method:'POST',
+      headers:{
+        'Authorization':`Bearer ${authToken}`,
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify(formData)
+    }).then((response) => response.json())
+    .then((data) =>{
+      console.log(data);
+    //   alert('Details are Successfully Updated');
+    //   navigate(-1);
+    }).catch((error) => {
+      console.log(error);
+    })
+    // Perform your form submission logic here
+  };
+   
+
+  return (
+    <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
+      <Header OpenSidebar={OpenSidebar}/>
+      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+      <main className='main-container'>
+      <Dashboard_upBlocks />
+      <Container style={{margin:'50px 0px'}}>
+              <form noValidate>
+        <Table sx={{border:'1px solid black',p:2,mt:3,backgroundColor:'white'}}>
+        <Grid container spacing={2} sx={{border:'1px black'}}>
+        <Grid item xs={12}>
+              <Button
+                variant="contained"
+                size="large"
+                color='primary'
+                fullWidth
+                sx={{ mb: 3  }}
+                
+              >
+                <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>New Request Details</Typography>
+              </Button>
+            </Grid>
+       
+        <FormField label="Battery Name" name="batteryName" value={formData.batteryName} onChange={handleInputChange} />
+        <FormField  label="Battery Number" name="batteryNumber"  value={formData.batteryNumber} onChange={handleInputChange}  />
+
+        <FormField  label="Battery ID" name="batteryId"  value={formData.batteryId} onChange={handleInputChange}  />
+        {/* Row 2 */}
+        <FormField label="Make" name="make" onChange={handleInputChange} value={formData.make}/>
+        <FormField label="Model" name="model" onChange={handleInputChange}  value={formData.model}/>
+
+        {/* Row 3 */}
+        <FormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.batteryVoltage}/>
+        <FormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange}  value={formData.batteryCurrent}/>
+
+        {/* Row 4 */}
+        <FormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)} disabled={false} />
+        <DropDownField label="Warrenty" name="warranty" onChange={handleInputChange}  value={formData.warranty} options={warrantyType}/>
         
-        console.log("data",data.warranty)
+        <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>
+        <FormField label="Vechicle Type" name="vechicleType" onChange={handleInputChange} value={formData.vechicleType}/>
+
+        {/* Row 6 */}
+        <FormField label="DealerName & Addrees" name="dealerName&address" onChange={handleInputChange} value={formData.delearAddress}/>
+        <FormField label="Dealer Contact" name="Dealer Contact" onChange={handleInputChange} value={formData.DealerContact}/>
+
+        {/* Row 7 */}
+        <FormField label="SubDealerName & Address" name="subDealerName&address" onChange={handleInputChange}  value={formData.subDealerAddress}/>
+        <FormField label="SubDealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/>
+
+        {/* Row 8 */}
+        <NoEditable label="Status" name="status" onChange={handleInputChange}   value={formData.status}/>
+        {/* options={Rating} */}
+        </Grid>
+        <Grid container spacing={3} sx={{p:3}}>
+        <Grid item xs={3}>
+              <Button
+                variant="contained"
+                size="large"
+                fullWidth
+                sx={{ mb:2}}
+                onClick={() => navigate(-1)}
+              >
+               close
+              </Button>
+            </Grid>
+        <Grid item xs={3}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                size="large"
+                fullWidth
+                sx={{mb:2  }}
+                onClick={onSubmit}
+              >
+                Update
+              </Button>
+            </Grid>
+           
+
+        </Grid>
         
-        fetch(`${SERVER_URL}user/add-new-battery`,{
-            mode:'cors',
-            method:'POST',
-            headers:{
-                'Accept':'application/json',
-                'Content-type':'application/json',
-                'Authorization':`Bearer ${access_token}`
-            },
-            body:jsonData,
-        }).then(response=>response.json())
-            .then(data=>{
-                console.log(data)
-
-            }).catch(err=>{
-                console.log(err)
-            })
-
-        alert("Battery added successfully new")
-        navigate('/userMyBatteries')
         
-      }
-
-
-      const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
-      const OpenSidebar = () => {
-        setOpenSidebarToggle(!openSidebarToggle)
-      }
-    
-    const [warranty,serwarranty]=useState(false)
-    const checkboxHandler=()=>{
-        serwarranty(!warranty)
-        
-    }
-console.log(warranty)
-      return (
-        <>
-        <div className='grid-container'>
-       <Header OpenSidebar={OpenSidebar}/>
-       <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
-       <main className="main-container">
-       <Container className=" col ">
-            <div className="bg-primary rounded mb-3 text-white m-2 p-2 px-3">
-                <header>New Battery</header>
-            </div>
-            <Card className="shadow p-3 mb-5 bg-body-tertiary rounded text-dark">
-                <Col className="m-3 mt-5 col" >
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control type="text"  {...register('username')} style={{cursor:'not-allowed'}} readOnly></Form.Control>
-                        </Col>
-                        <Col>
-                            <Form.Label>Battery ID</Form.Label>
-                            <Form.Control type="text"  placeholder='Enter BatteryId' {...register('batteryId',{
-                                required:'misssing battery Id'
-                            })}/>
-                            <p className='error'>{errors.batteryId?.message}</p>
-                        </Col>
-                        <Col>
-                        <Form.Label>Battery Number</Form.Label>
-                            <Form.Control type="text"  placeholder='Enter Battery Number' {...register('batteryNumber',{
-                                required:'misssing battery number'
-                            })}/>
-                            <p className='error'>{errors.batteryNumber?.message}</p>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label> Battery Capacity</Form.Label>
-                            <Form.Control type="text" {...register('batteryCapacity')} placeholder='Enter Battery capacity'></Form.Control>
-                        </Col>
-                        <Col>
-                            <Form.Label>Battery Current</Form.Label>
-                            <Form.Control type="text"  placeholder='Enter Battery Current' {...register('batteryCurrent',{
-                                required:'misssing battery number'
-                            })}/>
-                            <p className='error'>{errors.batteryCurrent?.message}</p>
-                        </Col>
-                        <Col>
-                            <Form.Label>Battery Voltage</Form.Label>
-                            <Form.Control type="text"  placeholder='Enter Battery Voltage' {...register('batteryVoltage',{
-                                required:'misssing battery voltage'
-                            })}/>
-                            <p className='error'>{errors.batteryVoltage?.message}</p>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                        <Form.Control type="text" {...register('make',{required:'missing make'})} placeholder="Enter Make" />
-                        </Col>
-                        <Col>
-                        <Form.Control type="text" {...register('model',{required:'missing model' })} placeholder="Enter Model" /><br/>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label>Enter Purchase Date</Form.Label>
-                            <Form.Control type='text'  {...register('purchaseDate',{
-                                required:'missing Date'
-                            })} placeholder='Enter Date'/>
-                            <p className='error'>{errors.purchaseDate?.message}</p>
-                        </Col>
-                        <Col>
-                            <Form.Label>invoice upload</Form.Label>
-                            <Form.Control type='text'  {...register('invoiceUploaded')} placeholder='invoice upload'/>
-                        </Col>
-                    </Row>
-                    <Row className="mb-2" >
-                        <Col>
-                            <Form.Label>Principal Company</Form.Label>
-                            <Form.Control as="select">
-                                <option>principal Company</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>                                             
-                                <option>4</option>
-                            </Form.Control>
-                        </Col>
-                        <Col>
-                                <Form.Label>Area Dealer</Form.Label>
-                                <Form.Control as="select" onChange={(e)=>setSelected(e.target.value)}>
-                                {dealer.map(eachDealer=>{
-                                    return <option>{eachDealer}</option>
-                                })}
-                                </Form.Control>
-                        </Col>
-                        <Col>
-                        
-                            {
-                            select && 
-                            <>
-                            <Form.Label>Area  SubDealer</Form.Label>
-                                <Form.Control as="select">
-                                { sub_dealer[select].map(eachDealer=>{
-                                    return <option>{eachDealer}</option>
-                                })
-                            }
-                                    </Form.Control>
-                            </>
-                            
-                            }
-                        </Col>
-
-                    </Row><br/>
-                    <Row>
-                    <Col md={3}>
-                            <Form.Control type="text"  {...register('name')} placeholder="Enter Name" />
-                    </Col>
-                    <Col md={3}>
-                    <div style={{textAlign:'center',marginTop:'10px'}}>
-                            <input type="checkbox" checked={warranty} id="agree" onChange={checkboxHandler}/>
-                            <label htmlFor="agree" ><b>  warranty</b> </label>
-                        </div>
-                    </Col>
-
-                                
-                    </Row>
-                    
-                    <Row className="mb-2"  >
-                        
-                        {/* <Col  className="d-flex flex-row-reverse mt-4" > */}
-                            <Col md={8}>
-                            </Col>
-                            <Col md={2}>
-                                <Button  variant='danger'onClick={()=>navigate('/userMyBatteries')} className="feather icon-x"> Cancle</Button>
-                            </Col>
-                            <Col md={2}>
-                                <Button variant="success"  onClick={handleSubmit(submitHandler)}><i className="fa fa-edit"> Save</i> </Button>
-                            </Col>    
-                        
-                        {/* </Col> */}
-                    </Row>
-                </Col>
-            </Card>
-        </Container> 
-       </main> 
- 
-         
-           </div>
-           </>
-      )
-
+        </Table>
+      </form>
+            </Container>
+      </main>
+    </div>
+  )
 }
 
-export default BatteryAdd
+
+export default BatteryAdd;

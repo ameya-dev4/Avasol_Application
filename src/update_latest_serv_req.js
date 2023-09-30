@@ -7,12 +7,14 @@ import Header from "./Header";
 import Admin_sidebar from './Admin_sidebar';
 import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
+import EditFormField from './Update/EditInputFormField';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const SEoptions = [{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
+const warrantyType = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
+const Declaration = [{value:true, label :'Yes'},{label:'No',value:false}]
 const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
 const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
@@ -31,6 +33,9 @@ function UpdateLatestServReq() {
   console.log("**********");
   console.log(batteryDetails);
   console.log("***********");
+
+  // batteryDetails.otpId=5
+  // batteryDetails.requestId=0
   const [formData, setFormData] = useState(batteryDetails);
 
 
@@ -90,7 +95,8 @@ function UpdateLatestServReq() {
 
     }
 
-
+      formData.status=6
+      formData.transactionId=1
       fetch(`${SERVER_URL}user/delete-service-request`,{
         method : "DELETE",
         headers : {
@@ -121,7 +127,7 @@ function UpdateLatestServReq() {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch(`${SERVER_URL}user/update-battery`,{
+    fetch(`${SERVER_URL}user/update-service-request`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
@@ -165,42 +171,42 @@ function UpdateLatestServReq() {
        
         {/* Row 1 */}
         <FormField label="Battery ID" name="batteryId" value={formData.batteryId}  />
-        <FormField  label="Description" name="description"  value={formData.shortDescription} onChange={handleInputChange}  />
+        <EditFormField  label="Description" name="shortDescription"  value={formData.shortDescription} onChange={handleInputChange}  />
 
         {/* Row 2 */}
-        <FormField label="Make" name="make" onChange={handleInputChange} value={formData.make}/>
-        <FormField label="Model" name="model" onChange={handleInputChange}  value={formData.model}/>
+        <EditFormField label="Make" name="make" onChange={handleInputChange} value={formData.make}/>
+        <EditFormField label="Model" name="model" onChange={handleInputChange}  value={formData.model}/>
 
         {/* Row 3 */}
-        <FormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.voltage}/>
-        <FormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange}  value={formData.current}/>
+        <EditFormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.batteryVoltage}/>
+        <EditFormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange}  value={formData.batteryCurrent}/>
 
         {/* Row 4 */}
-        <FormField label="Vehicle Type" name="vehicleType" onChange={handleInputChange} value={formData.vehicleType}/>
-        <FormField label="Service Location" name="serviceLocation" onChange={handleInputChange}  value={formData.service_location}/>
+        <EditFormField label="Vehicle Type" name="vehicleType" onChange={handleInputChange} value={formData.vehicleType}/>
+        <EditFormField label="Service Location" name="serviceLocation" onChange={handleInputChange}  value={formData.service_location}/>
 
         {/* Row 5 */}
         <FormField label="Date Opened" name="openDate" onChange={handleInputChange} value={formData.openDate}/>
-        <FormField label="NoteToServiceEngineer" name="NoteToServiceEngineer" onChange={handleInputChange} value={formData.noteToServiceEngineer}/>
+        <EditFormField label="NoteToServiceEngineer" name="noteToServiceEngineer" onChange={handleInputChange} value={formData.noteToServiceEngineer}/>
 
         {/* Row 6 */}
-        <FormField label="Under Warrenty" name="underWarrenty" />
-        <FormField label="self Declaration" placeholder='I agree terms & conditions'/>
+        <DropDownField label="Under Warrenty" name="warranty" onChange={handleInputChange}  value={formData.warranty} options={warrantyType}/>
+        <DropDownField label="self Declaration" placeholder='I agree terms & conditions' name='selfDeclaration' onChange={handleInputChange} options={Declaration} value={formData.selfDeclaration}/>
 
         {/* Row 7 */}
-        <FormField label="Status" name="status" onChange={handleInputChange}  value={formData.status}/>
+        <DropDownField label="Status" name="status" onChange={handleInputChange}  value={formData.status} options={statusOptions}/>
         <FormField label="Last Status Updated" name="lastStatusUpdated" onChange={handleInputChange} value={formData.laststatusUpdated}/>
 
-        <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange}  value={formData.amount}/>
-        <FormField label="Visit Amount Paid" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid}/>
+        <EditFormField label="Visit Amount" name="visitAmount" onChange={handleInputChange}  value={formData.amount}/>
+        <EditFormField label="Visit Amount Paid" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid}/>
         
-        <FormField label="Service Date" name="serviceDate" onChange={handleInputChange}  value={formData.serviceDate}/>
-        <FormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
+        <EditFormField label="Service Date" name="serviceDate" onChange={handleInputChange}  value={formData.serviceDate}/>
+        <EditFormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
 
-        <FormField label="Service Amount" name="serviceAmount" onChange={handleInputChange}  value={formData.ServiceAmount}/>
-        <FormField label="service Amount Paid" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid}/>
+        <EditFormField label="Service Amount" name="serviceAmount" onChange={handleInputChange}  value={formData.serviceAmount}/>
+        <EditFormField label="service Amount Paid" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid}/>
             
-        <DropDownField label="Customer Rating" name="customerRating" onChange={handleInputChange}  value={formData.rating} options={Rating}/>
+        <DropDownField label="Customer Rating" name="rating" onChange={handleInputChange}  value={formData.rating} options={performanceOptions}/>
         
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>

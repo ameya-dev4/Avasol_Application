@@ -15,64 +15,64 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
         </div>
 
         <ul className='sidebar-list'>
-        <li className='sidebar-list-item'>
+        {/* <li className='sidebar-list-item'>
                 <Link to='/Admin_signup'>
-                    {/* <BsFillArchiveFill className='icon'/> */}
+                    
                     <i className='feather icon-monitor'> Admin Signup</i>
                 </Link>
             </li>
             <li className='sidebar-list-item'>
                 <Link to='/se_signup'>
-                    {/* <BsGrid1X2Fill className='icon'/> Dashboard */}
+                   
                     <i className='feather icon-users'> SE_SignUp</i>
                 </Link>
             </li>
             <li className='sidebar-list-item'>
                 <Link to='/signup'>
-                    {/* <BsGrid1X2Fill className='icon'/> Dashboard */}
+                    
                     <i className='feather icon-users'> SignUp</i>
                 </Link>
             </li>
             <li className='sidebar-list-item'>
                 <Link to='/signin'>
-                    {/* <BsFillArchiveFill className='icon'/> */}
+                    
                     <i className='feather icon-log-in'> Login</i>
                 </Link>
-            </li>
+            </li> */}
             <li className='sidebar-list-item'>
             <Link to='/latest_serv_request'>
-                    {/* <BsFillArchiveFill className='icon'/> */}
+                    
                     <i className='feather icon-home'> User DashBoard</i>
                 </Link>
             </li>
             <li className='sidebar-list-item'>
             <Link to='/userMyBatteries'>
-                    {/* <BsFillArchiveFill className='icon'/> */}
+                   
                     <i className='fa fa-server'> My Batteries</i>
                 </Link>
             </li>
             <li className='sidebar-list-item'>
             <Link to='/latest_serv_request'>
-                    {/* <BsFillArchiveFill className='icon'/> */}
+                    
                     <i className='fa fa-server'> My Service Request</i>
                 </Link>
             </li>
             <li className='sidebar-list-item'>
             <Link to='/signin'>
-                    {/* <BsFillArchiveFill className='icon'/> */}
+                    
                     <i className='fa fa-money'> My Payments</i>
                 </Link>
             </li>
             <li className='sidebar-list-item'>
                 <Link to='/user_profile'>
-                    {/* <BsFillArchiveFill className='icon'/> */}
+                    
                     <i className='feather icon-user'> My Profile</i>
                 </Link>
         
             </li>
             <li className='sidebar-list-item'>
             <Link to='/logout'>
-                    {/* <BsFillArchiveFill className='icon'/> */}
+                    
                     <i className='feather icon-log-out'> Logout</i>
                 </Link>
             </li>

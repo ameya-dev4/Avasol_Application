@@ -6,13 +6,14 @@ import AdminDash_upblock from './AdminDash_upblock';
 import Header from "./Header";
 import Admin_sidebar from './Admin_sidebar';
 import FormField from './Update/InputFormField';
+import EditFormField from './Update/EditInputFormField'
 import DropDownField from './Update/DropDownField';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const SEoptions = [{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
+const warrantyType = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
 const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
 const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
@@ -184,34 +185,34 @@ function UpdateBattery() {
             </Grid>
        
         {/* Row 1 */}
-        <FormField label="Battery Name" name="batteryName" value={formData.batteryName} onChange={handleInputChange} />
+        <EditFormField label="Battery Name" name="batteryName" value={formData.batteryName} onChange={handleInputChange} />
         <FormField  label="Battery Number" name="batteryNumber"  value={formData.batteryNumber} onChange={handleInputChange}  />
 
         {/* Row 2 */}
-        <FormField label="Make" name="make" onChange={handleInputChange} value={formData.make}/>
-        <FormField label="Model" name="model" onChange={handleInputChange}  value={formData.model}/>
+        <EditFormField label="Make" name="make" onChange={handleInputChange} value={formData.make}/>
+        <EditFormField label="Model" name="model" onChange={handleInputChange}  value={formData.model}/>
 
         {/* Row 3 */}
-        <FormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.batteryVoltage}/>
-        <FormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange}  value={formData.batteryCurrent}/>
+        <EditFormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.batteryVoltage}/>
+        <EditFormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange}  value={formData.batteryCurrent}/>
 
         {/* Row 4 */}
-        <FormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)} disabled={false} />
-        <FormField label="Warrenty" name="warranty" onChange={handleInputChange}  value={formData.warranty}/>
+        <EditFormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)} disabled={false} />
+        <DropDownField label="Warrenty" name="warranty" onChange={handleInputChange}  value={formData.warranty} options={warrantyType}/>
         
-        <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>
-        <FormField label="Vechicle Type" name="vechicleType" onChange={handleInputChange} value={formData.vechicleType}/>
+        <EditFormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>
+        <EditFormField label="Vechicle Type" name="vechicleType" onChange={handleInputChange} value={formData.vechicleType}/>
 
         {/* Row 6 */}
-        <FormField label="DealerName & Addrees" name="dealerName&address" onChange={handleInputChange} value={formData.delearAddress}/>
-        <FormField label="Dealer Contact" name="Dealer Contact" onChange={handleInputChange} value={formData.DealerContact}/>
+        <EditFormField label="DealerName & Addrees" name="dealerName&address" onChange={handleInputChange} value={formData.delearAddress}/>
+        <EditFormField label="Dealer Contact" name="Dealer Contact" onChange={handleInputChange} value={formData.DealerContact}/>
 
         {/* Row 7 */}
-        <FormField label="SubDealerName & Address" name="subDealerName&address" onChange={handleInputChange}  value={formData.subDealerAddress}/>
-        <FormField label="SubDealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/>
+        <EditFormField label="SubDealerName & Address" name="subDealerName&address" onChange={handleInputChange}  value={formData.subDealerAddress}/>
+        <EditFormField label="SubDealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/>
 
         {/* Row 8 */}
-        <FormField label="Status" name="status" onChange={handleInputChange}   value={formData.status}/>
+        <DropDownField label="Status" name="status" onChange={handleInputChange}   value={formData.status} options={statusOptions}/>
         {/* options={Rating} */}
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>

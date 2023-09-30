@@ -395,10 +395,12 @@ import {Row,Col,Button,Card} from 'react-bootstrap'
 import { GetToken } from "./Api/auth";
 import SERVER_URL from './Server/Server';
 import Table_Batteries from "./Table_Batteries";
-
+import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 const authToken = GetToken();
 
 function getCurrentDate() {
+  
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1; // Month is zero-based, so add 1
@@ -413,7 +415,7 @@ const url = `${SERVER_URL}user/get-battery-list`
 function DisplayBattery(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
-
+    const navigate=useNavigate()
     const OpenSidebar = () => {
       setOpenSidebarToggle(!openSidebarToggle)
     }
@@ -437,11 +439,11 @@ function DisplayBattery(){
     return <>
     
     <Row>
-            <Col className='mx-3'>
-                <Button variant='success'><i className='fa fa-plus '> Add New</i></Button>
+            <Col className='mx-4'>
+                <Typography variant='h4' ><Button  variant='contained' style={{backgroundColor:'lightseagreen',color:'white'}} onClick={()=>navigate('/battery_add')}  >Add Battery</Button> </Typography>
             </Col>
             Records
-            <Col md={3}>
+            <Col md={2} style={{marginRight:'1%'}}>
             <select className="form-select " aria-label="Default select example">
                 <option selected>5</option>
                 <option value="15">15</option>
@@ -454,8 +456,8 @@ function DisplayBattery(){
     {TicketDetails.length > 0 ?<Table_Batteries array_Details={TicketDetails} /> : 
      
       <>
-            <h2 className="mx-3">No New Batteries</h2>
-           <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-white rounded mt-5 ">
+            <h2 className="text-center">No Recent Batteries</h2>
+           {/* <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-white rounded mt-5 ">
                             
                             <div className="text-center  py-1 px-2">
                             <div className="spinner-border text-primary " role="status">
@@ -464,7 +466,7 @@ function DisplayBattery(){
                             <p className="text-dark d-flex justify-content-center">Loading....</p>
                             </div>  
       
-                          </div>
+                          </div> */}
           </>
         } 
 

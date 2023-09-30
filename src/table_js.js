@@ -406,7 +406,7 @@
 
 import React, { useState ,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import {Link} from "@mui/material";
+import {Link,Typography} from "@mui/material";
 import {
   TableContainer,
   Table,
@@ -546,8 +546,8 @@ console.log("record",record)
       
     return (
       <>
-      
-        <TableContainer component={Paper} sx={{bgcolor:'white',maxWidth:'100%',mt:10}}>
+      <Typography variant='h4'> Latest Request Details</Typography>
+        <TableContainer component={Paper} sx={{bgcolor:'white',maxWidth:'100%',mt:3}}>
           <Table>
               <TableRow>
               <TableCell><h5>Description</h5></TableCell>

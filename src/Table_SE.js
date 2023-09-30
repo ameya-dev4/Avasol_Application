@@ -1,6 +1,6 @@
 import React, { useState ,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import {Link } from "@mui/material";
+import {Link, Typography } from "@mui/material";
 import {
   TableContainer,
   Table,
@@ -51,8 +51,8 @@ function Table_SE({array_Details}){
       
     return (
       <>
-      
-        <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%' , mt:10}}>
+        <Typography variant='h4'> Latest Request Details</Typography>
+        <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%' , mt:3}}>
           <Table>
               <TableRow>
                 <TableCell><h5>First Name   </h5> </TableCell>

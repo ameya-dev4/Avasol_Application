@@ -80,7 +80,7 @@ function UserProfile() {
                 size="large"
                 color='primary'
                 fullWidth
-                sx={{ mb: 3  }}
+                
                 
               >
                 <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Profile</Typography>
@@ -89,12 +89,12 @@ function UserProfile() {
        
           <Grid item xs={12} sm={12}>
             <Box>
-              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:3,mt:2}}>Personal Info</Typography>
+              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:1,px:2}}>Personal Info</Typography>
             </Box>
           </Grid>
         {/* Horizontal Line */}
         <Grid sm={12} xs={12}>
-        <hr style={{width:'98%',color:'grey',align:'right'}} noshade />
+        <hr style={{width:'98%',color:'grey',align:'right',marginLeft:'2%'}} noshade />
         </Grid>
 
         
@@ -127,12 +127,12 @@ function UserProfile() {
           
         <Grid item xs={12} sm={12}>
             <Box>
-              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:3,mt:5}}>Address Details </Typography>
+              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:1,mt:2,px:2}}>Address Details </Typography>
             </Box>
           </Grid>
         {/* Horizontal Line */}
         <Grid sm={12} xs={12}>
-        <hr style={{width:'98%',color:'grey',align:'right'}} noshade />
+        <hr style={{width:'98%',color:'grey',align:'right',marginLeft:'2%'}} noshade />
         </Grid>
 
 
@@ -147,7 +147,7 @@ function UserProfile() {
 
         {/* Row 6 */}
         <FormField label="Pincode" name="pincode" onChange={handleInputChange} value={user_Details.pincode}/>
-        <FormField label="Current Password" name="currentPassword" onChange={handleInputChange}  value={parse_password}/>
+        <FormField label="Current Password"  name="currentPassword" onChange={handleInputChange}  value={parse_password} type='password'/>
         
         
         <Grid item xs={2}>

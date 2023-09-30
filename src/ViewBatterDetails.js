@@ -54,13 +54,12 @@ function ViewBatteryDetails({Toggle}) {
 
   return (
       <>
-      <Dashboard_upBlocks/><br/>
+      <Dashboard_upBlocks/><br/><br/>
       {/* <UserDash_upblock/> */}
-            <Typography variant='h4' sx={{mb:"2rem",px:'20px'}}>Battery Details <Button  variant='contained' style={{backgroundColor:'lightseagreen'}} onClick={()=>navigate('/battery_add')} sx={{ml:'700px'}} >Add Battery</Button> </Typography>
+            
             { latestRequests.length ===0 ?
             <>
                 <Typography sx={{px:'20px'}}>No Recent Requests</Typography>
-              
           </>
             
             : 

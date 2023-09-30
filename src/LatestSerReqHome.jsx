@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AppBar, Button, Container, Toolbar, Typography ,Divider} from '@mui/material';
 import { GetToken } from '../src/Api/auth';
+import { Row,Col } from 'react-bootstrap';
 import { NavLink,Link, Navigate,BrowserRouter, useNavigate} from 'react-router-dom';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Header from './Header'
@@ -60,27 +61,23 @@ function LatestServReqHome({Toggle}) {
       <Dashboard_upBlocks/><br/>
       
       <Container>
-          <Typography variant='h4' sx={{mb:"2rem"}}>Latest Service Request <Button variant='contained' style={{backgroundColor:'lightseagreen'}} onClick={()=>navigate('/Service_ReqPage')} sx={{ml:'520px'}} >Add Service Request</Button> </Typography>
+        <Row>
+        <Col >
+                <Typography variant='h4' ><Button  variant='contained' style={{backgroundColor:'lightseagreen',color:'white'}} onClick={()=>navigate('/Service_ReqPage')}  >Add Service Request</Button> </Typography>
+            </Col>
+            
+        </Row><br/>
+     
           { latestRequests.length < 0 ?
-          <>
+          
            <Typography >No Recent Requests</Typography> 
-           <br/>
-           <br/>
-           <br/>
-           <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
-                            
-                            <div className="text-center  py-1 px-2">
-                            <div className="spinner-border text-primary " role="status">
-                              <span className="visually-hidden ">Loading...</span>
-                            </div> 
-                            <p className="text-dark d-flex justify-content-center">Loading....</p>
-                            </div>  
-      
-                          </div>
-          </>
+           
+         
   
           : 
-          <DisplayBattery  array_Details={latestRequests}/>
+          <>
+            <DisplayBattery  array_Details={latestRequests}/>
+          </>
         }
       </Container>
 

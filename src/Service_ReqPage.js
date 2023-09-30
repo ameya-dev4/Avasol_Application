@@ -17,25 +17,27 @@ const Service_ReqPage = () => {
 
   return (
     <>
-      
-    <div className='grid-container'>
+      <PostNewBattery/>
+
+    {/* <div className='grid-container'>
       <Header OpenSidebar={OpenSidebar}/>
       <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className="main-container text-dark">
+          
       <Card className="shadow p-3 mb-5 bg-body-tertiary rounded ">
           <Row>
                 <Col>
                     <hr/>
                     <Tabs defaultActiveKey="battery">
                         <Tab eventKey="battery" title="BATTERY">
-                            <PostNewBattery/>
+                            
                         </Tab>
                         <Tab eventKey="location" title="LOCATION">
                             <LocationPage/>
                         </Tab>
                         <Tab eventKey="confirm" title="CONFIRM">
                             <h2> Confirmation Page</h2>
-                            {/* <PaymentSuccess/> */}
+                    
                         </Tab>
                         <Tab eventKey="payment" title="PAYMENT">
                             <Payment/>
@@ -47,7 +49,7 @@ const Service_ReqPage = () => {
       </main> 
       
         
-    </div>
+    </div> */}
 
             
     
