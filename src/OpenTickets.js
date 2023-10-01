@@ -51,7 +51,7 @@ function OpenTickets(){
 
           <>
           <h2 className="mx-3 mt-3">No Tickets are Assigned</h2>
-          <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
+          {/* <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
                             
                             <div className="text-center  py-1 px-2">
                             <div className="spinner-border text-primary " role="status">
@@ -60,7 +60,7 @@ function OpenTickets(){
                             <p className="text-dark d-flex justify-content-center">Loading....</p>
                             </div>  
       
-                          </div>
+                          </div> */}
             </>
           }
           </main>

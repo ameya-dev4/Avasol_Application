@@ -274,17 +274,24 @@ import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const warrantyType = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-const vechicleType = [{value:'2', label:'Two'},{label:'Three',value:'3'}]
-const selfDeclaration = [{value:true, label :'Yes'},{label:'No',value:false}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
 
 
 function PostNewBattery() {
-    const Rating = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
-  const navigate = useNavigate();
+const [warranty_def, setWarranty_def]=useState('no')
+const [vechicel_def, setVechicle_def]=useState('None')
+const [status_def, setStatus_def]=useState('None')
+const [rating_def, setRating_def]=useState('None')
+
+const vechicleType = [{value:vechicel_def, label :'Select Vechicle Type  '},{value:'2', label:'Two'},{label:'Three',value:'3'}]
+const selfDeclaration = [{value:true, label :'Yes'},{label:'No',value:false}]
+const statusOptions = [{value:status_def, label :'Select Status'},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const performanceOptions = [{value:rating_def, label :'Select Rating'},{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+
+const Rating = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+const navigate = useNavigate();
+ 
+  const warrantyType = [{value:warranty_def, label :'select warranty '},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
@@ -319,6 +326,7 @@ function PostNewBattery() {
 
 //   console.log("formdata",formData)
   const handleInputChange = (e) => {
+
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -326,7 +334,34 @@ function PostNewBattery() {
     }));
   };
 
-  const handleSelectChange = (e) => {
+  const handleVechicleChange = (e) => {
+    setVechicle_def(e.target.value) 
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  
+  const handleWarrentyChange = (e) => {
+    setWarranty_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleStatusChange = (e) => {
+    setStatus_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const handleRatingChange = (e) => {
+    setRating_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -396,7 +431,7 @@ function PostNewBattery() {
         <FormField label="Battery Current" name="batteryCurrent" placeholder='Enter Current' onChange={handleInputChange}  value={formData.current}/>
 
         {/* Row 4 */}
-        <DropDownField label="Vehicle Type" name="vehicleType" onChange={handleInputChange} value={formData.vehicleType} options={vechicleType}/>
+        <DropDownField label="Vehicle Type" name="vehicleType" onChange={handleVechicleChange} value={vechicel_def} options={vechicleType}/>
         <FormField label="Service Location" name="service_location"  placeholder='eg:Hyderabad'onChange={handleInputChange}  value={formData.service_location}/>
 
         {/* Row 5 */}
@@ -404,11 +439,12 @@ function PostNewBattery() {
         <FormField label="NoteToServiceEngineer" name="noteToServiceEngineer" placeholder='Enter Note to Service Engineer' onChange={handleInputChange} value={formData.noteToServiceEngineer}/>
 
         {/* Row 6 */}
-        <DropDownField label="Under Warrenty" name="underWarrenty"  value={formData.warranty} options={warrantyType}/>
-        <DropDownField label="self Declaration"  value={formData.selfDeclaration} options={selfDeclaration} />
+        
+        <DropDownField label="Under Warranty" name="warranty"  value={warranty_def} options={warrantyType} onChange={handleWarrentyChange}/>
+        <DropDownField label="self Declaration"  value={formData.selfDeclaration} options={selfDeclaration} onChange={handleInputChange}  />
 
         {/* Row 7 */}
-        <DropDownField label="Status" name="status" onChange={handleInputChange}  value={formData.status} options={statusOptions}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange}  value={status_def} options={statusOptions}/>
         <FormField label="Last Status Updated" name="lastStatusUpdated" onChange={handleInputChange} value={formData.status}/>
 
         <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} placeholder='Enter Visit Amount' value={formData.amount}/>
@@ -420,7 +456,7 @@ function PostNewBattery() {
         <FormField label="Service Amount" name="serviceAmount" placeholder='Enter Amount' onChange={handleInputChange}  value={formData.ServiceAmount}/>
         <FormField label="service Amount Paid" name="serviceAmountPaid" placeholder='Enter Amount Paid' onChange={handleInputChange} value={formData.serviceAmountPaid}/>
             
-        <DropDownField label="Customer Rating" name="customerRating" onChange={handleInputChange}  value={formData.rating} options={performanceOptions}/>
+        <DropDownField label="Customer Rating" name="customerRating" onChange={handleRatingChange}  value={rating_def} options={performanceOptions} />
         
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>
@@ -445,7 +481,7 @@ function PostNewBattery() {
                 sx={{mb:2  }}
                 onClick={onSubmit}
               >
-                Update
+                Add Request
               </Button>
             </Grid>
            

@@ -4,6 +4,7 @@ import
 {BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, 
   BsListCheck, BsMenuButtonWideFill, BsFillGearFill}
  from 'react-icons/bs'
+import { GiMechanicGarage } from 'react-icons/gi'
 
 
 function Admin_sidebar({openSidebarToggle, OpenSidebar}) {
@@ -11,7 +12,9 @@ function Admin_sidebar({openSidebarToggle, OpenSidebar}) {
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
         <div className='sidebar-title'>
             <div className='sidebar-brand text-white'>
-                <i className='fa fa-flash'><b>Ameya</b></i>    
+                {/* <i className='fa fa-flash'><b>Ameya</b></i> */}
+                <GiMechanicGarage  className='icon_header '/> AMEYA
+
             </div>
             <span className='icon close_icon text-danger' onClick={OpenSidebar}>X</span>
         </div>

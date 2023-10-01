@@ -6,6 +6,7 @@ import SERVER_URL from './Server/Server';
 
 
 function AdminDash_upblock() {
+    
     const [TicketDetails, setTicketDetails] = useState([]);
     const [All_serv_engg ,setAll_Serv_engg]=useState([]);
     const authToken=GetToken()
@@ -51,8 +52,9 @@ function AdminDash_upblock() {
     const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
+
   return (
-    <div className='px-3'>
+    <div >
         <div className='container-fluid px-1'> 
             <div className='row g-3 my-2'>
                 <div className='col-md-3 dashboard-stat red-intense' >

@@ -174,12 +174,12 @@ function Table_Tickets({array_Details}){
         return (
           <>
            <TableRow >
-            <TableCell style={{fontSize:'14px'}}>{record.requestId}</TableCell>
-            <TableCell style={{fontSize:'14px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
-            <TableCell style={{fontSize:'14px'}}>{record.username}</TableCell>
-            <TableCell style={{fontSize:'14px'}}>Contact Number</TableCell>
-            <TableCell style={{fontSize:'14px'}}>{record.openDate.slice(0,10)}</TableCell>
-            <TableCell style={{fontSize:'14px'}}>City</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.requestId}</TableCell>
+            <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.username}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>Contact Number</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.openDate.slice(0,10)}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>City</TableCell>
             
 
             </TableRow>
@@ -190,15 +190,15 @@ function Table_Tickets({array_Details}){
     return (
       <>
       
-        <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%',mt:10}}>
+        <TableContainer component={Paper} sx={{m:1,bgcolor:'white',maxWidth:'99%',mt:10}}>
           <Table>
               <TableRow>
-                <TableCell><h6>ID</h6></TableCell>
-                <TableCell><h6>Ticket Description</h6></TableCell>
-                <TableCell><h6>Customer Name </h6></TableCell>
-                <TableCell><h6>Contact Number</h6></TableCell>
-                <TableCell><h6>Open Date</h6></TableCell>
-                <TableCell><h6>Service Location </h6></TableCell>
+                <TableCell><h4>ID</h4></TableCell>
+                <TableCell><h4>Ticket Description</h4></TableCell>
+                <TableCell><h4>Customer Name </h4></TableCell>
+                <TableCell><h4>Contact Number</h4></TableCell>
+                <TableCell><h4>Open Date</h4></TableCell>
+                <TableCell><h4>Service Location </h4></TableCell>
               </TableRow>
             <TableBody>
               {enhancedArray.map((record) => (

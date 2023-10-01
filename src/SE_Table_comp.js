@@ -155,13 +155,13 @@ function SE_Table_comp({array_Details}){
         return (
           <>
            <TableRow >
-            <TableCell style={{fontSize:'14px'}}>{record.requestId}</TableCell>
-            <TableCell style={{fontSize:'14px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
-            <TableCell style={{fontSize:'14px'}}>{record.username}</TableCell>
-            <TableCell style={{fontSize:'14px'}}> Cotact Number</TableCell>      
-            <TableCell style={{fontSize:'14px'}}>City</TableCell>
-            <TableCell style={{fontSize:'14px'}}>{record.serviceEngineerNotes}</TableCell>
-            <TableCell style={{fontSize:'14px'}}>{record.status}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.requestId}</TableCell>
+            <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.username}</TableCell>
+            <TableCell style={{fontSize:'18px'}}> Cotact Number</TableCell>      
+            <TableCell style={{fontSize:'18px'}}>City</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerNotes}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
 
             </TableRow>
                     

@@ -10,13 +10,17 @@ import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const SEoptions = [{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
-
 
 
 function UpdateNewTickets() {
+  const [status_def, setSatus_def]=useState(Number(0))
+  const [SE_def, setSE_def]=useState('None')
+
+  const SEoptions = [{value:SE_def, label :'Select Service Engineer'},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
+  const statusOptions = [{value:status_def, label :'Select Status'},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+  const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+
+
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -55,7 +59,17 @@ function UpdateNewTickets() {
     }));
   };
 
-  const handleSelectChange = (e) => {
+  const handleStausChange = (e) => {
+    setSatus_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSEChange = (e) => {
+    setSE_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -95,7 +109,7 @@ function UpdateNewTickets() {
       <main className='main-container'>
       <AdminDash_upblock />
       <form onSubmit={onSubmit}>
-        <Table sx={{border:'1px solid black',p:2,mt:10,backgroundColor:'white'}}>
+        <Table sx={{border:'1px solid black',p:1,mt:3,backgroundColor:'white'}}>
         <Grid container spacing={2} sx={{border:'1px black'}}>
         <Grid item xs={12}>
               <Button
@@ -128,8 +142,8 @@ function UpdateNewTickets() {
 
         
         {/* Row 5 */}
-        <DropDownField label="Status" name="status" onChange={handleSelectChange} options={statusOptions} value={formData.status}/>
-        <DropDownField label="Service Engineer" name="serviceEngineerId" options={SEoptions} onChange={handleInputChange} value={formData.serviceEngineerId} disabled={false} />
+        <DropDownField label="Status" name="status" onChange={handleStausChange} options={statusOptions} value={status_def}/>
+        <DropDownField label="Service Engineer" name="serviceEngineerId" options={SEoptions} onChange={handleSEChange} value={SE_def} />
 
         {/* Row 5 */}
         <FormField label="Notes" name="notes1" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
@@ -141,7 +155,7 @@ function UpdateNewTickets() {
                 variant="contained"
                 size="large"
                 fullWidth
-                sx={{ml:65,mt:5,mb:3}}
+                sx={{ml:40,mt:5,mb:3}}
                 onClick={() => navigate(-1)}
               >
                close
@@ -154,7 +168,7 @@ function UpdateNewTickets() {
                 color="success"
                 size="large"
                 fullWidth
-                sx={{ml:70, mb:3,mt:5  }}
+                sx={{ml:50, mb:3,mt:5  }}
               >
                 Save Changes
               </Button>

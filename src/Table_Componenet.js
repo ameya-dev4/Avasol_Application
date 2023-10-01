@@ -162,13 +162,13 @@ function Table_comp({array_Details}){
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell><h2>Ticket</h2></TableCell>
-                <TableCell><h2>Description</h2></TableCell>
-                <TableCell><h2>Customer Name </h2></TableCell>
-                <TableCell><h2>Mobile Number</h2></TableCell>
-                <TableCell><h2>Location</h2></TableCell>
-                <TableCell><h2>SE Notes </h2></TableCell>
-                <TableCell><h2>Status</h2></TableCell>
+                <TableCell><h6>Ticket</h6></TableCell>
+                <TableCell><h6>Description</h6></TableCell>
+                <TableCell><h6>Customer Name </h6></TableCell>
+                <TableCell><h6>Mobile Number</h6></TableCell>
+                <TableCell><h6>Location</h6></TableCell>
+                <TableCell><h6>SE Notes </h6></TableCell>
+                <TableCell><h6>Status</h6></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

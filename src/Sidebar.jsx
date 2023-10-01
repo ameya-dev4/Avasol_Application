@@ -1,4 +1,5 @@
 import React from 'react'
+import { GiMechanicGarage } from 'react-icons/gi'
 import {Link} from 'react-router-dom'
 
 
@@ -7,8 +8,8 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
         <div className='sidebar-title'>
             <div className='sidebar-brand text-white'>
-                {/* <BsCart3  className='icon_header text-white'/> */}
-                <i className='fa fa-flash'><b>Ameya</b></i>
+                {/* <i className='fa fa-flash'><b>Ameya</b></i> */}
+                <GiMechanicGarage  className='icon_header '/> AMEYA
                 
             </div>
             <span className='icon close_icon text-danger' onClick={OpenSidebar}>X</span>

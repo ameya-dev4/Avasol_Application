@@ -10,20 +10,28 @@ import SERVER_URL from './Server/Server';
 const Admin_Logout= (event)=>{
     const navigate=useNavigate();
     const access_token=GetToken();
-    console.log(access_token)
+    const send_token=access_token
     // Cookies.remove('access_token')
     // Cookies.remove('refresh_token')
-    document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    window.localStorage.clear()
     // alert("do you want to logout")
+    const token={access_token:send_token}
     fetch(`${SERVER_URL}admin/logout`,{
             method:'POST',
             mode:'cors',
             headers:{
                 'Content-Type': 'application/json',
+                'Authorization':`Bearer ${access_token}`
+                
             },
-            body:JSON.stringify(event)
+            body:JSON.stringify(token)
+        }).then((resp)=>resp.json())
+        .then((data)=>{
+            document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            window.localStorage.clear()
+            console.log(data)
+        }).catch((err)=>{
+            console.error("logout Failed...!",err)
         })
 
         const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -39,7 +47,7 @@ const Admin_Logout= (event)=>{
       <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className="main-container">
       <div >
-                <div className=" position-absolute top-50 start-50 translate-middle col-6 shadow p-3 bg-body-tertiary rounded ">
+                <div className=" position-absolute top-50 start-50 translate-middle col-6 shadow p-3 bg-body-tertiary rounded bg-white">
                     <div className='px-2 mx-5 mb-5 text-dark'>
                         <h3>Welcome to EV MEC System</h3>
                     </div>

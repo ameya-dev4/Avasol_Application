@@ -16,9 +16,7 @@ const Logout= (event)=>{
     }
     // Cookies.remove('access_token')
     // Cookies.remove('refresh_token')
-    document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    window.localStorage.clear()
+   
     // alert("do you want to logout")
     fetch(`${SERVER_URL}user/logout`,{
             method:'POST',
@@ -26,7 +24,15 @@ const Logout= (event)=>{
             headers:{
                 'Content-Type': 'application/json',
             },
-            body:data
+            body:JSON.stringify(data)
+        }).then((resp)=>resp.json())
+        .then((data)=>{
+            document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            window.localStorage.clear()
+            console.log(data)
+        }).catch((err)=>{
+            console.error("logout failed...!",err)
         })
 
         const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
