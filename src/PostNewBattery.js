@@ -371,29 +371,32 @@ const navigate = useNavigate();
 
   const [latestRequests, setLatestRequests] = useState([]);
   const[displayDetails , setDisplayDetails] = useState(false);
+  const [data, setData] = useState(null)
+  const [error, setError] = useState(null)
 
-
-  const onSubmit = (e) => {
+  const onSubmit = (e) => async()=>{
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch(`${SERVER_URL}user/add-service-request`,{
+    const response= await fetch(`${SERVER_URL}user/add-service-request`,{
       method:'POST',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
-      alert('Details are Successfully Updated');
-      navigate(-1);
-    }).catch((error) => {
-      console.log(error);
     })
-    // Perform your form submission logic here
+    if(response.ok){
+      const result=await response.json()
+      setData(result)
+      console.log('fetching successful...!')
+    }else{
+      throw new Error('Failed to Add New Request...!')
+    }
+   
   };
+
+  
    
 
   return (

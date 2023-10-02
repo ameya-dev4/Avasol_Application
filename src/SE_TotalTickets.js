@@ -91,6 +91,9 @@ const url = `${SERVER_URL}se/get-service-request-details`
 
 
 function SE_TotalTickets(){
+    const [data, setData]= useState(null)
+    const [error, setError] = useState(null)
+
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
     //const {authToken} = useAuth();
@@ -99,23 +102,36 @@ function SE_TotalTickets(){
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
-  let data = {
+  let data1 = {
     username : userName,
   }
   useEffect (()=> {
     async function fetchDetails(){
-        const response = await fetch(url,{
+        try {
+          
+          const response = await fetch(url,{
             method : 'POST',
             headers : {
                 'Authorization' : `Bearer ${authToken}`,
                 'Content-type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
             },
-            body : JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((array_Details) =>{
-            setTicketDetails(array_Details);
+            body : JSON.stringify(data1)
         })
+          if(response.ok){
+            const results= await response.json()
+            setData(results)
+            setTicketDetails(results)
+            console.log('Fetching successful..!')
+          }else{
+            throw new Error('failed to get service request details...!')
+
+          }
+
+        } catch (error) {
+          setError(error.message)
+        }
+
       }
       fetchDetails();
   },[]) 

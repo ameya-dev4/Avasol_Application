@@ -577,6 +577,8 @@ const authToken = GetToken();
 
 
 function Admin_Edit_Profile() {
+  const [data, setData]= useState(null)
+  const [error, SetError] = useState(null)
   const navigate = useNavigate();
   const [user_Details,setUserDetails] = useState({})
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -623,23 +625,29 @@ function Admin_Edit_Profile() {
   const onSubmit = (e) => {
     e.preventDefault();
     // formData contains the form values
+
+        try {
+          const response=fetch(`${SERVER_URL}admin/profile-update`,{
+            method:'PUT',
+            headers:{
+              'Authorization':`Bearer ${authToken}`,
+              'Content-Type':'application/json',
+            },
+            body:JSON.stringify(user_Details)
+          })
+          if (response.ok){
+            alert('Details are Successfully Updated');
+            navigate('/admin_profile');
+            const result =response.json()
+            setData(result)
+          }else{
+            throw new Error("Failed to fetch Details...!")
+          }
+          
+        } catch (error) {
+         SetError(error.message) 
+        }   
     
-    fetch(`${SERVER_URL}admin/profile-update`,{
-      method:'PUT',
-      headers:{
-        'Authorization':`Bearer ${authToken}`,
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify(user_Details)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
-      alert('Details are Successfully Updated');
-      navigate('/admin_profile');
-    }).catch((error) => {
-      console.log(error);
-    })
-    // Perform your form submission logic here
   };
 
   return (

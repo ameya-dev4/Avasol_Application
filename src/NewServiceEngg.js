@@ -24,6 +24,8 @@ const url = `${SERVER_URL}admin/get-service-engineers`
 function NewServiceEngineers(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
+    const [data, setData]= useState(null)
+    const [error,setError] = useState(null)
 
     const OpenSidebar = () => {
       setOpenSidebarToggle(!openSidebarToggle)
@@ -31,21 +33,33 @@ function NewServiceEngineers(){
 
     useEffect (()=> {
       async function fetchDetails(){
-          const response = await fetch(url,{
+          try {
+            const response = await fetch(url,{
               method : 'POST',
               headers : {
                   'Authorization' : `Bearer ${authToken}`,
                   'Content-type': 'application/json',
               },
               body : JSON.stringify({status:1}),
-          }).then((response) => response.json())
-          .then((array_Details) =>{
-              setTicketDetails(array_Details);
           })
+              if(response.ok){
+                const result=await response.json()
+                setData(result)
+                setTicketDetails(result)
+                console.log('fetching successful...!')
+              }else{
+                throw new Error("failed to fetch New Service Engineers...!")
+                
+              }
+
+          } catch (error) {
+            setError(error.message)
+          }
         }
         fetchDetails();
     },[])
     console.log(TicketDetails);
+    
 
     return <>
     <div className='grid-container'>
@@ -54,7 +68,8 @@ function NewServiceEngineers(){
     <main className="main-container">
     <AdminDash_upblock />
     {TicketDetails.length > 0 ? <Table_SE array_Details={TicketDetails} /> : 
-      <h2 className="mx-3 mt-3">New Service Engineer Details Display Here</h2>}
+
+      <h2 className="mx-3 mt-3">New Service Engineer Details Display Here</h2> }
     </main>
     </div>
     </>

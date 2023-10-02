@@ -427,28 +427,28 @@ function DisplayBattery({array_Details}){
   const [enhancedArray, setEnhancedArray ] = useState([]);
   const [latestRequests, setLatestRequests]=useState([])
 
-  useEffect(() => {
-    // Function to make the GET request
-    async function getLatestRequests() {
-      try {
-        const response = await fetch(`${SERVER_URL}user/latest-service-requests`,{
-            method:"GET",
-            headers:{
-                'Content-Type':"application/json",
-                "Authorization": "Bearer " + authToken,
-            },
-        });
-        const data = await response.json();
-        setLatestRequests(data);
-        // console.log(data)
-      } catch (error) {
-        console.error('Error fetching latest requests:', error);
-      }
-    }
+  // useEffect(() => {
+  //   // Function to make the GET request
+  //   async function getLatestRequests() {
+  //     try {
+  //       const response = await fetch(`${SERVER_URL}user/latest-service-requests`,{
+  //           method:"GET",
+  //           headers:{
+  //               'Content-Type':"application/json",
+  //               "Authorization": "Bearer " + authToken,
+  //           },
+  //       });
+  //       const data = await response.json();
+  //       setLatestRequests(data);
+  //       // console.log(data)
+  //     } catch (error) {
+  //       console.error('Error fetching latest requests:', error);
+  //     }
+  //   }
 
-    // Call the function to get and display the latest service requests on page load
-    getLatestRequests();
-  }, []);
+  //   // Call the function to get and display the latest service requests on page load
+  //   getLatestRequests();
+  // }, []);
 
 console.log("lates",latestRequests)
 

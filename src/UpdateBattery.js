@@ -138,28 +138,29 @@ function UpdateBattery() {
   }
 
 
-  const onSubmit = (e) => {
+  const onSubmit = (e) =>async()=> {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch(`${SERVER_URL}user/update-battery`,{
+    const response= await fetch(`${SERVER_URL}user/update-battery`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
+    })
+    if (response.ok){
+      const result= await response.json()
       alert('Details are Successfully Updated');
       navigate(-1);
-    }).catch((error) => {
-      console.log(error);
-    })
+    }else{
+      throw new Error('Failed to update battery Details...!')
+    }
     // Perform your form submission logic here
   };
    
+
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>

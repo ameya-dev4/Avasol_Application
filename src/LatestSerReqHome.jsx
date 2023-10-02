@@ -19,7 +19,9 @@ function LatestServReqHome({Toggle}) {
   const navigate=useNavigate();
   const [latestRequests, setLatestRequests] = useState([]);
   const[displayDetails , setDisplayDetails] = useState(false);
-  
+  const [data, setData]=useState(null)
+  const [error, setError]= useState(null)
+
 
 
   useEffect(() => {
@@ -32,9 +34,16 @@ function LatestServReqHome({Toggle}) {
                 'Content-Type':"application/json",
                 "Authorization": "Bearer " + access_token,
             },
-        });
-        const data = await response.json();
-        setLatestRequests(data);
+        })
+          if(response.ok){
+            const data = await response.json();
+            setLatestRequests(data);
+            setData(data)
+            console.log("fetching Successful")
+          }else{
+            throw new Error('failed to fetch Service Request details')
+          }
+        
       } catch (error) {
         console.error('Error fetching latest requests:', error);
       }

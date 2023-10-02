@@ -14,6 +14,8 @@ const authToken = GetToken();
 
 
 function AdminMyProfile() {
+  const [data,setData]= useState(null)
+  const [error,SetError]= useState(null)
   const navigate = useNavigate();
   const [user_Details,setUserDetails] = useState({})
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -22,22 +24,36 @@ function AdminMyProfile() {
   }
   
   useEffect (() =>{ async function fetchDetails(){
-    const response = await fetch(`${SERVER_URL}admin/get-profile`,{
+    try {
+      
+      const response = await fetch(`${SERVER_URL}admin/get-profile`,{
         method : 'GET',
         headers : {
             'Authorization' : `Bearer ${authToken}`,
             'Content-type': 'application/json',
             "Access-Control-Allow-Origin": "*",
         }
-    }).then((response) => response.json())
-    .then((user_Details) =>{
-      setUserDetails(user_Details);
-      console.log(user_Details);
-        
     })
+    if (response.ok){
+      const result=await response.json()
+      setUserDetails(result)
+      console.log("fetch Successful")
+      setData(result)
+      
+    }else{
+      throw new Error("failed to fetch details...! ")
+      
+    }
+
+    } catch (error) {
+      SetError(error.message)
+    }
   }
   fetchDetails();
 },[])
+
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

@@ -27,6 +27,8 @@ const url = `${SERVER_URL}admin/get-new-tickets`
 function NewTickets(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
+    const [data, setData] =useState(null)
+    const [error, setError] =useState(null)
 
     const OpenSidebar = () => {
       setOpenSidebarToggle(!openSidebarToggle)
@@ -34,16 +36,27 @@ function NewTickets(){
 
     useEffect (()=> {
       async function fetchDetails(){
-          const response = await fetch(url,{
+          try {
+            
+            const response = await fetch(url,{
               method : 'GET',
               headers : {
                   'Authorization' : `Bearer ${authToken}`,
                   'Content-type': 'application/json',
               },
-          }).then((response) => response.json())
-          .then((array_Details) =>{
-              setTicketDetails(array_Details);
           })
+            if(response.ok){
+              const result= await response.json()
+              setData(result)
+              setTicketDetails(result)
+              console.log('fetching Successful')
+            }else{
+              throw new Error('failed to fetch New Tickets...!')
+            }
+
+          } catch (error) {
+            setError(error.message)
+          }
         }
         fetchDetails();
     },[])

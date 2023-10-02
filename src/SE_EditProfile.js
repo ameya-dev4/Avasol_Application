@@ -303,6 +303,9 @@ const authToken = GetToken();
 
 function EditSe_Profile() {
   const navigate = useNavigate();
+  const [data, setData] = useState(null)
+  const [error, setError] = useState(null)
+
   const [user_Details,setUserDetails] = useState({})
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -310,22 +313,34 @@ function EditSe_Profile() {
   }
   
   useEffect (() =>{ async function fetchDetails(){
-    const response = await fetch(`${SERVER_URL}se/get-profile`,{
+    try {
+      
+      const response = await fetch(`${SERVER_URL}se/get-profile`,{
         method : 'GET',
         headers : {
             'Authorization' : `Bearer ${authToken}`,
             'Content-type': 'application/json',
             "Access-Control-Allow-Origin": "*",
         }
-    }).then((response) => response.json())
-    .then((user_Details) =>{
-      setUserDetails(user_Details);
-      console.log(user_Details);
-        
     })
+      if (response.ok){
+        const result= await response.json()
+        setData(result)
+        setUserDetails(result)
+        console.log('fetching successful...!')
+      }else{
+        throw new Error('Failed to fetch Service Engineer details...!')
+      }
+
+    } catch (error) {
+      setError(error.message)
+    }
+
   }
   fetchDetails();
 },[])
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -345,27 +360,28 @@ function EditSe_Profile() {
 
   
 
-  const onSubmit = (e) => {
+  const onSubmit = (e) => async()=>{
     e.preventDefault();
     // formData contains the form values
     
-    fetch(`${SERVER_URL}se/update-profile`,{
+    const response=await fetch(`${SERVER_URL}se/update-profile`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(user_Details)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
+    })
+    if (response.ok){
+      const result = await response.json()
+      setData(result)
       alert('Details are Successfully Updated');
       navigate('/se_myDashboard');
-    }).catch((error) => {
-      console.log(error);
-    })
-    // Perform your form submission logic here
+    }else{
+      throw new Error('Failef to update details...!')
+    }
   };
+  
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>

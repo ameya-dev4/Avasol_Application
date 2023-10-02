@@ -8,6 +8,7 @@ import SERVER_URL from "./Server/Server";
 const authToken = GetToken();
 
 function getCurrentDate() {
+  
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1; // Month is zero-based, so add 1
@@ -20,6 +21,8 @@ const currentDate = getCurrentDate();
 const url = `${SERVER_URL}admin/get-service-engineers`
 
 function AllServiceEngineers(){
+  const [data, setData] =useState(null)
+  const [error, setError] =useState(null)
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
 
@@ -29,23 +32,31 @@ function AllServiceEngineers(){
 
     useEffect (()=> {
       async function fetchDetails(){
-          const response = await fetch(url,{
+          try { 
+            const response = await fetch(url,{
               method : 'POST',
               headers : {
                   'Authorization' : `Bearer ${authToken}`,
                   'Content-type': 'application/json',
               },
               body : JSON.stringify({status:3}),
-          }).then((response) => response.json())
-          .then((array_Details) =>{
-              setTicketDetails(array_Details);
-              console.log(array_Details);
-              
           })
+            if(response.ok){
+              const result= await response.json()
+              setData(result)
+              setTicketDetails(result)
+              console.log("fetch successful...!")
+            }else{
+              throw new Error("failed to fetch All Service Engineers details")
+            }
+          } catch (error) {
+            setError(error.message)
+          }
         }
         fetchDetails();
     },[])
 
+    
 
     return <>
     <div className='grid-container'>

@@ -21,25 +21,38 @@ console.log(display_details);
 
 
 function SE_TicketPage({details}){
+  const [data, setData] = useState(null)
+  const [error, setError] = useState(null)
+
   const [status, setStatus] = useState('');
   const [payinfo , setPayinfo] = useState('');
   const navigate = useNavigate();
-  const data = {
+  const data1= {
     username : userName
   }
   useEffect (() =>{ async function fetchDetails(){
-    const response = await fetch(url,{
+    try {
+      
+      const response = await fetch(url,{
         method : 'POST',
         headers : {
             'Authorization' : `Bearer ${authToken}`,
             'Content-type': 'application/json',
             "Access-Control-Allow-Origin": "*",
         },
-        body : JSON.stringify(data)
-    }).then((response) => response.json())
-    .then((array_Details) =>{
-        TicketDetails = array_Details;
+        body : JSON.stringify(data1)
     })
+      if (response.ok){
+        const results= await response.json()
+        setData(results)
+        TicketDetails=results
+      }else{
+        throw new Error('Failed to get Ticket details...!')
+      }
+
+    } catch (error) {
+       setError(error.message)
+    }
   }
   fetchDetails();
 },[])

@@ -14,6 +14,9 @@ const authToken = GetToken();
 
 
 function UserProfile() {
+  const [data, setData] = useState(null)
+  const [error, setError] = useState(null)
+
   const navigate = useNavigate();
   const [user_Details,setUserDetails] = useState({})
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -24,19 +27,27 @@ function UserProfile() {
   const parse_password=JSON.parse(password)
   
   useEffect (() =>{ async function fetchDetails(){
-    const response = await fetch(`${SERVER_URL}user/get-profile`,{
+    try {
+      
+      const response = await fetch(`${SERVER_URL}user/get-profile`,{
         method : 'GET',
         headers : {
             'Authorization' : `Bearer ${authToken}`,
             'Content-type': 'application/json',
             "Access-Control-Allow-Origin": "*",
         }
-    }).then((response) => response.json())
-    .then((user_Details) =>{
-      setUserDetails(user_Details);
-      console.log(user_Details);
-        
     })
+        if(response.ok){
+          const result =await response.json()
+          setData(result)
+          setUserDetails(result)
+          console.log("fetching succesful....!")
+        }else{
+          throw new Error("failed to fetch user details...!")
+        }
+    } catch (error) {
+      setError(error.message)
+    }
   }
   fetchDetails();
 },[])

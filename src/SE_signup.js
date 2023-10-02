@@ -36,6 +36,8 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SE_signUp() {
+  const [ data, setData] =React.useState(null)
+  const [ error, setError] = React.useState(null)
 
     const {
         register,
@@ -63,21 +65,24 @@ export default function SE_signUp() {
       }
     );
 
-  const Submit = (RegisterData) => {
+  const Submit = (RegisterData) =>async()=> {
     console.log(RegisterData);
-    fetch(`${SERVER_URL}se/signup`,{
+    const response= await fetch(`${SERVER_URL}se/signup`,{
         method:'POST',
         headers:{ 
             'Content-Type':'application/json',
         },
         body : JSON.stringify(RegisterData),
 
-    }).then((response) => response.json())
-    .then((output) =>{
-        console.log(output);
-    }).catch((error) => {
-        console.log(error)
     })
+    if(response.ok){
+      const results= await response.json()
+      setData(results)
+      console.log('fetching successful...!')
+
+    }else{
+      throw new Error('Failed to signup...!')
+    }
 
     
     /*event.preventDefault();

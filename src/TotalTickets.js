@@ -13,6 +13,8 @@ const url = `${SERVER_URL}get-ticket-details`
 
 
 function TotalTickets(){
+    const [error, setError] = useState(null)
+
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
     //const {authToken} = useAuth();
@@ -26,7 +28,9 @@ function TotalTickets(){
   }
   useEffect (()=> {
     async function fetchDetails(){
-        const response = await fetch(url,{
+        try {
+          
+          const response = await fetch(url,{
             method : 'POST',
             headers : {
                 'Authorization' : `Bearer ${authToken}`,
@@ -34,10 +38,19 @@ function TotalTickets(){
                 "Access-Control-Allow-Origin": "*",
             },
             body : JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((array_Details) =>{
-            setTicketDetails(array_Details);
         })
+            if (response.ok){
+              const result=await response.json()
+              setTicketDetails(result)
+              console.log('fetching successful...!')
+
+            }else{
+              throw new Error('Failed to fetch total tickets...!')
+            }
+
+        } catch (error) {
+          setError(error.message)
+        }
       }
       fetchDetails();
   },[TicketDetails]) 

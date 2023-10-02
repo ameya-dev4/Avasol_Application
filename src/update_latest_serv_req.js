@@ -123,29 +123,30 @@ function UpdateLatestServReq() {
     }
 
 
-  const onSubmit = (e) => {
+  const onSubmit = (e) => async()=>{
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch(`${SERVER_URL}user/update-service-request`,{
+    const response= await fetch(`${SERVER_URL}user/update-service-request`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
+    })
+    if(response.ok){
+      const results= await response.json()
       alert('Details are Successfully Updated');
       navigate(-1);
-    }).catch((error) => {
-      console.log(error);
-    })
+      console.log('fetching successful...!')
+    }else{
+      throw new Error('Failed to update service Request details...!')
+    }
     // Perform your form submission logic here
   };
-   
 
+  
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
       <Header OpenSidebar={OpenSidebar}/>

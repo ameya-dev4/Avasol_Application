@@ -65,25 +65,25 @@ function UpdateTicket() {
 
 
 
-  const onSubmit = (e) => {
+  const onSubmit = (e) => async()=>{
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch(`${SERVER_URL}admin/update-ticket`,{
+    const response= await fetch(`${SERVER_URL}admin/update-ticket`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
+    })
+    if (response.ok){
+      const result= await response.json()
       alert('Details are Successfully Updated');
       navigate(-1);
-    }).catch((error) => {
-      console.log(error);
-    })
+    }else{
+      throw new Error('Failed to update the Assigned Ticket...!')
+    }
     // Perform your form submission logic here
   };
 

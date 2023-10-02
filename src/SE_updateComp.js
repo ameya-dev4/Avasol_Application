@@ -238,6 +238,9 @@ const performanceOptions = [{label:'Average',value:'average'},{label:'Good',valu
 
 
 function Update() {
+  const [data, setData] = useState(null)
+  const [error, setError] = useState(null)
+
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -287,6 +290,7 @@ function Update() {
         });
         } else {
           // Handle error if API request fails
+
         }
       } catch (error) {
         // Handle any other errors
@@ -318,26 +322,26 @@ function Update() {
   }
 
 
-  const onSubmit = (e) => {
+  const onSubmit = (e) =>async()=> {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch(`${SERVER_URL}admin/update-service-engineer`,{
+    const response= await fetch(`${SERVER_URL}admin/update-service-engineer`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
-      alert('Details are Successfully Updated');
-      navigate(-1);
-    }).catch((error) => {
-      console.log(error);
     })
-    // Perform your form submission logic here
+    if (response.ok){
+      const result=await response.json()
+      setData(result)
+    
+    }else{
+      throw new Error('Failed to update service engineer...!')
+    }
+    
   };
 
   return (
