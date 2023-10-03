@@ -86,7 +86,7 @@ import SE_Dash_upblocks from "./SE_Dash_upblocks";
 import SERVER_URL from './Server/Server';
 
 const userName = localStorage.getItem('username');
-console.log(userName);
+const parse_username=JSON.parse(userName)
 const url = `${SERVER_URL}se/get-service-request-details`
 
 
@@ -103,7 +103,7 @@ function SE_TotalTickets(){
     setOpenSidebarToggle(!openSidebarToggle)
   }
   let data1 = {
-    username : userName,
+    username :parse_username,
   }
   useEffect (()=> {
     async function fetchDetails(){

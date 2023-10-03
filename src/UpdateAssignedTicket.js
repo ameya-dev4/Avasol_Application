@@ -10,13 +10,16 @@ import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const SEoptions = [{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
 
 
 function UpdateTicket() {
+  const [status_def, setSatus_def]=useState(Number(0))
+  const [SE_def, setSE_def]=useState('None')
+
+
+  const SEoptions = [{value:SE_def, label :'Select Service Engineer'},{value:'<TBD>', label :'<TBD>'},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
+  const statusOptions = [{value:status_def, label :'Select Status'},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -55,7 +58,17 @@ function UpdateTicket() {
     }));
   };
 
-  const handleSelectChange = (e) => {
+  const handleStatusChange = (e) => {
+    setSatus_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSEChange = (e) => {
+    setSE_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -128,8 +141,8 @@ function UpdateTicket() {
 
         
         {/* Row 5 */}
-        <DropDownField label="Status" name="status"  onChange={handleSelectChange} options={statusOptions} value={formData.status}/>
-        <DropDownField label="Service Engineer"  name="serviceEngineerId" options={SEoptions} onChange={handleInputChange} value={formData.serviceEngineerId} disabled={false} />
+        <DropDownField label="Status" name="status"  onChange={handleStatusChange} options={statusOptions} value={formData.status!==null?formData.status:status_def}/>
+        <DropDownField label="Service Engineer"  name="serviceEngineerId" options={SEoptions} onChange={handleSEChange} value={formData.serviceEngineerId!==null?formData.serviceEngineerId:setSE_def} />
 
         {/* Row 5 */}
         <FormField label="Notes" name="notes1" onChange={handleInputChange} value={formData.noteToServiceEngineer}/>

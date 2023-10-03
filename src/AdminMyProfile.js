@@ -85,9 +85,9 @@ function AdminMyProfile() {
       <Header OpenSidebar={OpenSidebar}/>
       <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className='main-container'>
-     <AdminDash_upblock /> 
+     {/* <AdminDash_upblock />  */}
       <form onSubmit={onSubmit}>
-        <Table sx={{border:'1px solid black',p:2,mt:10,bgcolor:'white'}}>
+        <Table sx={{border:'1px solid black',p:2,bgcolor:'white'}}>
         <Grid container spacing={2} sx={{border:'1px black'}}>
         <Grid item xs={12}>
               <Button
@@ -95,7 +95,6 @@ function AdminMyProfile() {
                 size="large"
                 color='primary'
                 fullWidth
-                sx={{ mb: 3  }}
                 
               >
                 <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Profile</Typography>
@@ -104,12 +103,12 @@ function AdminMyProfile() {
        
           <Grid item xs={12} sm={12}>
             <Box>
-              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:3,mt:2}}>Personal Info</Typography>
+              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:1,px:2}}>Personal Info</Typography>
             </Box>
           </Grid>
         {/* Horizontal Line */}
         <Grid sm={12} xs={12}>
-        <hr style={{width:'98%',color:'grey',align:'right'}} noshade />
+        <hr style={{width:'98%',color:'grey',align:'right',marginLeft:'2%'}} noshade />
         </Grid>
 
         
@@ -125,7 +124,7 @@ function AdminMyProfile() {
         <FormField label="Service Area" name="serviceArea" onChange={handleInputChange} value={user_Details.serviceArea}/>
         <Grid item xs={12} sm={6}>
         <Box>
-          <Typography sx={{color:'black',fontSize:'24px',mb:3,ml:3}} >Training Completed</Typography>
+          <Typography sx={{color:'black',fontSize:'28px',m:1,mt:2,px:2}} >Training Completed</Typography>
         <FormControl>
               <RadioGroup
               row
@@ -141,12 +140,12 @@ function AdminMyProfile() {
           
         <Grid item xs={12} sm={12}>
             <Box>
-              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:3,mt:5}}>Address Details </Typography>
+              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:1,mt:2,px:2}}>Address Details </Typography>
             </Box>
           </Grid>
         {/* Horizontal Line */}
         <Grid sm={12} xs={12}>
-        <hr style={{width:'98%',color:'grey',align:'right'}} noshade />
+        <hr style={{width:'98%',color:'grey',align:'right',marginLeft:'2%'}} noshade />
         </Grid>
 
 
@@ -166,13 +165,13 @@ function AdminMyProfile() {
         
         <Grid item xs={12} sm={12}>
             <Box>
-              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:2,mt:5,mb:1}}>Bank Details </Typography>
+              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:1,mt:2,px:2}}>Bank Details </Typography>
             </Box>
           </Grid>
         
         {/*Horizontal Line */}
         <Grid sm={12} xs={12} >
-        <hr style={{width:'96%',color:'grey',align:'right'}} noshade />
+        <hr style={{width:'98%',color:'grey',align:'right',marginLeft:'2%'}} noshade />
         </Grid>
 
         

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React,{useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,6 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import SERVER_URL from './Server/Server';
+import { Card } from 'react-bootstrap';
+
 
 
 
@@ -36,8 +38,8 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SE_signUp() {
-  const [ data, setData] =React.useState(null)
-  const [ error, setError] = React.useState(null)
+  const [ data, setData] =useState(null)
+  const [ error, setError] =useState(null)
 
     const {
         register,
@@ -65,42 +67,42 @@ export default function SE_signUp() {
       }
     );
 
-  const Submit = (RegisterData) =>async()=> {
-    console.log(RegisterData);
-    const response= await fetch(`${SERVER_URL}se/signup`,{
-        method:'POST',
-        headers:{ 
-            'Content-Type':'application/json',
-        },
-        body : JSON.stringify(RegisterData),
+  
+    const Submit = async (RegisterData) => {
+      try {
+        const response = await fetch(`${SERVER_URL}se/signup`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(RegisterData),
+        });
+  
+        if (response.ok) {
+          const results = await response.json();
+          setData(results);
+          console.log('fetching successful...!');
+        } else {
+          throw new Error('Failed to signup...!');
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    };
 
-    })
-    if(response.ok){
-      const results= await response.json()
-      setData(results)
-      console.log('fetching successful...!')
-
-    }else{
-      throw new Error('Failed to signup...!')
+    const [agree,setAgree]=useState(false)
+    const checkboxHandler=()=>{
+        setAgree(!agree)
     }
-
-    
-    /*event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    */
-  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+        <Card className='shadow-lg p-3 mb-5 bg-body-tertiary rounded'>
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -234,7 +236,7 @@ export default function SE_signUp() {
               
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={<Checkbox value="allowExtraEmails" color="primary" onChange={checkboxHandler} />}
                   label="I Agree to the terms and conditions."
                 />
               </Grid>
@@ -244,6 +246,7 @@ export default function SE_signUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!agree}
             >
               Sign Up
             </Button>
@@ -257,6 +260,7 @@ export default function SE_signUp() {
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
+        </Card>
       </Container>
     </ThemeProvider>
   );

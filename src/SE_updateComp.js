@@ -232,12 +232,18 @@ import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 const trainingOptions = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
 
 
 function Update() {
+const [perform_def, setperform_def] = useState('None')
+const [training_def, setTraining_def] = useState('no')
+const [status_def, setStatus_def] = useState(Number(0))
+
+const statusOptions = [{value:status_def, label :'Select Status Type'},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const performanceOptions = [{value:perform_def, label :'Performance Rating'},{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+const trainingOptions = [{value:training_def, label :'select Training'},{value:'Yes', label :'yes'},{label:'No',value:'no'}]
+
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
 
@@ -308,7 +314,26 @@ function Update() {
     }));
   };
 
-  const handleSelectChange = (e) => {
+  const handleStatusChange = (e) => {
+    setStatus_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleTrainingChange = (e) => {
+    setTraining_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handlePerformChange = (e) => {
+    setperform_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -343,6 +368,8 @@ function Update() {
     }
     
   };
+  console.log("training",formData)
+  
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -377,11 +404,11 @@ function Update() {
 
         {/* Row 3 */}
         <FormField label="Enrolled Date" name="enrolledDate" onChange={handleInputChange} value={formData.enrolledDate}/>
-        <DropDownField label="Training" name="trainingDetails" onChange={handleSelectChange} options={trainingOptions} value={formData.trainingDetails}/>
+        <DropDownField label="Training" name="trainingDetails" onChange={handleTrainingChange} options={trainingOptions} value={formData.trainingDetails!==null?formData.trainingDetails:training_def}/>
 
         {/* Row 4 */}
         <FormField label="Service Area" name="serviceArea" onChange={handleInputChange} value={formData.serviceArea} disabled={false} />
-        <DropDownField label="Status" name="status" onChange={handleSelectChange} options={statusOptions} value={formData.status}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange} options={statusOptions} value={formData.status!==null?formData.status:status_def}/>
 
         {/* Row 5 */}
         <FormField label="Address 1" name="address1" onChange={handleInputChange} value={formData.address}/>
@@ -392,7 +419,7 @@ function Update() {
         <FormField label="State" name="state" onChange={handleInputChange} value={formData.state}/>
 
         {/* Row 7 */}
-        <DropDownField label="Performance" name="performance" onChange={handleSelectChange} options={performanceOptions}  value={formData.performance}/>
+        <DropDownField label="Performance" name="performance" onChange={handlePerformChange} options={performanceOptions}  value={formData.performance!==null?formData.performance:perform_def}/>
         <FormField label="Reference" name="reference" onChange={handleInputChange} value={formData.reference}/>
 
         {/* Row 8 */}

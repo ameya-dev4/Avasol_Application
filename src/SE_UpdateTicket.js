@@ -185,13 +185,18 @@ import SE_Sidebar from './SE_Sidebar';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const trainingOptions = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const paymentOptions = [{label:'Paid',value:'paid'},{label:'Yet to be Paid',value:'not yet'},{label:'raised',value:'raised'},{label:'failed',value:'failed'}];
+
 const userName = localStorage.getItem('username');
 
 
 function SE_UpdateTicket() {
+  const [training_def,setTraining_def]=useState('no')
+const [status_def,setStatus_def]=useState(Number(0))
+const [payment_def,setpayment_def]=useState('not yet')
+
+const trainingOptions = [{value:training_def, label :'select Training'},{value:'<TBD>', label :'<TBD>'},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
+const statusOptions = [{value:status_def, label :'select status type'},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const paymentOptions = [{value:payment_def, label :'payment status'},{label:'Paid',value:'paid'},{label:'Yet to be Paid',value:'not yet'},{label:'raised',value:'raised'},{label:'failed',value:'failed'}];
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -210,7 +215,25 @@ function SE_UpdateTicket() {
     }));
   };
 
-  const handleSelectChange = (e) => {
+  const handleTrainingChange = (e) => {
+    setTraining_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleStatusChange = (e) => {
+    setStatus_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const handlePaymentChange = (e) => {
+    setpayment_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -286,7 +309,7 @@ function SE_UpdateTicket() {
 
         
         {/* Row 4 */}
-        <DropDownField label="Assigned By" name="assignedBy" onChange={handleSelectChange} options={trainingOptions} value={formData.assignedBy}/>
+        <DropDownField label="Assigned By" name="assignedBy" onChange={handleTrainingChange} options={trainingOptions} value={formData.assignedBy!==null?formData.assignedBy:training_def}/>
         <FormField label="Assigned Date" name="assignedDate" type = "Date" onChange={handleInputChange} value={formData.assignedDate}/>
         
         {/* Row 5 */}
@@ -307,11 +330,11 @@ function SE_UpdateTicket() {
         <EditInputFormField label="Service Engineer Notes" name="serviceEngineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
 
        {/* Row 9 */}
-        <DropDownField label="Status" name="status" onChange={handleSelectChange} options={statusOptions} value={formData.status}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange} options={statusOptions} value={formData.status!==null?formData.status:status_def}/>
         <FormField label="Amount" name="amount" onChange={handleInputChange} value={formData.amount} disabled={false} />
         
         {/* Row 7 */}
-        <DropDownField label="Payment" name="payment" onChange={handleSelectChange} options={paymentOptions}  value={formData.payment}/>
+        <DropDownField label="Payment" name="payment" onChange={handlePaymentChange} options={paymentOptions}  value={payment_def}/>
         <FormField label="Pefr Otp" name="otpId" onChange={handleInputChange} value={formData.otpId}/>
 
         
