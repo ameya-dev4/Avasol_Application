@@ -231,12 +231,6 @@ import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const trainingOptions = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
-
-
-
 function Update() {
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -257,13 +251,22 @@ function Update() {
   "password": "",
   "performance": "",
   "serviceArea": "",
-  "status": Number(0),
+  "status":1,
   "trainingDetails": "",
   "username": ""
     
   });
   const location = useLocation();
   const ServiceEngineerName = location.state.updateArray.username;
+  const [status_def, setSatus_def]=useState(Number(1))
+  const [preform_def,setPerform_def]=useState('None')
+  const [train_def,setTrain_def]=useState('No')
+
+  console.log("status",status_def)
+const trainingOptions = [{value:train_def, label :train_def},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
+const statusOptions = [{label:status_def,value:status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const performanceOptions = [{label:preform_def,value:preform_def},{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -279,12 +282,16 @@ function Update() {
         if (response.ok) {
           const data = await response.json();
           // Set form values using setFormData
-          setFormData({
-            ...data,
-          status : findselectedOption(data.status , statusOptions),
-          trainingDetails : findselectedOption(data.trainingDetails,trainingOptions),
-          performance : findselectedOption(data.performance ,performanceOptions),
-        });
+          setFormData(data)
+          
+          setTrain_def(data.trainingDetails)
+          setPerform_def(data.performance)
+        //   setFormData({
+        //     ...data,
+        //   status : findselectedOption(data.status , statusOptions),
+        //   trainingDetails : findselectedOption(data.trainingDetails,trainingOptions),
+        //   performance : findselectedOption(data.performance ,performanceOptions),
+        // });
         } else {
           // Handle error if API request fails
         }
@@ -304,7 +311,26 @@ function Update() {
     }));
   };
 
-  const handleSelectChange = (e) => {
+  const handleStatusChange = (e) => {
+    setSatus_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleTrainChange = (e) => {
+    setTrain_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handlePerfomChange = (e) => {
+    setPerform_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -373,11 +399,11 @@ function Update() {
 
         {/* Row 3 */}
         <FormField label="Enrolled Date" name="enrolledDate" onChange={handleInputChange} value={formData.enrolledDate}/>
-        <DropDownField label="Training" name="trainingDetails" onChange={handleSelectChange} options={trainingOptions} value={formData.trainingDetails}/>
+        <DropDownField label="Training" name="trainingDetails" onChange={handleTrainChange} options={trainingOptions} value={train_def}/>
 
         {/* Row 4 */}
         <FormField label="Service Area" name="serviceArea" onChange={handleInputChange} value={formData.serviceArea} disabled={false} />
-        <DropDownField label="Status" name="status" onChange={handleSelectChange} options={statusOptions} value={formData.status}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange} options={statusOptions} value={status_def}/>
 
         {/* Row 5 */}
         <FormField label="Address 1" name="address1" onChange={handleInputChange} value={formData.address}/>
@@ -388,7 +414,7 @@ function Update() {
         <FormField label="State" name="state" onChange={handleInputChange} value={formData.state}/>
 
         {/* Row 7 */}
-        <DropDownField label="Performance" name="performance" onChange={handleSelectChange} options={performanceOptions}  value={formData.performance}/>
+        <DropDownField label="Performance" name="performance" onChange={handlePerfomChange} options={performanceOptions}  value={preform_def}/>
         <FormField label="Reference" name="reference" onChange={handleInputChange} value={formData.reference}/>
 
         {/* Row 8 */}

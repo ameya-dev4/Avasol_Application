@@ -185,10 +185,6 @@ import SE_Sidebar from './SE_Sidebar';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const trainingOptions = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const paymentOptions = [{label:'Paid',value:'paid'},{label:'Yet to be Paid',value:'not yet'},{label:'raised',value:'raised'},{label:'failed',value:'failed'}];
-const userName = localStorage.getItem('username');
 
 
 function SE_UpdateTicket() {
@@ -200,6 +196,18 @@ function SE_UpdateTicket() {
   const location = useLocation();
   const TicketDetails = location.state.updateArray;
   const [formData, setFormData] = useState(TicketDetails);
+
+  const [train_def, setTrain_def]=useState(formData.trainingDetails)
+  const [status_def, setSatus_def]=useState(formData.status)
+  const [payment_def, setPayment_def]=useState('nill')
+  const [assign_def, setAssign_def]=useState(formData.assignedBy)
+console.log("assign",assign_def)
+
+const assignedByOpt = [{value:assign_def, label :assign_def},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
+const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const paymentOptions = [{value:payment_def, label :'Payment status'},{label:'Paid',value:'paid'},{label:'Yet to be Paid',value:'yet to be paid'},{label:'raised',value:'raised'},{label:'failed',value:'failed'}];
+const userName = localStorage.getItem('username');
+
   
 
   const handleInputChange = (e) => {
@@ -211,6 +219,33 @@ function SE_UpdateTicket() {
   };
 
   const handleSelectChange = (e) => {
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleAssignChange = (e) => {
+    setAssign_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleStatusChange = (e) => {
+    setSatus_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handlePaymentChange = (e) => {
+    setPayment_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -286,8 +321,8 @@ function SE_UpdateTicket() {
 
         
         {/* Row 4 */}
-        <DropDownField label="Assigned By" name="assignedBy" onChange={handleSelectChange} options={trainingOptions} value={formData.assignedBy}/>
-        <FormField label="Assigned Date" name="assignedDate" type = "Date" onChange={handleInputChange} value={formData.assignedDate}/>
+        <DropDownField label="Assigned By" name="assignedBy" onChange={handleAssignChange} options={assignedByOpt} value={assign_def}/>
+        <FormField label="Assigned Date" name="assignedDate" type = "text" onChange={handleInputChange} value={formData.assignedDate}/>
         
         {/* Row 5 */}
         <FormField label="Ticket Description" name="shortDescription" onChange={handleInputChange} value={formData.shortDescription}/>
@@ -299,19 +334,19 @@ function SE_UpdateTicket() {
         
         {/* Row 7 */}
         <FormField label="Service Location" name="serviceArea" onChange={handleInputChange} value={formData.serviceArea}/>
-        <Typography sx={{mt:5,ml:10,mb:3}}><LocationOnIcon  style={{ fontSize: 60 }} /><Link sx={{fontSize : '24px' , cursor:'pointer'}}  href={`${'https://'}`} target='_blank'>Hello</Link></Typography>
+        <Typography sx={{mt:5,ml:10,mb:3}}><LocationOnIcon  style={{ fontSize: 60 }} /><Link sx={{fontSize : '24px' , cursor:'pointer'}}  href={`${'https://'}`} target='_blank'>Location</Link></Typography>
        
        
         {/* Row 8 */}
-        <EditInputFormField label="Attended Date" type='date' name="attendedDate" onChange={handleInputChange} value={formData.attendedDate}/>
+        <EditInputFormField label="Attended Date" type='text' name="attendedDate" onChange={handleInputChange} value={formData.attendedDate}/>
         <EditInputFormField label="Service Engineer Notes" name="serviceEngineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
 
        {/* Row 9 */}
-        <DropDownField label="Status" name="status" onChange={handleSelectChange} options={statusOptions} value={formData.status}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange} options={statusOptions} value={status_def}/>
         <FormField label="Amount" name="amount" onChange={handleInputChange} value={formData.amount} disabled={false} />
         
         {/* Row 7 */}
-        <DropDownField label="Payment" name="payment" onChange={handleSelectChange} options={paymentOptions}  value={formData.payment}/>
+        <DropDownField label="Payment" name="payment" onChange={handlePaymentChange} options={paymentOptions}  value={payment_def}/>
         <FormField label="Pefr Otp" name="otpId" onChange={handleInputChange} value={formData.otpId}/>
 
         

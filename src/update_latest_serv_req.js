@@ -13,21 +13,10 @@ import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const warrantyType = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-const Declaration = [{value:true, label :'Yes'},{label:'No',value:false}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
 
 
 function UpdateLatestServReq() {
-    const Rating = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
-  const navigate = useNavigate();
-  const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
-  const OpenSidebar = () => {
-    setOpenSidebarToggle(!openSidebarToggle)
-  }
-
   const location = useLocation();
   const batteryDetails = location.state.shortDescription
   console.log("**********");
@@ -38,9 +27,37 @@ function UpdateLatestServReq() {
   // batteryDetails.requestId=0
   const [formData, setFormData] = useState(batteryDetails);
 
+  
+  const [status_def, setSatus_def]=useState('')
+  const [preform_def,setPerform_def]=useState('None')
+  const [warranty_def,setWarranty_def]=useState('No')
+  const [Declare_def, setDeclare_def] = useState(false)
+
+  const warrantyType = [{value:warranty_def, label :warranty_def},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
+  const Declaration = [{value:Declare_def, label :Declare_def},{value:true, label :'Yes'},{label:'No',value:false}]
+  const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+  const performanceOptions = [{value:preform_def, label :preform_def},{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+
+  const navigate = useNavigate();
+  const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
+  const OpenSidebar = () => {
+    setOpenSidebarToggle(!openSidebarToggle)
+  }
+
+  useEffect(()=>{
+    setSatus_def(formData.status)
+    setDeclare_def(formData.selfDeclaration)
+    setWarranty_def(formData.warranty)
+    setPerform_def(formData.performance)
+  })
+ 
+  
+
 
   console.log("formdata",formData)
+
   const handleInputChange = (e) => {
+
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -48,7 +65,35 @@ function UpdateLatestServReq() {
     }));
   };
 
-  const handleSelectChange = (e) => {
+  const handlewarrantyChange = (e) => {
+    setWarranty_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleDeclareChange = (e) => {
+    setDeclare_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleStatusChange = (e) => {
+    setSatus_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handlePerformChange = (e) => {
+    setPerform_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -190,12 +235,12 @@ function UpdateLatestServReq() {
         <EditFormField label="NoteToServiceEngineer" name="noteToServiceEngineer" onChange={handleInputChange} value={formData.noteToServiceEngineer}/>
 
         {/* Row 6 */}
-        <DropDownField label="Under Warrenty" name="warranty" onChange={handleInputChange}  value={formData.warranty} options={warrantyType}/>
-        <DropDownField label="self Declaration" placeholder='I agree terms & conditions' name='selfDeclaration' onChange={handleInputChange} options={Declaration} value={formData.selfDeclaration}/>
+        <DropDownField label="Under Warrenty" name="warranty" onChange={handlewarrantyChange}  value={warranty_def} options={warrantyType}/>
+        <DropDownField label="self Declaration" placeholder='I agree terms & conditions' name='selfDeclaration' onChange={handleDeclareChange} options={Declaration} value={Declare_def}/>
 
         {/* Row 7 */}
-        <DropDownField label="Status" name="status" onChange={handleInputChange}  value={formData.status} options={statusOptions}/>
-        <FormField label="Last Status Updated" name="lastStatusUpdated" onChange={handleInputChange} value={formData.laststatusUpdated}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange}  value={status_def} options={statusOptions}/>
+        <FormField label="Last Status Updated" name="status" onChange={handleInputChange} value={formData.status}/>
 
         <EditFormField label="Visit Amount" name="visitAmount" onChange={handleInputChange}  value={formData.amount}/>
         <EditFormField label="Visit Amount Paid" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid}/>
@@ -206,7 +251,7 @@ function UpdateLatestServReq() {
         <EditFormField label="Service Amount" name="serviceAmount" onChange={handleInputChange}  value={formData.serviceAmount}/>
         <EditFormField label="service Amount Paid" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid}/>
             
-        <DropDownField label="Customer Rating" name="rating" onChange={handleInputChange}  value={formData.rating} options={performanceOptions}/>
+        <DropDownField label="Customer Rating" name="performance" onChange={handlePerformChange}  value={preform_def} options={performanceOptions}/>
         
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>

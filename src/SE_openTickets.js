@@ -101,7 +101,9 @@ function OpenTickets(){
 
   useEffect (()=> {
     async function fetchDetails(){
-        const response = await fetch(url,{
+        try {
+          
+          const response = await fetch(url,{
             method : 'POST',
             headers : {
                 'Authorization' : `Bearer ${authToken}`,
@@ -109,10 +111,16 @@ function OpenTickets(){
                 "Access-Control-Allow-Origin": "*",
             },
             body : JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((array_Details) =>{
-            setTicketDetails(array_Details);
         })
+        if(response.ok){
+          const result=await response.json()
+          setTicketDetails(result)
+        }else{
+          throw new Error('Failed to get Open Tickets details...!')
+        }
+        } catch (error) {
+          console.error(error)
+        }
       }
       fetchDetails();
   },[]) 

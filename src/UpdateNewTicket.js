@@ -13,13 +13,6 @@ const authToken = GetToken();
 
 
 function UpdateNewTickets() {
-  const [status_def, setSatus_def]=useState(Number(0))
-  const [SE_def, setSE_def]=useState('None')
-
-  const SEoptions = [{value:SE_def, label :'Select Service Engineer'},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
-  const statusOptions = [{value:status_def, label :'Select Status'},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-  const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
-
 
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -33,6 +26,14 @@ function UpdateNewTickets() {
   console.log(ticketId);
   console.log("***********");
   const [formData, setFormData] = useState({});
+  
+  const [status_def, setStatus_def]=useState(Number(0))
+  const [SE_def, setSE_def]=useState('<TBD>')
+
+  const SEoptions = [{value:SE_def, label :SE_def},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
+  const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+  const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+
 
   useEffect (()=> {
     async function fetchDetails(){
@@ -43,10 +44,15 @@ function UpdateNewTickets() {
                 'Content-type': 'application/json',
             },
             body : JSON.stringify({ticketId:ticketId})
-        }).then((response) => response.json())
-        .then((array_Details) =>{
-            setFormData(array_Details);
         })
+        if(response.ok){
+          const result=await response.json()
+          setFormData(result)
+          setSE_def(result.serviceEngineerId)
+          setStatus_def(result.status)
+        }else{
+          throw new Error('Failed to update ticket details...!')
+        }
       }
       fetchDetails();
   },[])
@@ -60,7 +66,7 @@ function UpdateNewTickets() {
   };
 
   const handleStausChange = (e) => {
-    setSatus_def(e.target.value)
+    setStatus_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -79,25 +85,26 @@ function UpdateNewTickets() {
 
 
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch(`${SERVER_URL}admin/update-ticket`,{
+    const response= await fetch(`${SERVER_URL}admin/update-ticket`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
+    })
+    if(response.ok){
+      const result= await response.json()
       alert('Details are Successfully Updated');
       navigate(-1);
-    }).catch((error) => {
-      console.log(error);
-    })
+    }else{
+      throw new Error('Failed to Update Ticket Details...!')
+    }
+    
     // Perform your form submission logic here
   };
 
@@ -143,7 +150,7 @@ function UpdateNewTickets() {
         
         {/* Row 5 */}
         <DropDownField label="Status" name="status" onChange={handleStausChange} options={statusOptions} value={status_def}/>
-        <DropDownField label="Service Engineer" name="serviceEngineerId" options={SEoptions} onChange={handleSEChange} value={SE_def} />
+        <DropDownField label="Service Engineer ID" name="serviceEngineerId" options={SEoptions} onChange={handleSEChange} value={SE_def} />
 
         {/* Row 5 */}
         <FormField label="Notes" name="notes1" onChange={handleInputChange} value={formData.noteToServiceEngineer} />

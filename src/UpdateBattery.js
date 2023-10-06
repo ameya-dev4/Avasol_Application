@@ -33,6 +33,17 @@ function UpdateBattery() {
   console.log("***********");
   const [formData, setFormData] = useState(batteryDetails);
 
+  const [status_def, setSatus_def]=useState('')
+  const [warranty_def,setWarranty_def]=useState('No')
+
+  const warrantyType = [{value:warranty_def, label :warranty_def},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
+  const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+  
+
+  useEffect(()=>{
+    setSatus_def(formData.status)
+    setWarranty_def(formData.warranty)
+  })
 
   console.log("formdata",formData)
   // const fdata=JSON.stringify(formData)
@@ -47,6 +58,24 @@ function UpdateBattery() {
   };
 
   const handleSelectChange = (e) => {
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handlewarrantyChange = (e) => {
+    setWarranty_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleStatusChange = (e) => {
+    setSatus_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -138,25 +167,25 @@ function UpdateBattery() {
   }
 
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    fetch(`${SERVER_URL}user/update-battery`,{
+    const response= await fetch(`${SERVER_URL}user/update-battery`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
+    })
+    if (response.ok){
+      const result =await response.json()
       alert('Details are Successfully Updated');
       navigate(-1);
-    }).catch((error) => {
-      console.log(error);
-    })
+    }else{
+      throw new Error('Failed to Update the Battery details...')
+    }
     // Perform your form submission logic here
   };
    
@@ -198,21 +227,21 @@ function UpdateBattery() {
 
         {/* Row 4 */}
         <EditFormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)} disabled={false} />
-        <DropDownField label="Warrenty" name="warranty" onChange={handleInputChange}  value={formData.warranty} options={warrantyType}/>
+        <DropDownField label="Warranty" name="warranty" onChange={handlewarrantyChange}  value={warranty_def} options={warrantyType}/>
         
         <EditFormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>
         <EditFormField label="Vechicle Type" name="vechicleType" onChange={handleInputChange} value={formData.vechicleType}/>
 
         {/* Row 6 */}
-        <EditFormField label="DealerName & Addrees" name="dealerName&address" onChange={handleInputChange} value={formData.delearAddress}/>
+        <EditFormField label="Dealer Addrees" name="dealerAddress" onChange={handleInputChange} value={formData.delearAddress}/>
         <EditFormField label="Dealer Contact" name="Dealer Contact" onChange={handleInputChange} value={formData.DealerContact}/>
 
         {/* Row 7 */}
-        <EditFormField label="SubDealerName & Address" name="subDealerName&address" onChange={handleInputChange}  value={formData.subDealerAddress}/>
-        <EditFormField label="SubDealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/>
+        <EditFormField label="Sub-DealerAddress" name="subDealerAddress" onChange={handleInputChange}  value={formData.subDealerAddress}/>
+        <EditFormField label="Sub-Dealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/>
 
         {/* Row 8 */}
-        <DropDownField label="Status" name="status" onChange={handleInputChange}   value={formData.status} options={statusOptions}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange}   value={Number(status_def)} options={statusOptions}/>
         {/* options={Rating} */}
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>

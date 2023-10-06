@@ -131,7 +131,7 @@ function SE_TotalTickets(){
       {TicketDetails.length > 0 ? <Table_comp array_Details={TicketDetails} /> : 
       <>
       <h2 className='mx-3 mt-3'>No Tickets are Assigned </h2>
-      <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded mt-5">
+      <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded mt-5 bg-white">
                           
                           <div className="text-center  py-1 px-2">
                           <div className="spinner-border text-primary " role="status">

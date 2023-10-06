@@ -43,6 +43,7 @@ import UpdateBattery from './UpdateBattery'
 import UpdateLatestServReq from './update_latest_serv_req'
 import EditSe_Profile from './SE_EditProfile'
 import SE_UpdateTicket from './SE_UpdateTicket'
+import SE_Logout from './SE_logout'
 
 
 function App() {
@@ -98,7 +99,7 @@ function App() {
             <Route exact path='/se_pendingAmount' element={<SE_Dash_upblocks />} />
             <Route exact path='/se_Earnings' element={<SE_Dash_upblocks />} />
             <Route exact path='/se_myProfile' element={<SE_MyProfile />} />
-            <Route exact path='/se_logout' element={<Logout /> } />
+            <Route exact path='/se_logout' element={<SE_Logout/> } />
             <Route exact path='/se_update_ticket_details' element = {<SE_UpdateTicket/>} />
             <Route exact path='/update-Profile' element={<EditSe_Profile/>} />
             

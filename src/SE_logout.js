@@ -52,7 +52,7 @@ const SE_Logout= ()=>{
       <SE_Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className="main-container">
       <div >
-                <div className=" position-absolute top-50 start-50 translate-middle col-6 shadow p-3 bg-body-tertiary rounded ">
+                <div className=" position-absolute top-50 start-50 translate-middle col-6 shadow p-3 bg-body-tertiary rounded bg-white">
                     <div className='px-2 mx-5 mb-5 text-dark'>
                         <h3>Welcome to EV MEC System</h3>
                     </div>

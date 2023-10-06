@@ -10,10 +10,6 @@ import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
-const SEoptions = [{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
-
 
 
 function UpdateTicket() {
@@ -29,6 +25,15 @@ function UpdateTicket() {
   console.log(ticketId);
   console.log("***********");
   const [formData, setFormData] = useState({});
+  const [status_def, setSatus_def]=useState(Number(0))
+  const [preform_def,setPerform_def]=useState('None')
+  const [se_def,setSe_def]=useState('<TBD>')
+
+const SEoptions = [{value:se_def, label :'Select Perfomance'},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
+const statusOptions = [{label:status_def,value:'select Status Type'},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const performanceOptions = [{label:preform_def,value:1},{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+
+
 
   useEffect (()=> {
     async function fetchDetails(){
@@ -39,10 +44,11 @@ function UpdateTicket() {
                 'Content-type': 'application/json',
             },
             body : JSON.stringify({ticketId:ticketId})
-        }).then((response) => response.json())
-        .then((array_Details) =>{
-            setFormData(array_Details);
         })
+        if (response.ok){
+          const result=await response.json()
+          setFormData(result)
+        }
       }
       fetchDetails();
   },[])
