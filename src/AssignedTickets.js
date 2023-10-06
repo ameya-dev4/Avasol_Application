@@ -24,8 +24,6 @@ const url = `${SERVER_URL}admin/get-assigned-tickets`
 function AssignedTickets(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
-    const [error,setError]= useState(null)
-    const [data, setData] =useState(null)
 
     const OpenSidebar = () => {
       setOpenSidebarToggle(!openSidebarToggle)
@@ -33,28 +31,17 @@ function AssignedTickets(){
 
     useEffect (()=> {
       async function fetchDetails(){
-          try {
-            const response = await fetch(url,{
-                method : 'GET',
-                headers : {
-                    'Authorization' : `Bearer ${authToken}`,
-                    'Content-type': 'application/json',
-                },
-            }) 
-                if(response.ok){
-                    const result =await response.json()
-                    setData(result)
-                    setTicketDetails(result)
-                    console.log("fetching successful...!")
-
-                }else{
-                    throw new Error('failed to fetch the details of Assigned Tickets')
-                }
-
-            
-          } catch (error) {
-            setError(error.message)
-          }
+          const response = await fetch(url,{
+              method : 'GET',
+              headers : {
+                  'Authorization' : `Bearer ${authToken}`,
+                  'Content-type': 'application/json',
+              },
+          }).then((response) => response.json())
+          .then((array_Details) =>{
+              setTicketDetails(array_Details);
+              console.log(array_Details)
+          })
         }
         fetchDetails();
     },[])

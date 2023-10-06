@@ -235,9 +235,6 @@ const authToken = GetToken();
 
 
 function EditProfile() {
-  const [data,setData]=useState(null)
-  const [error, setError]=useState(null)
-
   const navigate = useNavigate();
   const [user_Details,setUserDetails] = useState({})
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -247,29 +244,20 @@ function EditProfile() {
     setOpenSidebarToggle(!openSidebarToggle)
   }
   
-
   useEffect (() =>{ async function fetchDetails(){
-    try {
-      const response = await fetch(`${SERVER_URL}user/get-profile`,{
+    const response = await fetch(`${SERVER_URL}user/get-profile`,{
         method : 'GET',
         headers : {
             'Authorization' : `Bearer ${authToken}`,
             'Content-type': 'application/json',
             "Access-Control-Allow-Origin": "*",
         }
-    })
-      if(response.ok){
-        const result=await response.json()
-        setData(result)
-        setUserDetails(result)
-        console.log("fetching successful...!")
-      }else{
-        throw new Error("Failed to fetch User details...!")
-      }
+    }).then((response) => response.json())
+    .then((user_Details) =>{
+      setUserDetails(user_Details);
+      console.log(user_Details);
         
-    } catch (error) {
-      setError(error.message)
-    }
+    })
   }
   fetchDetails();
 },[])
@@ -303,9 +291,7 @@ function EditProfile() {
         'Content-Type':'application/json',
       },
       body:JSON.stringify(user_Details)
-    })
-    
-    .then((response) => response.json())
+    }).then((response) => response.json())
     .then((data) =>{
       console.log(data);
       alert('Details are Successfully Updated');

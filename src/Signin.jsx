@@ -98,19 +98,15 @@ const handleChange = (event) => {
         localStorage.setItem("username",JSON.stringify(event.username))
         localStorage.setItem('password',JSON.stringify(event.password))
         
-        
       // alert("Register Successfull!...Welocome user")
             if(loginType==='user'){
-              alert(`Welcome ${event.username}..! Have a great experience with Avasol`)
               navigate('/latest_serv_request')
             }
             else if (loginType==='admin'){
               // window.open('/admin_home','_blank')
-              alert(`Welcome ${event.username}..! Have a great experience with Avasol`)
               navigate('/admin_home')
             } 
             else{
-              alert(`Welcome ${event.username}..! Have a great experience with Avasol`)
               navigate('/se_myDashboard')
             }
       
@@ -149,8 +145,7 @@ const handleChange = (event) => {
               {loginType==='admin'?'Admin':loginType==='user'?'User':'Service Engineer'}
             </Typography>
             <p style={{color:'red'}}>{ err?"signin  failed":"" }</p>
-            <Box component="form" onSubmit={handleSubmit(submitHandler)} noValidate sx={{ mt: 1 }}>
-            {/* access_token===null?handleSubmit(submitHandler):()=>alert(`you are aleady logged in as ${loginType}`) */}
+            <Box component="form" onSubmit={access_token===null?handleSubmit(submitHandler):()=>alert(`you are aleady logged in as ${loginType}`)} noValidate sx={{ mt: 1 }}>
                   <FormControl sx={{ width:'100%' }}>
               <InputLabel id="demo-simple-select-autowidth-label">Login As</InputLabel>
               <Select

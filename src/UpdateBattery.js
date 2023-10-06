@@ -12,24 +12,14 @@ import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 
+const authToken = GetToken();
+const warrantyType = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
+const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+
 
 
 function UpdateBattery() {
-    const authToken = GetToken();
-    const [warranty_def, setwarranty_def] = useState('no')
-    const [vehicle_def, setVehicle_def] = useState('none')
-    const [status_def, setStatus_def] = useState(Number(0))
-    // const [rating_def, setRating_def] = useState('none')
-    // const [declear_def, setdeclear_def] = useState('yes')
-
-    const warrantyType = [{value:warranty_def, label :'Select Warranty'},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-    const vechicleType = [{value:vehicle_def, label :'Select VehicleType'},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-    // const Declaration = [{value:declear_def, label :'Declaration'},{value:true, label :'Yes'},{label:'No',value:false}]
-    const statusOptions = [{value:status_def, label :'Select Status Type'},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-    // const performanceOptions = [{value:rating_def, label :'Performance Rating'},{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
-
-
-
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -56,8 +46,7 @@ function UpdateBattery() {
     }));
   };
 
-  const handleWarrantyChange = (e) => {
-    setwarranty_def(e.target.value)
+  const handleSelectChange = (e) => {
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -65,24 +54,6 @@ function UpdateBattery() {
     }));
   };
 
-  const handleStatusChange = (e) => {
-    setStatus_def(e.target.value)
-    const {name , value} = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  
-  const handleVechicleChange = (e) => {
-    setVehicle_def(e.target.value)
-    const {name , value} = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
 
   //View Batteries
 
@@ -167,29 +138,28 @@ function UpdateBattery() {
   }
 
 
-  const onSubmit = (e) =>async()=> {
+  const onSubmit = (e) => {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    const response= await fetch(`${SERVER_URL}user/update-battery`,{
+    fetch(`${SERVER_URL}user/update-battery`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    })
-    if (response.ok){
-      const result= await response.json()
+    }).then((response) => response.json())
+    .then((data) =>{
+      console.log(data);
       alert('Details are Successfully Updated');
       navigate(-1);
-    }else{
-      throw new Error('Failed to update battery Details...!')
-    }
+    }).catch((error) => {
+      console.log(error);
+    })
     // Perform your form submission logic here
   };
    
-
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -216,7 +186,7 @@ function UpdateBattery() {
        
         {/* Row 1 */}
         <EditFormField label="Battery Name" name="batteryName" value={formData.batteryName} onChange={handleInputChange} />
-        <FormField  label="Battery Number" name="batteryNumber"  value={formData.batteryNumber} onChange={handleInputChange}  />
+        <EditFormField  label="Battery Number" name="batteryNumber"  value={formData.batteryNumber} onChange={handleInputChange}  />
 
         {/* Row 2 */}
         <EditFormField label="Make" name="make" onChange={handleInputChange} value={formData.make}/>
@@ -228,21 +198,21 @@ function UpdateBattery() {
 
         {/* Row 4 */}
         <EditFormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)} disabled={false} />
-        <DropDownField label="Warrenty" name="warranty" onChange={handleWarrantyChange}  value={warranty_def} options={warrantyType}/>
+        <DropDownField label="Warrenty" name="warranty" onChange={handleInputChange}  value={formData.warranty} options={warrantyType}/>
         
         <EditFormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>
-        <DropDownField label="Vechicle Type" name="vechicleType" onChange={handleVechicleChange} value={vehicle_def} options={vechicleType}/>
+        <EditFormField label="Vechicle Type" name="vechicleType" onChange={handleInputChange} value={formData.vechicleType}/>
 
         {/* Row 6 */}
-        <EditFormField label="Dealer Addrees" name="dealerAddress" onChange={handleInputChange} value={formData.delearAddress}/>
+        <EditFormField label="DealerName & Addrees" name="dealerName&address" onChange={handleInputChange} value={formData.delearAddress}/>
         <EditFormField label="Dealer Contact" name="Dealer Contact" onChange={handleInputChange} value={formData.DealerContact}/>
 
         {/* Row 7 */}
-        <EditFormField label="Sub-Dealer Address" name="sub-DealeAddress" onChange={handleInputChange}  value={formData.subDealerAddress}/>
-        <EditFormField label="Sub-Dealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/>
+        <EditFormField label="SubDealerName & Address" name="subDealerName&address" onChange={handleInputChange}  value={formData.subDealerAddress}/>
+        <EditFormField label="SubDealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/>
 
         {/* Row 8 */}
-        <DropDownField label="Status" name="status" onChange={handleStatusChange}   value={status_def} options={statusOptions}/>
+        <DropDownField label="Status" name="status" onChange={handleInputChange}   value={formData.status} options={statusOptions}/>
         {/* options={Rating} */}
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>

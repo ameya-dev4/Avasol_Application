@@ -216,8 +216,6 @@ const authToken = GetToken();
 
 
 function BatteryAdd() {
-  const [data, setData]=useState(null)
-  const [error, setError] =useState(null)
   const [warranty_def, setWarranty_def]=useState('no')
   const [vechicel_def, setVechicle_def]=useState('None')
 
@@ -292,33 +290,31 @@ function BatteryAdd() {
   };
 
 
-  const onSubmit = (e) => async()=>{
+  const [latestRequests, setLatestRequests] = useState([]);
+  const[displayDetails , setDisplayDetails] = useState(false);
+
+
+   const onSubmit = (e) => {
     e.preventDefault();
     // formData contains the form values
-    try {
-      const response= await fetch(`${SERVER_URL}user/add-new-battery`,{
-        method:'POST',
-        headers:{
-          'Authorization':`Bearer ${authToken}`,
-          'Content-Type':'application/json',
-        },
-        body:JSON.stringify(formData)
-      })
-        if(response.ok){
-          const result=await response.json()
-          setData(result)
-          alert('Details are Successfully Updated');
-          navigate(-1);
-        }else{
-          throw new Error('failed to Add New Battery...!')
-        }
-      
-      
-    } catch (error) {
-      setError(error.message)
-    } 
+    console.log(formData);
+    fetch(`${SERVER_URL}user/add-new-battery`,{
+      method:'POST',
+      headers:{
+        'Authorization':`Bearer ${authToken}`,
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify(formData)
+    }).then((response) => response.json())
+    .then((data) =>{
+      console.log(data);
+    //   alert('Details are Successfully Updated');
+    //   navigate(-1);
+    }).catch((error) => {
+      console.log(error);
+    })
+    // Perform your form submission logic here
   };
-
    
 
   return (
@@ -397,7 +393,7 @@ function BatteryAdd() {
                 sx={{mb:2  }}
                 onClick={onSubmit}
               >
-                Update
+                Add
               </Button>
             </Grid>
            

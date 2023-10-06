@@ -30,13 +30,10 @@ async function fetchDataAndEnhanceArray({array_Details}){
         },
         // body:JSON.stringify(data),
       })
-      if(response.ok){
-        const outPut_value = await response.json();
-        console.log(outPut_value);
-        return { ...item, customerDetails: outPut_value };
-      }else{
-        throw new Error('Failed to fetch battery details...!')
-      }
+      const outPut_value = await response.json();
+      console.log(outPut_value);
+      
+      return { ...item, customerDetails: outPut_value };
     })
   )
   return enhancedArray ; 

@@ -14,7 +14,6 @@ import DisplayBattery from './batteryComponent';
 import UserDash_upblock from './UserDash_upblock';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import SERVER_URL from './Server/Server';
-import Table_Batteries from './Table_Batteries';
 
 const access_token =GetToken()
 const apiUrl = `${SERVER_URL}user/get-battery-list`; 
@@ -64,8 +63,7 @@ function ViewBatteryDetails({Toggle}) {
           </>
             
             : 
-            <Table_Batteries array_Details={latestRequests}/>
-            // <DisplayBattery />
+            <DisplayBattery />
               }
    </>
   );

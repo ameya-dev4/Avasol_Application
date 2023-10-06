@@ -16,7 +16,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SERVER_URL from './Server/Server';
-import { Card } from 'react-bootstrap';
 
 const defaultTheme=createTheme()
 
@@ -88,13 +87,11 @@ const SignUp1=()=>{
         return(
 
             <ThemeProvider theme={defaultTheme}>
-      
       <Container component="main" maxWidth="md">
-      <Card className='shadow-lg p-3 mb-5 bg-body-tertiary rounded'>
         <CssBaseline />
         <Box
           sx={{
-            marginTop:2,
+            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -107,7 +104,6 @@ const SignUp1=()=>{
             User Signup
           </Typography>
 
-          
           <Box component="form" noValidate  sx={{ mt: 3 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
@@ -355,11 +351,9 @@ const SignUp1=()=>{
               </Grid>
             </Grid>
           </Box>
-          
         </Box>
-        </Card>
+        
       </Container>
-      
     </ThemeProvider>
         )
     }   

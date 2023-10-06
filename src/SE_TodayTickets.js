@@ -107,40 +107,29 @@ const url = `${SERVER_URL}se/get-service-request-details`
 function SE_TicketsToday(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
-    const [data, setData] = useState(null)
-    const [error, setError] = useState(null)
+
     const OpenSidebar = () => {
       setOpenSidebarToggle(!openSidebarToggle)
     }
 
-    const data1 = {
+    const data = {
       serviceDate : currentDate,
     }
 
     useEffect (()=> {
       async function fetchDetails(){
-          try {
-            const response = await fetch(url,{
+          const response = await fetch(url,{
               method : 'POST',
               headers : {
                   'Authorization' : `Bearer ${authToken}`,
                   'Content-type': 'application/json',
                   "Access-Control-Allow-Origin": "*",
               },
-              body : JSON.stringify(data1),
+              body : JSON.stringify(data),
+          }).then((response) => response.json())
+          .then((array_Details) =>{
+              setTicketDetails(array_Details);
           })
-            if(response.ok){
-              const result=await response.json()
-              setData(result)
-              setTicketDetails(result)
-              console.log('fetching Successful..!')
-              
-            }else{
-              throw new Error('Failed to get service request details...!')
-            }
-          } catch (error) {
-            setError(error.message)
-          }
         }
         fetchDetails();
     },[])

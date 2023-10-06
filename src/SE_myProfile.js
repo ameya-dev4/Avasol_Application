@@ -197,9 +197,6 @@ const authToken = GetToken();
 
 function SE_MyProfile() {
   const navigate = useNavigate();
-  const [data, setData]=useState(null)
-  const [error, setError] = useState(null)
-
   const [user_Details,setUserDetails] = useState({})
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -207,28 +204,19 @@ function SE_MyProfile() {
   }
   
   useEffect (() =>{ async function fetchDetails(){
-    try {
-      
-      const response = await fetch(`${SERVER_URL}se/get-profile`,{
+    const response = await fetch(`${SERVER_URL}se/get-profile`,{
         method : 'GET',
         headers : {
             'Authorization' : `Bearer ${authToken}`,
             'Content-type': 'application/json',
             "Access-Control-Allow-Origin": "*",
         }
+    }).then((response) => response.json())
+    .then((user_Details) =>{
+      setUserDetails(user_Details);
+      console.log(user_Details);
+        
     })
-    if (response.ok){
-      const result=await response.json()
-      setData(result)
-      setUserDetails(result)
-      console.log('fetching Successful...!')
-    }else{
-      throw new Error('Failed to fetch User details...')
-    }
-
-    } catch (error) {
-      setError(error.message)
-    }
   }
   fetchDetails();
 },[])

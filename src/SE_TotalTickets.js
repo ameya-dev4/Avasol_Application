@@ -86,14 +86,11 @@ import SE_Dash_upblocks from "./SE_Dash_upblocks";
 import SERVER_URL from './Server/Server';
 
 const userName = localStorage.getItem('username');
-const parse_username=JSON.parse(userName)
+console.log(userName);
 const url = `${SERVER_URL}se/get-service-request-details`
 
 
 function SE_TotalTickets(){
-    const [data, setData]= useState(null)
-    const [error, setError] = useState(null)
-
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
     //const {authToken} = useAuth();
@@ -102,36 +99,23 @@ function SE_TotalTickets(){
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
-  let data1 = {
-    username :parse_username,
+  let data = {
+    username : userName,
   }
   useEffect (()=> {
     async function fetchDetails(){
-        try {
-          
-          const response = await fetch(url,{
+        const response = await fetch(url,{
             method : 'POST',
             headers : {
                 'Authorization' : `Bearer ${authToken}`,
                 'Content-type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
             },
-            body : JSON.stringify(data1)
+            body : JSON.stringify(data)
+        }).then((response) => response.json())
+        .then((array_Details) =>{
+            setTicketDetails(array_Details);
         })
-          if(response.ok){
-            const results= await response.json()
-            setData(results)
-            setTicketDetails(results)
-            console.log('Fetching successful..!')
-          }else{
-            throw new Error('failed to get service request details...!')
-
-          }
-
-        } catch (error) {
-          setError(error.message)
-        }
-
       }
       fetchDetails();
   },[]) 

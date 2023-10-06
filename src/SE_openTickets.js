@@ -88,45 +88,31 @@ const url = `${SERVER_URL}se/get-service-request-details`
 function OpenTickets(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
-    const [data, setData] =useState(null)
-    const [error, setError] =useState(null)
-
+    
     const authToken = GetToken();
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
 
-  const data1 = {
+  const data = {
     status : 8
   }
 
   useEffect (()=> {
     async function fetchDetails(){
-        try {
-          
-          const response = await fetch(url,{
+        const response = await fetch(url,{
             method : 'POST',
             headers : {
                 'Authorization' : `Bearer ${authToken}`,
                 'Content-type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
             },
-            body : JSON.stringify(data1)
+            body : JSON.stringify(data)
+        }).then((response) => response.json())
+        .then((array_Details) =>{
+            setTicketDetails(array_Details);
         })
-        if (response.ok){
-          const result = await response.json()
-          setTicketDetails(result)
-          setData(result)
-          console.log('fetching successful..!')
-
-        }else{
-          throw new Error('failed to fetch Open tickets...!')
-        }
-
-        } catch (error) {
-          setError(error.message)
-        }
       }
       fetchDetails();
   },[]) 

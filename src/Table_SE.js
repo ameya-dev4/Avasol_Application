@@ -51,7 +51,7 @@ function Table_SE({array_Details}){
       
     return (
       <>
-        
+        <Typography variant='h4'> Latest Request Details</Typography>
         <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%' , mt:3}}>
           <Table>
               <TableRow>
@@ -65,7 +65,7 @@ function Table_SE({array_Details}){
             <TableBody>
               {array_Details.map((record) => (
               <Row key={record.id} record={record} />))}
-            </TableBody> 
+            </TableBody>  
            </Table>
         </TableContainer>
       </>

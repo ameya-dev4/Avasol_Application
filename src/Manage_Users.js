@@ -5,6 +5,7 @@ import { GetToken } from "./Api/auth";
 import Table_SE from "./Table_SE";
 import AdminDash_upblock from "./AdminDash_upblock";
 import SERVER_URL from "./Server/Server";
+import Table_ManageUsers from "./Table_ManageUsers";
 
 const authToken = GetToken();
 
@@ -18,11 +19,9 @@ function getCurrentDate() {
 }
 
 const currentDate = getCurrentDate();
-const url = `${SERVER_URL}admin/get-service-engineers`
+const url = `${SERVER_URL}admin/get-users`
 
 function Manage_Users(){
-    const [data,setData]= useState(null)
-    const [error,setError]= useState(null)
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
 
@@ -32,26 +31,19 @@ function Manage_Users(){
 
     useEffect (()=> {
       async function fetchDetails(){
-          try {
-            const response = await fetch(url,{
+          const response = await fetch(url,{
               method : 'POST',
               headers : {
                   'Authorization' : `Bearer ${authToken}`,
                   'Content-type': 'application/json',
               },
-              body : JSON.stringify({status:2}),
+              body : JSON.stringify({status:-1}),
+          }).then((response) => response.json())
+          .then((array_Details) =>{
+              setTicketDetails(array_Details);
+              console.log(array_Details);
+              
           })
-              if(response.ok){
-                const result=await response.json()
-                setData(result)
-                setTicketDetails(result)
-                console.log("fetching successful...!")
-              }else{
-                throw new Error("Failed to fetch Manage Users...!")
-              }
-          } catch (error) {
-            setError(error.message)
-          }
         }
         fetchDetails();
     },[])
@@ -63,7 +55,7 @@ function Manage_Users(){
     <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
     <main className="main-container">
     <AdminDash_upblock />
-    {TicketDetails.length > 0 ? <Table_SE array_Details={TicketDetails} /> : 
+    {TicketDetails.length > 0 ? <Table_ManageUsers array_Details={TicketDetails} /> : 
       <h2 className="mx-3 mt-3">Manage Users Details Display Here</h2>}
     </main>
     </div>  

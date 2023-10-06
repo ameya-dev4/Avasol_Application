@@ -305,13 +305,13 @@ const navigate = useNavigate();
   const [formData, setFormData] = useState({
     amount: "",
     assignedBy: "",
-    assignedDate: "2023-08-09", 
+    assignedDate: "2023-09-09", 
     attendedDate:"2023-07-12",
     batteryId: "",
     noteToServiceEngineer: "",
-    openDate: "",
+    openDate: "2023-08-10",
     otpId: 5,
-    payerId: "",
+    payerId:"",
     requestId: 0,
     selfDeclaration: true,
     serviceEngineerId: "",
@@ -371,32 +371,29 @@ const navigate = useNavigate();
 
   const [latestRequests, setLatestRequests] = useState([]);
   const[displayDetails , setDisplayDetails] = useState(false);
-  const [data, setData] = useState(null)
-  const [error, setError] = useState(null)
 
-  const onSubmit = (e) => async()=>{
+
+  const onSubmit = (e) => {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    const response= await fetch(`${SERVER_URL}user/add-service-request`,{
+    fetch(`${SERVER_URL}user/add-service-request`,{
       method:'POST',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
+    }).then((response) => response.json())
+    .then((data) =>{
+      console.log(data);
+      alert('Details are Successfully Updated');
+      navigate(-1);
+    }).catch((error) => {
+      console.log(error);
     })
-    if(response.ok){
-      const result=await response.json()
-      setData(result)
-      console.log('fetching successful...!')
-    }else{
-      throw new Error('Failed to Add New Request...!')
-    }
-   
+    // Perform your form submission logic here
   };
-
-  
    
 
   return (

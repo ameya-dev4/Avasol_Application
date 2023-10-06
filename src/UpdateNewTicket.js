@@ -16,8 +16,7 @@ function UpdateNewTickets() {
   const [status_def, setSatus_def]=useState(Number(0))
   const [SE_def, setSE_def]=useState('None')
 
-
-  const SEoptions = [{value:SE_def, label :'Select Service Engineer'},{value:'<TBD>', label :'<TBD>'},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
+  const SEoptions = [{value:SE_def, label :'Select Service Engineer'},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
   const statusOptions = [{value:status_def, label :'Select Status'},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
   const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
@@ -80,29 +79,27 @@ function UpdateNewTickets() {
 
 
 
-  const onSubmit = (e) =>async()=> {
+  const onSubmit = (e) => {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
-    const response= await fetch(`${SERVER_URL}admin/update-ticket`,{
+    fetch(`${SERVER_URL}admin/update-ticket`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    })
-    if (response.ok){
-      const result= await response.json()
+    }).then((response) => response.json())
+    .then((data) =>{
+      console.log(data);
       alert('Details are Successfully Updated');
       navigate(-1);
-    }else{
-      throw new Error('Failed to update New Ticket...!')
-    }
-
+    }).catch((error) => {
+      console.log(error);
+    })
     // Perform your form submission logic here
   };
-  console.log("status",formData.status)
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -145,8 +142,8 @@ function UpdateNewTickets() {
 
         
         {/* Row 5 */}
-        <DropDownField label="Status" name="status" onChange={handleStausChange} options={statusOptions} value={formData.status!==null?Number(formData.status):status_def}/>
-        <DropDownField label="Service EngineerID" name="serviceEngineerId" options={SEoptions} onChange={handleSEChange} value={formData.serviceEngineerId?formData.serviceEngineerId:SE_def} />
+        <DropDownField label="Status" name="status" onChange={handleStausChange} options={statusOptions} value={status_def}/>
+        <DropDownField label="Service Engineer" name="serviceEngineerId" options={SEoptions} onChange={handleSEChange} value={SE_def} />
 
         {/* Row 5 */}
         <FormField label="Notes" name="notes1" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
