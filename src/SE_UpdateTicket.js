@@ -204,7 +204,7 @@ function SE_UpdateTicket() {
 console.log("assign",assign_def)
 
 const assignedByOpt = [{value:assign_def, label :assign_def},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
-const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14},{label:'Opened',value:8}];
 const paymentOptions = [{value:payment_def, label :'Payment status'},{label:'Paid',value:'paid'},{label:'Yet to be Paid',value:'yet to be paid'},{label:'raised',value:'raised'},{label:'failed',value:'failed'}];
 const userName = localStorage.getItem('username');
 
@@ -322,7 +322,7 @@ const userName = localStorage.getItem('username');
         
         {/* Row 4 */}
         <DropDownField label="Assigned By" name="assignedBy" onChange={handleAssignChange} options={assignedByOpt} value={assign_def}/>
-        <FormField label="Assigned Date" name="assignedDate" type = "text" onChange={handleInputChange} value={formData.assignedDate}/>
+        <EditInputFormField label="Assigned Date" name="assignedDate" type = "text" onChange={handleInputChange} value={formData.assignedDate}/>
         
         {/* Row 5 */}
         <FormField label="Ticket Description" name="shortDescription" onChange={handleInputChange} value={formData.shortDescription}/>
@@ -334,11 +334,11 @@ const userName = localStorage.getItem('username');
         
         {/* Row 7 */}
         <FormField label="Service Location" name="serviceArea" onChange={handleInputChange} value={formData.serviceArea}/>
-        <Typography sx={{mt:5,ml:10,mb:3}}><LocationOnIcon  style={{ fontSize: 60 }} /><Link sx={{fontSize : '24px' , cursor:'pointer'}}  href={`${'https://'}`} target='_blank'>Location</Link></Typography>
+        <Typography sx={{mt:5,ml:10,mb:3}}><LocationOnIcon  style={{ fontSize: 60 }} /><Link sx={{fontSize : '24px' , cursor:'pointer'}}  href={`${`https://google.com/maps?q=${34},${45}`}`} target='_blank'>Location</Link></Typography>
        
        
         {/* Row 8 */}
-        <EditInputFormField label="Attended Date" type='text' name="attendedDate" onChange={handleInputChange} value={formData.attendedDate}/>
+        <EditInputFormField label="Attended Date" type='text' name="attendedDate" onChange={handleInputChange} value={formData.attendedDate.slice(0,10)}/>
         <EditInputFormField label="Service Engineer Notes" name="serviceEngineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
 
        {/* Row 9 */}

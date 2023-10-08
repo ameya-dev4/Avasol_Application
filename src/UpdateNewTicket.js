@@ -31,7 +31,7 @@ function UpdateNewTickets() {
   const [SE_def, setSE_def]=useState('<TBD>')
 
   const SEoptions = [{value:SE_def, label :SE_def},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
-  const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+  const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14},{label:'Opened',value:8}];
   const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
 
@@ -48,8 +48,8 @@ function UpdateNewTickets() {
         if(response.ok){
           const result=await response.json()
           setFormData(result)
-          setSE_def(result.serviceEngineerId)
-          setStatus_def(result.status)
+          setSE_def(result.serviceEngineerId || 'select Service Engineer')
+          setStatus_def(result.status || 'select Status')
         }else{
           throw new Error('Failed to update ticket details...!')
         }

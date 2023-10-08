@@ -16,7 +16,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useForm} from 'react-hook-form'
 import {GetToken} from '../src/Api/auth'
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import UserGetDetails from './UserGetDetals';
 import SERVER_URL from './Server/Server';
 
@@ -95,6 +95,7 @@ const handleChange = (event) => {
         document.cookie = `access_token=${accessToken}; path=/;`;
         document.cookie = `refresh_token=${refreshToken}; path=/;`;
 
+        localStorage.setItem('login_acoount',JSON.stringify(loginType))
         localStorage.setItem("username",JSON.stringify(event.username))
         localStorage.setItem('password',JSON.stringify(event.password))
         

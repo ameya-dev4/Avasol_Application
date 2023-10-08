@@ -22,27 +22,27 @@ function LatestServReqHome({Toggle}) {
   
 
 
-  useEffect(() => {
-    // Function to make the GET request
-    async function getLatestRequests() {
-      try {
-        const response = await fetch(apiUrl,{
-            method:"GET",
-            headers:{
-                'Content-Type':"application/json",
-                "Authorization": "Bearer " + access_token,
-            },
-        });
-        const data = await response.json();
-        setLatestRequests(data);
-      } catch (error) {
-        console.error('Error fetching latest requests:', error);
-      }
-    }
+  // useEffect(() => {
+  //   // Function to make the GET request
+  //   async function getLatestRequests() {
+  //     try {
+  //       const response = await fetch(apiUrl,{
+  //           method:"GET",
+  //           headers:{
+  //               'Content-Type':"application/json",
+  //               "Authorization": "Bearer " + access_token,
+  //           },
+  //       });
+  //       const data = await response.json();
+  //       setLatestRequests(data);
+  //     } catch (error) {
+  //       console.error('Error fetching latest requests:', error);
+  //     }
+  //   }
 
-    // Call the function to get and display the latest service requests on page load
-    getLatestRequests();
-  }, [])
+  //   // Call the function to get and display the latest service requests on page load
+  //   getLatestRequests();
+  // }, [])
 
 
 
@@ -67,18 +67,7 @@ function LatestServReqHome({Toggle}) {
             </Col>
             
         </Row><br/>
-     
-          { latestRequests.length < 0 ?
-          
-           <Typography >No Recent Requests</Typography> 
-           
-         
-  
-          : 
-          <>
-            <DisplayBattery  array_Details={latestRequests}/>
-          </>
-        }
+        <DisplayBattery/>
       </Container>
 
       </main> 

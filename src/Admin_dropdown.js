@@ -5,7 +5,7 @@ import
  from 'react-icons/bs'
  import { GetToken } from './Api/auth';
  
-function Header_dropdown() {
+function Admin_dropdown() {
     // let dropdownRightAlign = false;
     //     if (this.props.rtlLayout) {
     //         dropdownRightAlign = true;
@@ -20,18 +20,15 @@ function Header_dropdown() {
                     <BsPersonCircle  className='icon text-white'/>
                         </Dropdown.Toggle>
                             <ul>
-                                {access_token!==null?
                                 <Dropdown.Menu>
-                                <li><a className="dropdown-item" href='/latest_serv_request'>Dashboard</a></li>
-                                <li><a className="dropdown-item" href='/user_profile'>My profile</a></li>
-                                <li><a className="dropdown-item" href='/signin'>About Us</a></li>
+                                <li><a className="dropdown-item" href='/admin_home'>Dashboard</a></li>
+                                <li><a className="dropdown-item" href='/admin_profile'>My profile</a></li>
+                                <li><a className="dropdown-item" href='#'>About Us</a></li>
                                     {access_token!==null?
-                                    <li><a className="dropdown-item" href='/logout'>Logout</a></li> :""
+                                    <li><a className="dropdown-item" href='/admin_logout'>Logout</a></li> :""
                                     }
                                         
-                                </Dropdown.Menu> :
-                                <li><a className="dropdown-item" href='/'>Not yet Login?</a></li>
-                                }
+                                </Dropdown.Menu>
                             </ul>
                 </Dropdown>
             
@@ -39,4 +36,4 @@ function Header_dropdown() {
   )
 }
 
-export default Header_dropdown
+export default Admin_dropdown

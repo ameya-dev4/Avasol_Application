@@ -6,7 +6,7 @@ import SERVER_URL from './Server/Server';
 
 function SE_Dash_upblocks() {
     const [TicketDetails, setTicketDetails] = useState([]);
-    const [All_serv_engg ,setAll_Serv_engg]=useState();
+    const [openTickets ,setOpenTickets]=useState();
     const authToken=GetToken()
     const currentDate = getCurrentDate();
     const url = `${SERVER_URL}se/get-service-request-details`
@@ -42,11 +42,41 @@ function SE_Dash_upblocks() {
             body : JSON.stringify(data),
         }).then((response) => response.json())
         .then((array_Details) =>{
-            setTicketDetails(array_Details);
+            setOpenTickets(array_Details);
         })
       }
       fetchDetails();
   },[])
+
+  const data1 = {
+    status : 8
+  }
+
+  useEffect (()=> {
+    async function fetchDetails(){
+        try {
+          
+          const response = await fetch(url,{
+            method : 'POST',
+            headers : {
+                'Authorization' : `Bearer ${authToken}`,
+                'Content-type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+            body : JSON.stringify(data1)
+        })
+        if(response.ok){
+          const result=await response.json()
+          setTicketDetails(result)
+        }else{
+          throw new Error('Failed to get Open Tickets details...!')
+        }
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      fetchDetails();
+  },[]) 
 
   return (
     <div className='px-3'>
@@ -56,7 +86,7 @@ function SE_Dash_upblocks() {
                     <div className='p-3 shadow-sm d-flex justify-content-around align-items-center rounded ' style={{backgroundColor:'#E35B5A'}}>
                         <Row>
                             <Col md={9}>
-                                <h6 className='fs-1'>{TicketDetails && TicketDetails.length}</h6>
+                                <h6 className='fs-1'>{TicketDetails>0? TicketDetails.length:0}</h6>
                                 <small className='fs-6'>Today's Tasks</small>
 
                             </Col>
@@ -78,7 +108,7 @@ function SE_Dash_upblocks() {
                     <div className='p-3  shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#5C9BD1'}}>
                         <Row>
                             <Col md={9}>
-                            <h6 className='fs-1'>{All_serv_engg && All_serv_engg.length}</h6>
+                            <h6 className='fs-1'>{openTickets>0?openTickets.length:0}</h6>
                             <small className='fs-6 '>My Open Tasks</small>
                             </Col>
                             <Col></Col>

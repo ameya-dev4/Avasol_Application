@@ -41,8 +41,8 @@ function UpdateBattery() {
   
 
   useEffect(()=>{
-    setSatus_def(formData.status)
-    setWarranty_def(formData.warranty)
+    setSatus_def(formData.status || 'select Status')
+    setWarranty_def(formData.warranty || 'select Warranty')
   })
 
   console.log("formdata",formData)

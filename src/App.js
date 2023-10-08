@@ -44,6 +44,8 @@ import UpdateLatestServReq from './update_latest_serv_req'
 import EditSe_Profile from './SE_EditProfile'
 import SE_UpdateTicket from './SE_UpdateTicket'
 import SE_Logout from './SE_logout'
+import LatestServReqHome from './LatestSerReqHome'
+import Admin_Logout from './Admin_logout'
 
 
 function App() {
@@ -59,7 +61,7 @@ function App() {
             <Route path='signup' element={<SignUp1/>}/>
             <Route path='signin' element={<SignIn/>}/>
             <Route path='userMyBatteries' element={<UserMyBatteries/>}/>
-            <Route path='latest_serv_request' element={<LatestServRequest/>}/>
+            <Route path='latest_serv_request' element={<LatestServReqHome/>}/>
             <Route path='Service_ReqPage' element={<Service_ReqPage/>}/>
             <Route path='paysuccess' element={<PaymentSuccess/>}/>
             <Route path='newRequestPage' element={<NewRequest/>}/>
@@ -82,7 +84,7 @@ function App() {
             <Route path='admin_profile' element={<AdminMyProfile/>}/>
             <Route path='manage_users' element={<Manage_Users/>}/>
             <Route path='admin_mydash' element={<AdminMyDashboard/>}/>
-            <Route path='admin_logout' element={<Admin_logout/>}/>
+            <Route path='admin_logout' element={<Admin_Logout/>}/>
             <Route path='admin_profile_update' element={<Admin_Edit_Profile/>}/>
             <Route path='update_ticket_details' element={<UpdateNewTickets/>}/>
             <Route path='update_se' element={<Update/>}/>

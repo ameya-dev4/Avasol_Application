@@ -422,7 +422,7 @@ import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 
-function DisplayBattery({array_Details}){  
+function DisplayBattery(){  
   const navigate = useNavigate();
   const [enhancedArray, setEnhancedArray ] = useState([]);
   const [latestRequests, setLatestRequests]=useState([])
@@ -438,9 +438,13 @@ function DisplayBattery({array_Details}){
                 "Authorization": "Bearer " + authToken,
             },
         });
-        const data = await response.json();
-        setLatestRequests(data);
-        // console.log(data)
+        if(response.ok){
+          const data = await response.json();
+          setLatestRequests(data);
+        }else{
+          throw new Error('Failed to get service requests...!')
+        }
+        
       } catch (error) {
         console.error('Error fetching latest requests:', error);
       }
@@ -449,8 +453,6 @@ function DisplayBattery({array_Details}){
     // Call the function to get and display the latest service requests on page load
     getLatestRequests();
   }, []);
-
-console.log("lates",latestRequests)
 
    const Row = ({ record }) => {
         const [showDetails, setShowDetails] = useState(false);
@@ -465,8 +467,6 @@ console.log("lates",latestRequests)
           navigate('/update_latestServRequest',{state:{shortDescription:record}});
         };
         
-
-console.log("record",record)
         const handleDelete = (input_value) =>{
             let batteryInfo;
             let batteryId = input_value;
@@ -545,6 +545,7 @@ console.log("record",record)
     };
       
     return (
+      latestRequests.length < 0 ?<Typography >No Recent Requests</Typography> : 
       <>
       <Typography variant='h4'> Latest Request Details</Typography>
         <TableContainer component={Paper} sx={{bgcolor:'white',maxWidth:'100%',mt:3}}>
@@ -558,15 +559,16 @@ console.log("record",record)
                 <TableCell><h5>SE Notes</h5></TableCell>
                 <TableCell><h5>Target Service Date</h5></TableCell>
                 <TableCell><h5>Status  </h5></TableCell>
-                {/* <TableCell><h5>Delete  </h5></TableCell> */}
               </TableRow>
             <TableBody>
-              {array_Details.map((record) => (
+              {latestRequests.map((record) => (
               <Row key={record.id} record={record} />))}
             </TableBody>  
            </Table>
         </TableContainer>
+        
       </>
+
     );  
 
 }

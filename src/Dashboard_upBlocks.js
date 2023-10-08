@@ -65,7 +65,7 @@ function Dashboard_upBlocks() {
                     {/* <i className='fa fa-tasks p-3 fs-1 opacity-25  ' aria-hidden="true" ></i> */}
                         <Row>
                             <Col md={9}>
-                                <h6 className='fs-1'>{batteries && batteries.length}</h6>
+                                <h6 className='fs-1'>{batteries.length >0 ?batteries.length:0}</h6>
                                 <small className='fs-6'>My Batteries</small>
                             </Col>
                             <Col>
@@ -87,7 +87,7 @@ function Dashboard_upBlocks() {
                     <div className='p-3  shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#578EBE'}}>
                         <Row>
                             <Col md={9}>
-                            <h6 className='fs-1'>{latestRequests && latestRequests.length}</h6>
+                            <h6 className='fs-1'>{latestRequests.length >0 ? latestRequests.length:0}</h6>
                             <small className='fs-6'>My Service Tickets</small>
                             </Col>
                             <Col>
