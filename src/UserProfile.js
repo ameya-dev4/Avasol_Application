@@ -106,25 +106,6 @@ function UserProfile() {
         <FormField label="Contact Number#" name="contactNumber" onChange={handleInputChange} value={user_Details.contactNumber}/>
         <FormField label="Email Id" name="emailId" onChange={handleInputChange}  value={user_Details.emailId}/>
         
-        {/* Row 3 */}
-        <FormField label="House No" name="houseNo" onChange={handleInputChange} value={user_Details.houseNo}/>
-        <FormField label="Area Name" name="areaName" onChange={handleInputChange} value={user_Details.areaName}/>
-        {/* <Grid item xs={12} sm={6}>
-        <Box>
-          <Typography sx={{color:'black',fontSize:'24px',mb:3,ml:3}} >Training Completed</Typography>
-        <FormControl>
-              <RadioGroup
-              row
-              aria-labelledby="demo-form-control-label-placement"
-              sx={{ml:3}}
-              >
-                <FormControlLabel value="yes" defaultValue ="yes" control={<Radio />} label="Yes" sx={{fontSize:'14px',color:'black'}}/>
-                <FormControlLabel value="no" control={<Radio />} label="No" sx={{fontSize:'14px',color:'black'}}/>
-            </RadioGroup>
-            </FormControl>
-          </Box>
-          </Grid> */}
-          
         <Grid item xs={12} sm={12}>
             <Box>
               <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:1,mt:2,px:2}}>Address Details </Typography>
@@ -156,7 +137,7 @@ function UserProfile() {
                 size="large"
                 fullWidth
                 sx={{ mt: 7,mb:2,ml:40}}
-                onClick={() => navigate(-1)}
+                onClick={() => navigate('/latest_serv_request')}
               >
                close
               </Button>

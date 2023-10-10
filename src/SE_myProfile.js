@@ -326,7 +326,6 @@ function SE_MyProfile() {
         <FormField label="District" name="district" onChange={handleInputChange}  value={user_Details.district}/>
 
         {/* Row 6 */}
-        <FormField label="Area" name="area" onChange={handleInputChange} value={user_Details.area}/>
         <FormField label="Postal Code" name="postalcode" onChange={handleInputChange}  value={user_Details.postalcode}/>
         
         

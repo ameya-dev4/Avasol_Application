@@ -4,8 +4,8 @@ import './popup.css'
 const Popup = props => {
   return (
     <div className="popup-box">
-      <div className="box">
-        <span className="close-icon" onClick={props.handleClose}>x</span>
+      <div className="box text-dark ">
+        <span className="close-icon text-danger" onClick={props.handleClose}>x</span>
         {props.content}
       </div>
     </div>

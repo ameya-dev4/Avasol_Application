@@ -448,7 +448,6 @@ function EditSe_Profile() {
         <EditInputFormField label="District" name="district" onChange={handleInputChange}  value={user_Details.district}/>
 
         {/* Row 6 */}
-        <EditInputFormField label="Area" name="area" onChange={handleInputChange} value={user_Details.area}/>
         <EditInputFormField label="Postal Code" name="postalcode" onChange={handleInputChange}  value={user_Details.postalcode}/>
         
         

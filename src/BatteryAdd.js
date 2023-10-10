@@ -211,11 +211,13 @@ import DropDownField from './Update/DropDownField';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
+import ConfirmationModal from './Confirmation';
 
-const authToken = GetToken();
+
 
 
 function BatteryAdd() {
+  const authToken = GetToken();
   const [warranty_def, setWarranty_def]=useState('no')
   const [vechicel_def, setVechicle_def]=useState('None')
 
@@ -294,10 +296,11 @@ function BatteryAdd() {
   const[displayDetails , setDisplayDetails] = useState(false);
 
 
-   const onSubmit = (e) => {
+   const onSubmit = async(e) => {
     e.preventDefault();
     // formData contains the form values
     console.log(formData);
+    
     fetch(`${SERVER_URL}user/add-new-battery`,{
       method:'POST',
       headers:{
@@ -307,14 +310,35 @@ function BatteryAdd() {
       body:JSON.stringify(formData)
     }).then((response) => response.json())
     .then((data) =>{
-      console.log(data);
-      alert('Battery successfully added...!');
-      navigate(-1);
+      if (data){
+        alert('Battery successfully added...!');
+        navigate(-1);
+      }
+      
     }).catch((error) => {
       console.log(error);
     })
-    // Perform your form submission logic here
+    
   };
+
+
+  // Confirmation Dailog box
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancle = () => {
+    setIsConfirmationOpen(true);
+  };
+
+  const handleCloseConfirmation = () => {
+    setIsConfirmationOpen(false);
+  };
+
+  const handleConfirm = () => {
+    navigate('/userMyBatteries')
+    setIsConfirmationOpen(false);
+  };
+
+
    
 
   return (
@@ -378,7 +402,7 @@ function BatteryAdd() {
                 size="large"
                 fullWidth
                 sx={{ mb:2}}
-                onClick={() => navigate(-1)}
+                onClick={handleCancle}
               >
                close
               </Button>
@@ -396,7 +420,13 @@ function BatteryAdd() {
                 Add
               </Button>
             </Grid>
-           
+            
+            <ConfirmationModal
+        open={isConfirmationOpen}
+        onClose={handleCloseConfirmation}
+        onConfirm={handleConfirm}
+        
+      />
 
         </Grid>
         

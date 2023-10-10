@@ -1,7 +1,8 @@
 import React ,{useState} from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
-import ViewBatteryDetails from './ViewBatterDetails'
+import Dashboard_upBlocks from './Dashboard_upBlocks'
+import DisplayBattery from './batteryComponent'
 
 function UserMyBatteries() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -16,7 +17,8 @@ function UserMyBatteries() {
       <Header OpenSidebar={OpenSidebar}/>
       <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className="main-container">
-        <ViewBatteryDetails/>
+        <Dashboard_upBlocks/>
+        <DisplayBattery/>
       </main> 
       
         

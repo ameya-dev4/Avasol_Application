@@ -14,7 +14,7 @@ function FormField({ label, name, value, onChange,type='text',placeholder}) {
           onChange={onChange}
           fullWidth
           placeholder={placeholder}
-          sx={{width:'80%',ml:3,fontSize:'14',fontWeight:'500'}}
+          sx={{width:'80%',ml:3}}
           // Add any additional attributes or styling here
         />
         </Box>
