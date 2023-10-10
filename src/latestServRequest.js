@@ -5,10 +5,6 @@ import LatestServReqHome from './LatestSerReqHome'
 
 
 function LatestServRequest() {
-  const [toggle,setToggle]=useState(true )
-  const Toggle=()=>{
-    setToggle(!toggle)
-  }
   return (
     <>
       <LatestServReqHome/>

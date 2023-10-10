@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { GetToken } from './Api/auth';
 import { useNavigate } from 'react-router-dom';
-import {Grid,Typography,Button,Table,Link,FormControl,FormControlLabel,Radio,RadioGroup,Box} from '@mui/material';
+import {Grid,Typography,Button,Table,Link,FormControl,FormControlLabel,Radio,RadioGroup,Box,Avatar} from '@mui/material';
 import AdminDash_upblock from './AdminDash_upblock';
 import Header from "./Header";
 import Admin_sidebar from './Admin_sidebar';
@@ -17,6 +17,8 @@ function AdminMyProfile() {
   const navigate = useNavigate();
   const [user_Details,setUserDetails] = useState({})
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(null);
+  const[remove_bool,setRemove_bool]=useState(true)
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
@@ -56,6 +58,26 @@ function AdminMyProfile() {
   };
 
   
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+      setRemove_bool(!remove_bool)
+    }
+    
+
+  };
+
+  const handleAddPhoto = () => {
+    // Trigger the hidden input element to choose a file
+    document.getElementById('imageInput').click();
+  };
+
+  
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -73,6 +95,7 @@ function AdminMyProfile() {
       <form onSubmit={onSubmit}>
         <Table sx={{border:'1px solid black',p:2,mt:10,bgcolor:'white'}}>
         <Grid container spacing={2} sx={{border:'1px black'}}>
+        
         <Grid item xs={12}>
               <Button
                 variant="contained"
@@ -90,7 +113,45 @@ function AdminMyProfile() {
             <Box>
               <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:3,mt:2}}>Personal Info</Typography>
             </Box>
+                <input
+                  type="file"
+                  id="imageInput"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={handleImageUpload}
+                />
+                <Avatar
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    bgcolor:'secondary',
+                    color: 'white',
+                    fontSize: 30,
+                    position: 'relative',
+                    cursor: 'pointer',
+                    m:3,
+                    borderRadius:'5%'
+                    
+                  }}
+                  onClick={handleAddPhoto}
+                  variant='square'
+                >
+                  {selectedImage ? (
+                    <>
+                    <img src={selectedImage} alt="Profile" style={{width:'100%',height:'100%'}} />
+                    
+                    </>
+                  ) : (
+                   <div className='text-center fs-6 '>Add Photo</div>
+                  )}
+                  
+                </Avatar>
           </Grid>
+          <i hidden={remove_bool} className='mx-5 text-danger  feather icon-x ' ><a  href='#'  style={{textDecoration:'none'}} onClick={()=>{
+            setSelectedImage(null)
+            setRemove_bool(!remove_bool)
+            }} > Remove Photo</a></i>
+
         {/* Horizontal Line */}
         <Grid sm={12} xs={12}>
         <hr style={{width:'98%',color:'grey',align:'right'}} noshade />

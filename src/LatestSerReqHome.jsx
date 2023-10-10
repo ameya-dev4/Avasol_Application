@@ -61,10 +61,13 @@ function LatestServReqHome({Toggle}) {
       <Dashboard_upBlocks/><br/>
       
       <Container>
-        <Row>
-        <Col >
-                <Typography variant='h4' ><Button  variant='contained' style={{backgroundColor:'lightseagreen',color:'white'}} onClick={()=>navigate('/Service_ReqPage')}  >Add Service Request</Button> </Typography>
-            </Col>
+        <Row md={12}>
+          <Col>
+          <Typography variant='h4'> Latest Request Details</Typography>
+          </Col>
+          <Col >
+                <Typography variant='h4' ><Button  variant='contained' style={{backgroundColor:'lightseagreen',color:'white',marginLeft:'70%'}} onClick={()=>navigate('/Service_ReqPage')}  >Add Service Request</Button> </Typography>
+          </Col>
             
         </Row><br/>
         <DisplayBattery/>

@@ -16,28 +16,28 @@ import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 
-async function fetchDataAndEnhanceArray({array_Details}){
-  const enhancedArray = await Promise.all(
-    array_Details.map(async (item) => {
-      const data = {
-        username : item.username,
-      }
-      const response = await fetch(`${SERVER_URL}user/get-battery-list`,{
-        method : 'GET',
-        headers : {
-          'Authorization' : `Bearer ${authToken}`,
-          'Content-Type' : 'application/json',
-        },
-        // body:JSON.stringify(data),
-      })
-      const outPut_value = await response.json();
-      console.log(outPut_value);
+// async function fetchDataAndEnhanceArray({array_Details}){
+//   const enhancedArray = await Promise.all(
+//     array_Details.map(async (item) => {
+//       const data = {
+//         username : item.username,
+//       }
+//       const response = await fetch(`${SERVER_URL}user/get-battery-list`,{
+//         method : 'GET',
+//         headers : {
+//           'Authorization' : `Bearer ${authToken}`,
+//           'Content-Type' : 'application/json',
+//         },
+//         // body:JSON.stringify(data),
+//       })
+//       const outPut_value = await response.json();
+//       console.log(outPut_value);
       
-      return { ...item, customerDetails: outPut_value };
-    })
-  )
-  return enhancedArray ; 
-}
+//       return { ...item, customerDetails: outPut_value };
+//     })
+//   )
+//   return enhancedArray ; 
+// }
 
 function Table_Batteries({array_Details}){  
   const navigate = useNavigate();
@@ -46,11 +46,11 @@ function Table_Batteries({array_Details}){
 
 
 
-  useEffect(() => {fetchDataAndEnhanceArray({array_Details : array_Details }).then((result) => {
-    setEnhancedArray(result);
-  });
-  },[])
-  console.log(enhancedArray);
+  // useEffect(() => {fetchDataAndEnhanceArray({array_Details : array_Details }).then((result) => {
+  //   setEnhancedArray(result);
+  // });
+  // },[])
+  
    const Row = ({ record }) => {
         const [showDetails, setShowDetails] = useState(false);
       
@@ -67,10 +67,10 @@ function Table_Batteries({array_Details}){
         const handleDelete = (input_value) =>{
             let batteryInfo;
             let batteryId = input_value;
-            for(let i=0; i<enhancedArray.length ; i++){
-              if(batteryId === enhancedArray[i].batteryId){
-                 batteryInfo = enhancedArray[i]
-                enhancedArray.pop(batteryInfo);
+            for(let i=0; i<array_Details.length ; i++){
+              if(batteryId === array_Details[i].batteryId){
+                 batteryInfo = array_Details[i]
+                array_Details.pop(batteryInfo);
               }
         
             }
@@ -135,7 +135,7 @@ function Table_Batteries({array_Details}){
     return (
       <>
       
-        <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%',mt:10}}>
+        <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%',mt:3}}>
           <Table>
               <TableRow>
               <TableCell><h5>Battery Name</h5></TableCell>
@@ -147,7 +147,7 @@ function Table_Batteries({array_Details}){
                 <TableCell><h5>Delete  </h5></TableCell>
               </TableRow>
             <TableBody>
-              {enhancedArray.map((record) => (
+              {array_Details.map((record) => (
               <Row key={record.id} record={record} />))}
             </TableBody>  
            </Table>

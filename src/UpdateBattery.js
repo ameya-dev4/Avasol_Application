@@ -170,7 +170,8 @@ function UpdateBattery() {
   const onSubmit = async(e) => {
     e.preventDefault();
     // formData contains the form values
-    console.log(formData);
+    formData.purchaseDate=formData.purchaseDate.slice(0,10)
+    console.log(formData)
     const response= await fetch(`${SERVER_URL}user/update-battery`,{
       method:'PUT',
       headers:{
@@ -226,7 +227,7 @@ function UpdateBattery() {
         <EditFormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange}  value={formData.batteryCurrent}/>
 
         {/* Row 4 */}
-        <EditFormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)} disabled={false} />
+        <EditFormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)}/>
         <DropDownField label="Warranty" name="warranty" onChange={handlewarrantyChange}  value={warranty_def} options={warrantyType}/>
         
         <EditFormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>

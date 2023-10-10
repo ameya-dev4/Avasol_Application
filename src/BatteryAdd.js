@@ -308,8 +308,8 @@ function BatteryAdd() {
     }).then((response) => response.json())
     .then((data) =>{
       console.log(data);
-    //   alert('Details are Successfully Updated');
-    //   navigate(-1);
+      alert('Battery successfully added...!');
+      navigate(-1);
     }).catch((error) => {
       console.log(error);
     })

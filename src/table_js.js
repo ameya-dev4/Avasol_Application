@@ -426,6 +426,7 @@ function DisplayBattery(){
   const navigate = useNavigate();
   const [enhancedArray, setEnhancedArray ] = useState([]);
   const [latestRequests, setLatestRequests]=useState([])
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Function to make the GET request
@@ -444,7 +445,7 @@ function DisplayBattery(){
         }else{
           throw new Error('Failed to get service requests...!')
         }
-        
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching latest requests:', error);
       }
@@ -524,6 +525,7 @@ function DisplayBattery(){
         
           }
       
+          
       
         return (
           <>
@@ -533,7 +535,7 @@ function DisplayBattery(){
             <TableCell style={{fontSize:'18px'}}>{record.openDate.slice(0,10)}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.assignedDate.slice(0,10)}</TableCell>
             <TableCell style={{fontSize:'18px'}}>service_location</TableCell>
-            <TableCell style={{fontSize:'18px'}}>SE_Name</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerId}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerNotes}</TableCell>
             <TableCell style={{fontSize:'18px'}}>target serviceDate</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
@@ -544,10 +546,12 @@ function DisplayBattery(){
         </>);
     };
       
+    if (loading) {
+      return <Typography>Loading...</Typography>;
+    }
     return (
       latestRequests.length < 0 ?<Typography >No Recent Requests</Typography> : 
       <>
-      <Typography variant='h4'> Latest Request Details</Typography>
         <TableContainer component={Paper} sx={{bgcolor:'white',maxWidth:'100%',mt:3}}>
           <Table>
               <TableRow>

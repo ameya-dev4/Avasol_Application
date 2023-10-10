@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import {GetToken} from '../src/Api/auth'
 import Cookies from 'js-cookie'
 import { Button, Card, Col, Row } from 'react-bootstrap';
@@ -9,32 +9,43 @@ import SERVER_URL from './Server/Server';
 
 const Logout= (event)=>{
     const navigate=useNavigate();
-    const access_token=GetToken();
-    console.log(access_token)
+    const access_token=GetToken()
     const data={
         access_token:access_token
     }
-    // Cookies.remove('access_token')
-    // Cookies.remove('refresh_token')
-   
-    // alert("do you want to logout")
-    fetch(`${SERVER_URL}user/logout`,{
-            method:'POST',
-            mode:'cors',
-            headers:{
-                'Content-Type': 'application/json',
+    console.log("data",data)
+    const parse_data=JSON.stringify(data)
+    console.log("pares",parse_data)
+    const handleLogout = async () => {
+        try {
+          const response = await fetch(`${SERVER_URL}user/logout`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${access_token}`,
             },
-            body:JSON.stringify(data)
-        }).then((resp)=>resp.json())
-        .then((data)=>{
+            body: JSON.stringify(parse_data),
+          });
+    
+          if (response.ok) {
+            // Logout successful
             document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            window.localStorage.clear()
-            console.log(data)
-        }).catch((err)=>{
-            console.error("logout failed...!",err)
-        })
+            window.localStorage.clear();
+            navigate('/login');
+          } else {
+            const errorData = await response.json();
+          }
+        } catch (error) {
+          console.error('Logout failed:', error);
+        }
+      };
 
+      useEffect(()=>{
+        handleLogout()
+      })
+    
         const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)

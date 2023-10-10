@@ -113,7 +113,7 @@ function SE_TicketsToday(){
     }
 
     const data = {
-      serviceDate : currentDate,
+      assignedDate : currentDate,
     }
 
     useEffect (()=> {
