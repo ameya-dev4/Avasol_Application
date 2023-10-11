@@ -318,12 +318,10 @@ function PostNewBattery() {
   const [batteryDetails, setBatteryDetails] = useState([]);
   const [batteryList, setBatteryList] = useState([]);   // Store battery list separately
 
+
   const vechicleType = [{ value: vechicel_def, label: 'Select Vechicle Type  ' }, { value: '2', label: 'Two' }, { label: 'Three', value: '3' }];
   const selfDeclaration = [{ value: true, label: 'Yes' }, { label: 'No', value: false }];
-  const statusOptions = [{ value: status_def, label: 'Select Status' }, { label: 'New', value: 1 }, { label: 'Assigned', value: 2 }, { label: 'Rejected', value: 5 }, { label: 'Closed', value: 14 }];
-  const performanceOptions = [{ value: rating_def, label: 'Select Rating' }, { label: 'Average', value: 'average' }, { label: 'Good', value: 'good' }, { label: 'Excellent', value: 'excellent' }, { label: 'Needs Improvement', value: 'needs Improvement' }];
-
-  const Rating = [{ label: 'Average', value: 'average' }, { label: 'Good', value: 'good' }, { label: 'Excellent', value: 'excellent' }, { label: 'Needs Improvement', value: 'needs Improvement' }];
+ 
   const navigate = useNavigate();
 
   const warrantyType = [{ value: warranty_def, label: 'select warranty ' }, { value: 'Yes', label: 'Yes' }, { label: 'No', value: 'No' }];
@@ -333,9 +331,7 @@ function PostNewBattery() {
     setOpenSidebarToggle(!openSidebarToggle);
   };
 
-  const location = useLocation();
 
-  console.log("veh", vechicleType);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -426,26 +422,6 @@ function PostNewBattery() {
     }));
   };
 
-  const handleStatusChange = (e) => {
-    setStatus_def(e.target.value);
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleRatingChange = (e) => {
-    setRating_def(e.target.value);
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const [latestRequests, setLatestRequests] = useState([]);
-  const [displayDetails, setDisplayDetails] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -501,7 +477,7 @@ function PostNewBattery() {
                     options={batteryList}
                   />
                 ) : (
-                  <FormField label="Battery ID" name="batteryId" placeholder='Enter BatteryID' />
+                  <FormField label="Battery ID" name="batteryId" placeholder='Enter BatteryID' value="BatteryID's fetching...!" />
                 )}
 
                 <FormField label="Description" name="shortDescription" placeholder='Enter Description' value={formData.shortDescription} onChange={handleInputChange} />
@@ -525,21 +501,6 @@ function PostNewBattery() {
                 {/* Row 6 */}
                 <DropDownField label="Under Warranty" name="warranty" value={warranty_def} options={warrantyType} onChange={handleWarrentyChange} />
                 <DropDownField label="self Declaration" value={formData.selfDeclaration} options={selfDeclaration} onChange={handleInputChange} />
-
-                {/* Row 7 */}
-                <DropDownField label="Status" name="status" onChange={handleStatusChange} value={status_def} options={statusOptions} />
-                <FormField label="Last Status Updated" name="lastStatusUpdated" onChange={handleInputChange} value={formData.status} />
-
-                <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} placeholder='Enter Visit Amount' value={formData.amount} />
-                <FormField label="Visit Amount Paid" name="visitAmountPaid" onChange={handleInputChange} placeholder='Enter Amount Paid' value={formData.visitAmountPaid} />
-
-                <FormField label="Service Date" name="serviceDate" placeholder='YYYY/MM/DD' onChange={handleInputChange} value={formData.serviceDate} />
-                <FormField label="ServiceEngineer Notes" name="serviceEngineerNotes" placeholder='Enter Amount' onChange={handleInputChange} value={formData.serviceEngineerNotes} />
-
-                <FormField label="Service Amount" name="serviceAmount" placeholder='Enter Amount' onChange={handleInputChange} value={formData.ServiceAmount} />
-                <FormField label="service Amount Paid" name="serviceAmountPaid" placeholder='Enter Amount Paid' onChange={handleInputChange} value={formData.serviceAmountPaid} />
-
-                <DropDownField label="Customer Rating" name="customerRating" onChange={handleRatingChange} value={rating_def} options={performanceOptions} />
 
               </Grid>
               <Grid container spacing={3} sx={{ p: 3 }}>

@@ -220,14 +220,14 @@ function BatteryAdd() {
   const authToken = GetToken();
   const [warranty_def, setWarranty_def]=useState('no')
   const [vechicel_def, setVechicle_def]=useState('None')
+  const [principal_def, setPrincipal_def]=useState('None')
+
 
   const vechicleType = [{value:vechicel_def, label :'Select Vechicle Type  '},{value:'2', label:'Two'},{label:'Three',value:'3'}]
   const warrantyType = [{value:warranty_def, label :'Select Warranty'},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-  const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+  const principalType = [{value:principal_def, label :'Select Principal'},{label:1,value:1},{label:2,value:2},{label:3,value:3},{label:4,value:4}];
   const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
-
-  const Rating = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
   const OpenSidebar = () => {
@@ -259,7 +259,9 @@ function BatteryAdd() {
   batteryNumber:"",
   dealer:"",
   subDealer:"",
-  batteryName:""
+  batteryName:"",
+  principal:"",
+  principalContact:""
 
 });
 
@@ -284,6 +286,15 @@ function BatteryAdd() {
   
   const handleWarrentyChange = (e) => {
     setWarranty_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handlePrincipalChange = (e) => {
+    setPrincipal_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -377,19 +388,19 @@ function BatteryAdd() {
         <FormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange} placeholder='Enter Current '  value={formData.batteryCurrent}/>
 
         {/* Row 4 */}
-        <FormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} placeholder='YYYY/MM/DD' value={formData.purchaseDate.slice(0,10)} disabled={false} />
+        <FormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} placeholder='YYYY-MM-DD' value={formData.purchaseDate.slice(0,10)} disabled={false} />
         <DropDownField label="Warranty" name="warranty" onChange={handleWarrentyChange}  value={warranty_def} options={warrantyType}/>
         
         <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears} placeholder='Enter Warranty Years'/>
         <DropDownField label="Vechicle Type" name="vechicleType" onChange={handleVechicleChange} value={vechicel_def} options={vechicleType}/>
 
         {/* Row 6 */}
-        <FormField label="Dealer Addrees" name="dealerAddress" onChange={handleInputChange}  placeholder='Enter Dealer Address' value={formData.delearAddress}/>
-        <FormField label="Dealer Contact" name="Dealer Contact" onChange={handleInputChange} placeholder='Enter 10 digit number' value={formData.DealerContact}/>
+        <DropDownField label="Principal" name="principal" onChange={handlePrincipalChange}  placeholder='Enter Principal' options={principalType} value={formData.principal}/>
+        <FormField label="Principal Contact" name="principalContact" onChange={handleInputChange} placeholder='Enter 10 digit number' value={formData.principalContact}/>
 
         {/* Row 7 */}
-        <FormField label="Sub-Dealer Address" name="subDealerAddress" placeholder='Enter Sub-Dealer Address' onChange={handleInputChange}  value={formData.subDealerAddress}/>
-        <FormField label="Sub-Dealer Contact" name="subDealer Contact"  placeholder='Enter 10 digit number' onChange={handleInputChange} value={formData.subDealerContact}/>
+        <FormField label="Dealer Address" name="dealerAddress" placeholder='Enter Dealer Address' onChange={handleInputChange}  value={formData.dealerAddress}/>
+        <FormField label="Dealer Contact" name="dealerContact"  placeholder='Enter 10 digit number' onChange={handleInputChange} value={formData.DealerContact}/>
 
         {/* Row 8 */}
         <NoEditable label="Status" name="status" onChange={handleInputChange}   value={formData.status}/>

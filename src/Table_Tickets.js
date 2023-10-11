@@ -190,6 +190,7 @@ function Table_Tickets({ array_Details }) {
           <TableCell style={{ fontSize: '18px' }}>
             {record.customerDetails ? record.customerDetails.city : 'N/A'}
           </TableCell>
+          <TableCell style={{ fontSize: '18px' }}>{record.serviceEngineerId}</TableCell>
         </TableRow>
       </>
     );
@@ -206,6 +207,7 @@ function Table_Tickets({ array_Details }) {
             <TableCell><h4>Contact Number</h4></TableCell>
             <TableCell><h4>Open Date</h4></TableCell>
             <TableCell><h4>Service Location</h4></TableCell>
+            <TableCell><h4>ServiceEngineer ID</h4></TableCell>
           </TableRow>
           <TableBody>
             {enhancedArray.map((record) => (

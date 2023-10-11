@@ -40,10 +40,13 @@ function NewTickets(){
                   'Authorization' : `Bearer ${authToken}`,
                   'Content-type': 'application/json',
               },
-          }).then((response) => response.json())
-          .then((array_Details) =>{
-              setTicketDetails(array_Details);
           })
+          if(response.ok){
+            const result=await response.json()
+            setTicketDetails(result)
+          }else{
+            throw new Error('Failed to fetch New ticket Details....!')
+          }
         }
         fetchDetails();
     },[])

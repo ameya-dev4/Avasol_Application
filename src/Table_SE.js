@@ -51,8 +51,7 @@ function Table_SE({array_Details}){
       
     return (
       <>
-        <Typography variant='h4'> Latest Request Details</Typography>
-        <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%' , mt:3}}>
+        <TableContainer component={Paper} sx={{m:3,bgcolor:'white',maxWidth:'97%' , mt:5}}>
           <Table>
               <TableRow>
                 <TableCell><h5>First Name   </h5> </TableCell>
