@@ -69,7 +69,7 @@ function LatestServReqHome({ Toggle }) {
         <main className="main-container">
           <Dashboard_upBlocks /><br />
 
-          <Container>
+          <Container className='mt-5'>
             <Row md={12}>
               <Col>
                 <Typography variant='h4'> Latest Request Details</Typography>

@@ -229,6 +229,7 @@ import Sidebar from "./Sidebar";
 import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
+import Admin_sidebar from './Admin_sidebar';
 
 const authToken = GetToken();
 function Update() {
@@ -264,7 +265,7 @@ function Update() {
 
   console.log("status",status_def)
 const trainingOptions = [{value:train_def, label :train_def},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-const statusOptions = [{label:status_def,value:status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
+const statusOptions = [{label:status_def,value:status_def},{label:'New',value:1},{label:'Approved',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
 const performanceOptions = [{label:preform_def,value:preform_def},{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
 
@@ -370,7 +371,7 @@ const performanceOptions = [{label:preform_def,value:preform_def},{label:'Averag
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
       {/* ... form rendering ... */}
       <Header OpenSidebar={OpenSidebar}/>
-      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+      <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className='main-container'>
       <AdminDash_upblock />
       <form onSubmit={onSubmit}>

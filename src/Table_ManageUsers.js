@@ -117,6 +117,7 @@ import {
   TableRow,
   TableCell,
   Paper,
+  Typography
 } from '@mui/material';
 import { GetToken } from './Api/auth';
 import SERVER_URL from './Server/Server';
@@ -172,8 +173,10 @@ function Table_ManageUsers({ array_Details }) {
     };
 
     const handleTicketClick = ({ record }) => {
-      navigate('/update_ticket_details', { state: { ticketId: record.requestId } });
+      navigate('/ManageUser_details',{state:{username:record}});
     };
+
+    
 
     return (
       <>
@@ -193,7 +196,8 @@ function Table_ManageUsers({ array_Details }) {
 
   return (
     <>
-      <TableContainer component={Paper} sx={{ m: 1, bgcolor: 'white', maxWidth: '99%', mt: 10 }}>
+      <Typography  variant='h4' className='mx-3 mt-5'>Manage users</Typography>
+      <TableContainer component={Paper} sx={{ m: 1, bgcolor: 'white', maxWidth: '99%', mt:3}}>
         <Table>
           <TableRow>
             <TableCell><h4>First Name</h4></TableCell>

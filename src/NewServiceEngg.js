@@ -1,11 +1,13 @@
 
 import Header from "./Header";
+import { Typography } from "@mui/material";
 import { useState,useEffect } from "react";
 import { GetToken } from "./Api/auth";
 import Table_SE from "./Table_SE";
 import AdminDash_upblock from "./AdminDash_upblock";
 import Admin_sidebar from "./Admin_sidebar";
 import SERVER_URL from "./Server/Server";
+
 
 const authToken = GetToken();
 
@@ -53,8 +55,9 @@ function NewServiceEngineers(){
     <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
     <main className="main-container">
     <AdminDash_upblock />
+    <Typography  variant='h4' className='mx-3 mt-5'>New Service Engineers</Typography>
     {TicketDetails.length > 0 ? <Table_SE array_Details={TicketDetails} /> : 
-      <h2 className="mx-3 mt-3">New Service Engineer Details Display Here</h2>}
+      <h2 className="mx-3 mt-3">No Service Engineers to show...</h2>}
     </main>
     </div>
     </>

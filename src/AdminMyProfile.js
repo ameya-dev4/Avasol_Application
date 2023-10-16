@@ -102,17 +102,20 @@ function AdminMyProfile() {
                 size="large"
                 color='primary'
                 fullWidth
-                sx={{ mb: 3  }}
                 
               >
                 <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Profile</Typography>
               </Button>
             </Grid>
+
        
           <Grid item xs={12} sm={12}>
             <Box>
               <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:3,mt:2}}>Personal Info</Typography>
             </Box>
+            <Grid sm={12} xs={12}>
+              <hr style={{width:'100%',color:'grey',align:'right'}} noshade />
+            </Grid>
                 <input
                   type="file"
                   id="imageInput"
@@ -146,16 +149,13 @@ function AdminMyProfile() {
                   )}
                   
                 </Avatar>
-          </Grid>
-          <i hidden={remove_bool} className='mx-5 text-danger  feather icon-x ' ><a  href='#'  style={{textDecoration:'none'}} onClick={()=>{
+                <i hidden={remove_bool} className='mx-3 text-danger  feather icon-x ' ><a  href='#'  style={{textDecoration:'none'}} onClick={()=>{
             setSelectedImage(null)
             setRemove_bool(!remove_bool)
             }} > Remove Photo</a></i>
 
-        {/* Horizontal Line */}
-        <Grid sm={12} xs={12}>
-        <hr style={{width:'98%',color:'grey',align:'right'}} noshade />
-        </Grid>
+          </Grid>
+          
 
         
         {/* Row 1 */}
@@ -165,33 +165,15 @@ function AdminMyProfile() {
         {/* Row 2 */}
         <FormField label="Contact Number#" name="contactNumber" onChange={handleInputChange} value={user_Details.contactNumber}/>
         <FormField label="Email Id" name="emailId" onChange={handleInputChange}  value={user_Details.emailId}/>
-        
-        {/* Row 3 */}
-        <FormField label="Service Area" name="serviceArea" onChange={handleInputChange} value={user_Details.serviceArea}/>
-        <Grid item xs={12} sm={6}>
-        <Box>
-          <Typography sx={{color:'black',fontSize:'24px',mb:3,ml:3}} >Training Completed</Typography>
-        <FormControl>
-              <RadioGroup
-              row
-              aria-labelledby="demo-form-control-label-placement"
-              sx={{ml:3}}
-              >
-                <FormControlLabel value="yes" defaultValue ="yes" control={<Radio />} label="Yes" sx={{fontSize:'14px',color:'black'}}/>
-                <FormControlLabel value="no" control={<Radio />} label="No" sx={{fontSize:'14px',color:'black'}}/>
-            </RadioGroup>
-            </FormControl>
-          </Box>
-          </Grid>
           
         <Grid item xs={12} sm={12}>
             <Box>
-              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:3,mt:5}}>Address Details </Typography>
+              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:3,mt:2}}>Address Details </Typography>
             </Box>
           </Grid>
         {/* Horizontal Line */}
         <Grid sm={12} xs={12}>
-        <hr style={{width:'98%',color:'grey',align:'right'}} noshade />
+        <hr style={{width:'98%',color:'grey',align:'right',marginLeft:'2%'}} noshade />
         </Grid>
 
 
@@ -209,26 +191,6 @@ function AdminMyProfile() {
         <FormField label="Postal Code" name="pincode" onChange={handleInputChange}  value={user_Details.pincode}/>
         
         
-        <Grid item xs={12} sm={12}>
-            <Box>
-              <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:2,mt:5,mb:1}}>Bank Details </Typography>
-            </Box>
-          </Grid>
-        
-        {/*Horizontal Line */}
-        <Grid sm={12} xs={12} >
-        <hr style={{width:'96%',color:'grey',align:'right'}} noshade />
-        </Grid>
-
-        
-        {/* Row 7 */}
-        <FormField label="Account Holder Name" name="accountHolderName" onChange={handleInputChange} value={user_Details.accountHolderName}/>
-        <FormField label="Account #" name="bankAccountNo" onChange={handleInputChange} value={user_Details.bankAccountNo}/>
-       
-        {/* Row 8 */}
-        <FormField label="Bank Name"  name="bankName" onChange={handleInputChange} value={user_Details.bankName}/>
-        <FormField label="Ifsc Code" name="ifsc" onChange={handleInputChange} value={user_Details.ifsc}/>
-       
         <Grid item xs={2}>
               <Button
                 variant="contained"

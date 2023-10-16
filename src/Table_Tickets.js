@@ -147,6 +147,7 @@ async function fetchDataAndEnhanceArray({ array_Details }) {
       console.log(outPut_value);
 
       return { ...item, customerDetails: outPut_value };
+    
     })
   )
   return enhancedArray;
@@ -155,6 +156,7 @@ async function fetchDataAndEnhanceArray({ array_Details }) {
 function Table_Tickets({ array_Details }) {
   const navigate = useNavigate();
   const [enhancedArray, setEnhancedArray] = useState([]);
+  const [record_status, setRecord_status]=useState([])
 
   useEffect(() => {
     fetchDataAndEnhanceArray({ array_Details: array_Details }).then((result) => {
@@ -170,10 +172,13 @@ function Table_Tickets({ array_Details }) {
     };
 
     const handleTicketClick = ({ record }) => {
-      console.log(record)
+    
       localStorage.setItem('display_details', record);
       navigate('/update_ticket_details', { state: { ticketId: record.requestId } });
+
     };
+
+    setRecord_status(record)
 
     return (
       <>
@@ -190,7 +195,11 @@ function Table_Tickets({ array_Details }) {
           <TableCell style={{ fontSize: '18px' }}>
             {record.customerDetails ? record.customerDetails.city : 'N/A'}
           </TableCell>
-          <TableCell style={{ fontSize: '18px' }}>{record.serviceEngineerId}</TableCell>
+          {record.status===2 && (
+
+            <TableCell style={{ fontSize: '18px' }}>{record.serviceEngineerId}</TableCell>
+
+          )}
         </TableRow>
       </>
     );
@@ -198,7 +207,7 @@ function Table_Tickets({ array_Details }) {
 
   return (
     <>
-      <TableContainer component={Paper} sx={{ m: 1, bgcolor: 'white', maxWidth: '99%', mt: 10 }}>
+      <TableContainer component={Paper} sx={{ m: 1, bgcolor: 'white', maxWidth: '99%', mt: 5 }}>
         <Table>
           <TableRow>
             <TableCell><h4>ID</h4></TableCell>
@@ -207,7 +216,8 @@ function Table_Tickets({ array_Details }) {
             <TableCell><h4>Contact Number</h4></TableCell>
             <TableCell><h4>Open Date</h4></TableCell>
             <TableCell><h4>Service Location</h4></TableCell>
-            <TableCell><h4>ServiceEngineer ID</h4></TableCell>
+            { record_status.status===2 && ( <TableCell><h4 className='text-dark'>ServiceEngineer ID</h4></TableCell>)}
+           
           </TableRow>
           <TableBody>
             {enhancedArray.map((record) => (

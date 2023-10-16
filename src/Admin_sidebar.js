@@ -39,6 +39,12 @@ function Admin_sidebar({openSidebarToggle, OpenSidebar}) {
                 </Link>
             </li>
             <li className='sidebar-list-item'>
+                <Link to='/all_tickets'>
+                    {/* <BsFillArchiveFill className='icon'/> */}
+                    <i className='fa fa-money'> All Tickets</i>
+                </Link>
+            </li>
+            <li className='sidebar-list-item'>
             <Link to='/new_service_engg'>
                     {/* <BsFillArchiveFill className='icon'/> */}
                     <i className='fa fa-server'> New Service Engineers</i>

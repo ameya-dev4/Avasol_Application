@@ -64,6 +64,7 @@ function UpdateNewTickets() {
         setFormData(result);
         setServiceEnggId(result.serviceEngineerId || 'select Service Engineer');
         setStatus_def(result.status || 'select Status');
+        
       } else {
         throw new Error('Failed to update ticket details...!');
       }
@@ -80,7 +81,12 @@ function UpdateNewTickets() {
   };
 
   const handleStausChange = (e) => {
+    const { name, value } = e.target;
     setStatus_def(e.target.value);
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSEChange = (e) => {
@@ -103,6 +109,7 @@ function UpdateNewTickets() {
         setFormData(result);
         setServiceEnggId(result.serviceEngineerId || 'select Service Engineer');
         setStatus_def(result.status || 'select Status');
+       
       } else {
         throw new Error('Failed to get service engineers details...!');
       }
@@ -198,10 +205,62 @@ function UpdateNewTickets() {
        <FormField label="Customer Name" name="username" onChange={handleInputChange} value={formData.username}/>
        <FormField label="Contact" name="contactNumber" onChange={handleInputChange}  value={formData.contactNumber}/>
 
+        
+       {status_def === 2 && (
+
+            <>
+            <DropDownField label="Status" name="status" onChange={handleStausChange} options={statusOptions} value={status_def}/>
+              {all_serviceEngg.length>0?(
+              <DropDownField 
+              label="Service Engineer ID" 
+              name="serviceEngineerId" 
+              options={all_serviceEngg} 
+              onChange={handleSEChange} 
+              value={serviceEnggID} />
+              ):(
+              <EditFormField label="Service Engineer ID" name="serviceEngineerId"  value='SE Fetching...!' />
+              )}
+
+              <EditFormField label="Notes To ServiceEngineer" name="noteToServiceengineer" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
+              <FormField label="SE Notes" name="serviceEnigineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
+              <FormField label="Admin Notes" name="adminNotes" onChange={handleInputChange} value={formData.adminNotes}/>
+              <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.visitAmount}/>
+
+            </>
+        )}
+
+        {(status_def !== 2  &&  status_def!== 14) &&  (
+            //If status is assigned the service Engineers is editable...
+            <>
+            <FormField label="Status" name="status" onChange={handleStausChange} value={status_def} />
+            <FormField label="Service Engineer ID" name="serviceEngineerId"  value={serviceEnggID} />
+            <FormField label="Notes To ServiceEngineer" name="noteToServiceengineer" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
+            <FormField label="SE Notes" name="serviceEngineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
+            <EditFormField label="Admin Notes" name="adminNotes" onChange={handleInputChange} value={formData.adminNotes} />
+            <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.visitAmount}/>
        
-       {/* Row 5 */}
+          </>
+          )}
+
+
+          {status_def === 14 && (
+              // Code to execute when status_def is not 2
+              <>
+            <DropDownField label="Status" name="status" onChange={handleStausChange}  options={statusOptions} value={status_def} />
+            <FormField label="Service Engineer ID" name="serviceEngineerId"  value={formData.serviceEngineerId} />
+            <FormField label="Notes To ServiceEngineer" name="noteToServiceengineer" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
+            <FormField label="SE Notes" name="serviceEngineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
+            <EditFormField label="Admin Notes" name="adminNotes" onChange={handleInputChange} value={formData.adminNotes} />
+            <EditFormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.visitAmount}/>
+            <EditFormField label="Visit Amount Paid" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid}/>
+            <EditFormField label="Service Amount" name="serviceAmount" onChange={handleInputChange} value={formData.serviceAmount}/>
+            <EditFormField label="Service Amount Paid" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid}/>
+            
        
-       {
+          </>
+            )}
+       
+        {/* {
         //If status is assigned the service Engineers is editable...
         status_def===2?(
           <>
@@ -237,33 +296,33 @@ function UpdateNewTickets() {
           </>
           
         )
-       }
 
-       {/* Row 5 */}
-       
-
-       <Grid item xs={2}>
-             <Button
-               variant="contained"
-               size="large"
-               fullWidth
-               sx={{ml:40,mt:5,mb:3}}
-               onClick={() => navigate(-1)}
-             >
-              close
-             </Button>
-           </Grid>
-       <Grid item xs={2}>
-             <Button
-               type="submit"
-               variant="contained"
-               color="success"
-               size="large"
-               fullWidth
-               sx={{ml:50, mb:3,mt:5  }}
-             >
-               Save Changes
-             </Button>
+       } */}
+  
+       <Grid  container item xs={12} spacing={2}>
+              <Grid item xs={2}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      sx={{ml:40,mt:5,mb:3}}
+                      onClick={() => navigate(-1)}
+                    >
+                      close
+                    </Button>
+                  </Grid>
+              <Grid item xs={2}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="success"
+                      size="large"
+                      fullWidth
+                      sx={{ml:50, mb:3,mt:5  }}
+                    >
+                      Save Changes
+                    </Button>
+                  </Grid>
            </Grid>
        </Grid>
           </Table>

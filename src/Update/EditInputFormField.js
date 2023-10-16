@@ -1,6 +1,6 @@
 import {Grid , Box,Typography,TextField} from '@mui/material';
 
-function FormField({ label, name, value, onChange,type='text',placeholder}) {
+function FormField({ label, name, value, onChange,type='text',placeholder,required=false}) {
     return (
       <>
         <Grid item xs={12} sm={6}>
@@ -14,6 +14,7 @@ function FormField({ label, name, value, onChange,type='text',placeholder}) {
           onChange={onChange}
           fullWidth
           placeholder={placeholder}
+          // required={required}
           sx={{width:'80%',ml:3}}
           // Add any additional attributes or styling here
         />

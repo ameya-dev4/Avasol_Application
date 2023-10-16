@@ -46,6 +46,7 @@ import SE_UpdateTicket from './SE_UpdateTicket'
 import SE_Logout from './SE_logout'
 import LatestServReqHome from './LatestSerReqHome'
 import Admin_Logout from './Admin_logout'
+import ManageUsers_details from './ManageUsers_details'
 
 
 function App() {
@@ -90,6 +91,8 @@ function App() {
             <Route path='update_se' element={<Update/>}/>
             <Route path='update_asigned_ticket' element={<UpdateNewTickets/>}/>
             <Route path='update_new_ticket' element={<UpdateNewTickets/>}/>
+            <Route path='ManageUser_details' element={<ManageUsers_details/>}/>
+
 
 
 

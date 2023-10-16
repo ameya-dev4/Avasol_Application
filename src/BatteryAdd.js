@@ -224,7 +224,7 @@ function BatteryAdd() {
 
 
   const vechicleType = [{value:vechicel_def, label :'Select Vechicle Type  '},{value:'2', label:'Two'},{label:'Three',value:'3'}]
-  const warrantyType = [{value:warranty_def, label :'Select Warranty'},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
+  const warrantyType = [{value:warranty_def, label :'Select Warranty'},{value:'yes', label :'Yes'},{label:'No',value:'no'}]
   const principalType = [{value:principal_def, label :'Select Principal'},{label:1,value:1},{label:2,value:2},{label:3,value:3},{label:4,value:4}];
   const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
@@ -236,6 +236,16 @@ function BatteryAdd() {
 
   const location = useLocation();
 
+  function getCurrentDate() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Month is zero-based, so add 1
+    const day = currentDate.getDate();
+  
+    return `${day}/${month}/${year}`;
+  }
+  
+  const currentDate = getCurrentDate();
 
   const username=localStorage.getItem('username')
   const parse_username=JSON.parse(username)
@@ -252,7 +262,7 @@ function BatteryAdd() {
   make:"",
   model: "",
   principalId:"",
-  purchaseDate: "",
+  purchaseDate: currentDate,
   status:Number(0),
   username:parse_username,
   warranty:"",
@@ -312,23 +322,19 @@ function BatteryAdd() {
     // formData contains the form values
     console.log(formData);
     
-    fetch(`${SERVER_URL}user/add-new-battery`,{
+    const response=await fetch(`${SERVER_URL}user/add-new-battery`,{
       method:'POST',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    }).then((response) => response.json())
-    .then((data) =>{
-      if (data){
-        alert('Battery successfully added...!');
-        navigate(-1);
-      }
-      
-    }).catch((error) => {
-      console.log(error);
     })
+    if(response.ok){
+      const result= await response.json()
+      alert('Battery successfully added...!');
+      navigate(-1);
+    }
     
   };
 
@@ -388,20 +394,42 @@ function BatteryAdd() {
         <FormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange} placeholder='Enter Current '  value={formData.batteryCurrent}/>
 
         {/* Row 4 */}
-        <FormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} placeholder='YYYY-MM-DD' value={formData.purchaseDate.slice(0,10)} disabled={false} />
+        {/* <FormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} placeholder='YYYY-MM-DD' value={formData.purchaseDate.slice(0,10)} disabled={false} /> */}
         <DropDownField label="Warranty" name="warranty" onChange={handleWarrentyChange}  value={warranty_def} options={warrantyType}/>
         
-        <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears} placeholder='Enter Warranty Years'/>
         <DropDownField label="Vechicle Type" name="vechicleType" onChange={handleVechicleChange} value={vechicel_def} options={vechicleType}/>
 
+        {warranty_def==='yes' && (
+          <>
+            <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears} placeholder='Enter Warranty Years'/>
+            <DropDownField label="Principal" name="principal" onChange={handlePrincipalChange}  placeholder='Enter Principal' options={principalType} value={principal_def}/>
+            <FormField label="Principal Contact" name="principalContact" onChange={handleInputChange} placeholder='Enter 10 digit number' value={formData.principalContact}/>
+    
+            {/* Row 7 */}
+            <FormField label="Dealer Address" name="dealerAddress" placeholder='Enter Dealer Address' onChange={handleInputChange}  value={formData.dealerAddress}/>
+            <FormField label="Dealer Contact" name="dealerContact"  placeholder='Enter 10 digit number' onChange={handleInputChange} value={formData.DealerContact}/>
+    
+          </>
+            
+        )}
+
+        {warranty_def==='no' && (
+          <>
+            <NoEditable label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears} placeholder='Enter Warranty Years'/>
+            <NoEditable label="Principal" name="principal" onChange={handlePrincipalChange}  placeholder='Enter Principal' options={principalType} value={principal_def}/>
+            <NoEditable label="Principal Contact" name="principalContact" onChange={handleInputChange} placeholder='Enter 10 digit number' value={formData.principalContact}/>
+    
+            {/* Row 7 */}
+            <NoEditable label="Dealer Address" name="dealerAddress" placeholder='Enter Dealer Address' onChange={handleInputChange}  value={formData.dealerAddress}/>
+            <NoEditable label="Dealer Contact" name="dealerContact"  placeholder='Enter 10 digit number' onChange={handleInputChange} value={formData.DealerContact}/>
+    
+          </>
+            
+        )}
+
+        
         {/* Row 6 */}
-        <DropDownField label="Principal" name="principal" onChange={handlePrincipalChange}  placeholder='Enter Principal' options={principalType} value={formData.principal}/>
-        <FormField label="Principal Contact" name="principalContact" onChange={handleInputChange} placeholder='Enter 10 digit number' value={formData.principalContact}/>
-
-        {/* Row 7 */}
-        <FormField label="Dealer Address" name="dealerAddress" placeholder='Enter Dealer Address' onChange={handleInputChange}  value={formData.dealerAddress}/>
-        <FormField label="Dealer Contact" name="dealerContact"  placeholder='Enter 10 digit number' onChange={handleInputChange} value={formData.DealerContact}/>
-
+        
         {/* Row 8 */}
         <NoEditable label="Status" name="status" onChange={handleInputChange}   value={formData.status}/>
         {/* options={Rating} */}
