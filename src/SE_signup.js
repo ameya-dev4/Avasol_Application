@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import SERVER_URL from './Server/Server';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -36,7 +37,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SE_signUp() {
-
+    const navigate=useNavigate()
     const {
         register,
         handleSubmit,
@@ -63,21 +64,21 @@ export default function SE_signUp() {
       }
     );
 
-  const Submit = (RegisterData) => {
+  const Submit = async(RegisterData) => {
     console.log(RegisterData);
-    fetch(`${SERVER_URL}se/signup`,{
+    const response=await fetch(`${SERVER_URL}se/signup`,{
         method:'POST',
         headers:{ 
             'Content-Type':'application/json',
         },
         body : JSON.stringify(RegisterData),
 
-    }).then((response) => response.json())
-    .then((output) =>{
-        console.log(output);
-    }).catch((error) => {
-        console.log(error)
     })
+    if(response.ok){
+      const result=response.json()
+      alert('Service Engineer registered successful..!')
+      navigate('/signin')
+    }
 
     
     /*event.preventDefault();

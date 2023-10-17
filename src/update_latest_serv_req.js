@@ -585,15 +585,15 @@ function UpdateLatestServReq() {
                 <EditFormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes} />
 
                 <EditFormField label="Service Amount" name="serviceAmount" onChange={handleInputChange} value={formData.serviceAmount} />
-                <EditFormField label="service Amount Paid" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid} />
+                <EditFormField label="Service Amount Paid" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid} />
 
                 <DropDownField label="Customer Rating" name="performance" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />
               </Grid>
-              <Grid container spacing={3} sx={{ p: 3 }}>
+              <Grid container spacing={3} sx={{ p: 3 ,mt:3}}>
                 <Grid item xs={3}>
                   <Button
                     variant="contained"
-                    size="large"
+                    size="medium"
                     fullWidth
                     sx={{ mb: 2 }}
                     onClick={() => navigate(-1)}
@@ -606,7 +606,7 @@ function UpdateLatestServReq() {
                     type="submit"
                     variant="contained"
                     color="success"
-                    size="large"
+                    size="medium"
                     fullWidth
                     sx={{ mb: 2 }}
                     onClick={onSubmit}
@@ -617,7 +617,7 @@ function UpdateLatestServReq() {
                 <Grid item xs={3}>
                   <Button
                     variant="contained"
-                    size="large"
+                    size="medium"
                     fullWidth
                     color="error"
                     sx={{ mb: 2 }}

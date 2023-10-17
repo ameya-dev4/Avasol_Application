@@ -537,6 +537,7 @@ function DisplayBattery(){
             <TableCell style={{fontSize:'18px'}}>service_location</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerId}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerNotes}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>N/A</TableCell>
             <TableCell style={{fontSize:'18px'}}>target serviceDate</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
             {/* <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleDelete(record.batteryId)} > Delete</Link></TableCell> */}
@@ -561,6 +562,7 @@ function DisplayBattery(){
                 <TableCell><h5>Service Location </h5></TableCell>
                 <TableCell><h5>SE Name</h5></TableCell>
                 <TableCell><h5>SE Notes</h5></TableCell>
+                <TableCell><h5>SE Contact</h5></TableCell>
                 <TableCell><h5>Target Service Date</h5></TableCell>
                 <TableCell><h5>Status  </h5></TableCell>
               </TableRow>

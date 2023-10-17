@@ -226,7 +226,7 @@ import {Grid,Typography,Button,Table} from '@mui/material';
 import AdminDash_upblock from './AdminDash_upblock';
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import FormField from './Update/InputFormField';
+import FormField from './Update/EditInputFormField';
 import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
 import Admin_sidebar from './Admin_sidebar';
