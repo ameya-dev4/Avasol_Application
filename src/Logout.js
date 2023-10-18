@@ -11,7 +11,7 @@ const Logout= (event)=>{
     const navigate=useNavigate();
     const access_token=GetToken()
     const data={
-        access_token:access_token
+        access_token:"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJMOG01a0x2OHpqR2ZZOUZVY1pUSnAwQ3BaVW92M0tjQXNkeWlFc3dwZ3pBIn0.eyJleHAiOjE2OTc2MzE4MDksImlhdCI6MTY5NzYyODIwOSwianRpIjoiZDBkNDExMTAtYzQyNi00NzIzLTk5MzYtMjlmMjdiMTZkYWRiIiwiaXNzIjoiaHR0cDovLzQ0LjIzMC4yMy4xMzo4MDgwL3JlYWxtcy9ldmNybS11c2VycyIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI5MWE1MjZmMS0wZjcxLTQwZmYtYjBhYS1kODVlMWU3YTFkODEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJldmNybS11c2VycyIsInNlc3Npb25fc3RhdGUiOiIxZDdlNTcyYS03ODA4LTQwMzAtYTY2OS02YTRhZGMzMmZlOWUiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHA6Ly8xMDAuMjAuMzMuMjIyLzo1MDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLWF2YXNvbC11c2VycyIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJjdXN0b21lciJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJlYWxtLW1hbmFnZW1lbnQiOnsicm9sZXMiOlsibWFuYWdlLXJlYWxtIiwiaW1wZXJzb25hdGlvbiIsIm1hbmFnZS11c2VycyIsInZpZXctdXNlcnMiLCJxdWVyeS1ncm91cHMiLCJxdWVyeS11c2VycyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgbWljcm9wcm9maWxlLWp3dCBlbWFpbCBwcm9maWxlIiwic2lkIjoiMWQ3ZTU3MmEtNzgwOC00MDMwLWE2NjktNmE0YWRjMzJmZTllIiwidXBuIjoiYW1leWEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJMYWJzIEFtZXlhIiwiZ3JvdXBzIjpbImRlZmF1bHQtcm9sZXMtYXZhc29sLXVzZXJzIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImN1c3RvbWVyIl0sInByZWZlcnJlZF91c2VybmFtZSI6ImFtZXlhIiwiZ2l2ZW5fbmFtZSI6IkxhYnMiLCJmYW1pbHlfbmFtZSI6IkFtZXlhIiwiZW1haWwiOiJhbWV5YWxhYnNkZXYxQGdtYWlsLmNvbSJ9.vO-TbRSNlFh7vT7hCJshiCWvfdDlSujBKv1ts7lbKKYHjx2o1MVB_aodt1hkSRqspKRO6X7WLAYfdWisbwfc7KQeJ4VeyfEVZgnN5xL96Pou7cNO3-isfjWXsUigsA_vbOKgQl64NQFPNrb6yhsEnFC4EVN_t24ochCW3OMuuEHOL816ddxXPcat08FBmEGBkwEcykYyXJsL-TBYbZfg_uW1WPQEMjCrr4FM1mBDbg9XODtt3nyMGbnL0fFPW8W2ZdZPGhhZVAmDPAR6vBnFRoDumWA_Iis5EXhBF7xSlt_rOpawK0mXX5Hzo35OggEWIW540g6CsuXFOP_8c_IdIA"
     }
     console.log("data",data)
     const parse_data=JSON.stringify(data)
@@ -25,7 +25,7 @@ const Logout= (event)=>{
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${access_token}`,
             },
-            body: JSON.stringify(parse_data),
+            body: JSON.stringify(data),
           });
     
           if (response.ok) {

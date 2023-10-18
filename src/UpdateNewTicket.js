@@ -205,11 +205,8 @@ function UpdateNewTickets() {
        <FormField label="Customer Name" name="username" onChange={handleInputChange} value={formData.username}/>
        <FormField label="Contact" name="contactNumber" onChange={handleInputChange}  value={formData.contactNumber}/>
 
-        
-       {status_def === 2 && (
-
-            <>
-            <DropDownField label="Status" name="status" onChange={handleStausChange} options={statusOptions} value={status_def}/>
+       <FormField label="Notes To ServiceEngineer" name="noteToServiceengineer" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
+       <DropDownField label="Status" name="status" onChange={handleStausChange}  options={statusOptions} value={status_def} />
               {all_serviceEngg.length>0?(
               <DropDownField 
               label="Service Engineer ID" 
@@ -219,11 +216,17 @@ function UpdateNewTickets() {
               value={serviceEnggID} />
               ):(
               <EditFormField label="Service Engineer ID" name="serviceEngineerId"  value='SE Fetching...!' />
-              )}
+              )} 
 
-              <EditFormField label="Notes To ServiceEngineer" name="noteToServiceengineer" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
+          <EditFormField label="Admin Notes" name="adminNotes" onChange={handleInputChange} value={formData.adminNotes} />  
+
+       {status_def === 2 && (
+
+            <>
+            
+
+              
               <FormField label="SE Notes" name="serviceEnigineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
-              <FormField label="Admin Notes" name="adminNotes" onChange={handleInputChange} value={formData.adminNotes}/>
               <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.visitAmount}/>
 
             </>
@@ -232,11 +235,7 @@ function UpdateNewTickets() {
         {(status_def !== 2  &&  status_def!== 14) &&  (
             //If status is assigned the service Engineers is editable...
             <>
-            <FormField label="Status" name="status" onChange={handleStausChange} value={status_def} />
-            <FormField label="Service Engineer ID" name="serviceEngineerId"  value={serviceEnggID} />
-            <FormField label="Notes To ServiceEngineer" name="noteToServiceengineer" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
-            <FormField label="SE Notes" name="serviceEngineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
-            <EditFormField label="Admin Notes" name="adminNotes" onChange={handleInputChange} value={formData.adminNotes} />
+            {/* <FormField label="SE Notes" name="serviceEngineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/> */}
             <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.visitAmount}/>
        
           </>
@@ -246,11 +245,6 @@ function UpdateNewTickets() {
           {status_def === 14 && (
               // Code to execute when status_def is not 2
               <>
-            <DropDownField label="Status" name="status" onChange={handleStausChange}  options={statusOptions} value={status_def} />
-            <FormField label="Service Engineer ID" name="serviceEngineerId"  value={formData.serviceEngineerId} />
-            <FormField label="Notes To ServiceEngineer" name="noteToServiceengineer" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
-            <FormField label="SE Notes" name="serviceEngineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes}/>
-            <EditFormField label="Admin Notes" name="adminNotes" onChange={handleInputChange} value={formData.adminNotes} />
             <EditFormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.visitAmount}/>
             <EditFormField label="Visit Amount Paid" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid}/>
             <EditFormField label="Service Amount" name="serviceAmount" onChange={handleInputChange} value={formData.serviceAmount}/>

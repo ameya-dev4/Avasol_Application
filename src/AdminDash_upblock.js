@@ -102,9 +102,9 @@ function AdminDash_upblock() {
                 <div className='col-md-3 bg-blue-madison bg-font-blue-madison'>
                     <div className='p-3  shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#578EBE'}}>
                         <Row>
-                            <Col md={9}>
+                            <Col md={12}>
                             <h6 className='fs-1'>{All_serv_engg && All_serv_engg.length}</h6>
-                            <small className='fs-6 '>Manage SE Engineers</small>
+                            <small className='fs-6 '>Manage Service Engineers</small>
                             </Col>
                             <Col></Col>
                         </Row>
