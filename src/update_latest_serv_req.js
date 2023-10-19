@@ -543,10 +543,7 @@ function UpdateLatestServReq() {
           body:JSON.stringify({batteryId:formData.batteryId})
         });
         const data = await response.json();
-        setbatteryInfo(data);
-        batteryInfo.map((eachbattery)=>{
-          setDisplayDetails(eachbattery)
-         })
+        setbatteryInfo(data[0]);
         // console.log(data)
       } catch (error) {
         console.error('Error  in fetching battery details:', error);
@@ -570,10 +567,9 @@ function UpdateLatestServReq() {
    };
  
    const handleConfirm = () => {
-     navigate('/userMyBatteries')
+     navigate('/latest_serv_request')
      setIsConfirmationOpen(false);
    };
-
 
 
   return (
@@ -605,13 +601,13 @@ function UpdateLatestServReq() {
                 <EditFormField label="Description" name="shortDescription" value={formData.shortDescription} onChange={handleInputChange} />
 
                 {/* Row 2 */}
-                <FormField label="Make" name="make"  value={displayDetails.make} />
-                <FormField label="Model" name="model"  value={displayDetails.model} />
+                <FormField label="Make" name="make"  value={batteryInfo.make} />
+                <FormField label="Model" name="model"  value={batteryInfo.model} />
 
                 {/* Row 3 */}
-                <FormField label="Battery Voltage" name="batteryVoltage"  value={displayDetails.batteryVoltage} />
-                <FormField label="Battery Current" name="batteryCurrent"  value={displayDetails.batteryCurrent} />
-                <FormField label="Battery Capacity" name="batteryCapacity"  value={displayDetails.batteryCapacity} />
+                <FormField label="Battery Voltage" name="batteryVoltage"  value={batteryInfo.batteryVoltage} />
+                <FormField label="Battery Current" name="batteryCurrent"  value={batteryInfo.batteryCurrent} />
+                <FormField label="Battery Capacity" name="batteryCapacity"  value={batteryInfo.batteryCapacity} />
 
 
                 {/* Row 4 */}
