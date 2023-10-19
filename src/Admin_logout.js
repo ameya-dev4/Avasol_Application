@@ -106,22 +106,12 @@ function Admin_Logout() {
         body: JSON.stringify({ 'access_token': access_token }),
       });
 
-      if (response.ok) {
         // Logout successful
         document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         window.localStorage.clear();
-        navigate('/login');
-      } else {
-        const errorData = await response.json();
-        if (errorData && errorData.detail) {
-          // If 'detail' exists in the error response, set it as the logout error message
-          setLogoutError(errorData.detail);
-        } else {
-          // Handle other types of errors
-          setLogoutError('Logout failed');
-        }
-      }
+        navigate('/signin');
+     
     } catch (error) {
       console.error('Logout failed:', error);
       setLogoutError('Logout failed');

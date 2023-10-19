@@ -102,7 +102,7 @@ function UpdateNewTickets() {
    };
  
    const handleConfirm = () => {
-     navigate('/userMyBatteries')
+     navigate('/new_tickets')
      setIsConfirmationOpen(false);
    };
 

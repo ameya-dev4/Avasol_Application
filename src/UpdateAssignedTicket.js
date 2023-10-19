@@ -105,7 +105,7 @@ const performanceOptions = [{label:preform_def,value:1},{label:'Average',value:'
    };
  
    const handleConfirm = () => {
-     navigate('/userMyBatteries')
+     navigate('/assigned_tickets')
      setIsConfirmationOpen(false);
    };
 

@@ -27,16 +27,12 @@ const Logout= (event)=>{
             },
             body: JSON.stringify(data),
           });
-    
-          if (response.ok) {
             // Logout successful
             document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             document.cookie = 'refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             window.localStorage.clear();
-            navigate('/login');
-          } else {
-            const errorData = await response.json();
-          }
+            // navigate('/login');
+          
         } catch (error) {
           console.error('Logout failed:', error);
         }

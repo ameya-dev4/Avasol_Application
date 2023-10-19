@@ -183,7 +183,7 @@
 import React, { useEffect, useState } from 'react';
 import { GetToken } from './Api/auth';
 import { useNavigate } from 'react-router-dom';
-import {Grid,Typography,Button,Table,Link,FormControl,FormControlLabel,Radio,RadioGroup,Box} from '@mui/material';
+import {Grid,Typography,Button,Table,Link,FormControl,FormControlLabel,Radio,RadioGroup,Box,Avatar} from '@mui/material';
 import Header from "./Header";
 import FormField from './Update/InputFormField';
 import SE_Sidebar from './SE_Sidebar';
@@ -245,6 +245,28 @@ function SE_MyProfile() {
     navigate('/update-Profile');
   };
 
+  const [selectedImage, setImageSelected]=useState(null)
+  const [remove_bool, setRemove_bool] = useState(true)
+
+  const imageUpload=(e)=>{
+    const file=e.target.files[0]
+    if(file){
+      const reader = new FileReader()
+      reader.onloadend=()=>{
+        setImageSelected(reader.result)
+      }
+      reader.readAsDataURL(file)
+      setRemove_bool(!remove_bool)
+    }
+
+  }
+
+
+  const handlAddImage=()=>{
+    document.getElementById('imageselect').click()
+  }
+
+
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
       {/* ... form rendering ... */}
@@ -253,7 +275,7 @@ function SE_MyProfile() {
       <main className='main-container'>
      <SE_Dash_upblocks/>
       <form onSubmit={onSubmit}>
-        <Table sx={{border:'1px solid black',p:2,mt:10,bgcolor:'white'}}>
+        <Table sx={{border:'1px solid black',p:2,mt:3,bgcolor:'white'}}>
         <Grid container spacing={2} sx={{border:'1px black'}}>
         <Grid item xs={12}>
               <Button
@@ -261,7 +283,7 @@ function SE_MyProfile() {
                 size="large"
                 color='primary'
                 fullWidth
-                sx={{ mb: 3  }}
+              
                 
               >
                 <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Profile</Typography>
@@ -272,13 +294,50 @@ function SE_MyProfile() {
             <Box>
               <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:3,mt:2}}>Personal Info</Typography>
             </Box>
-          </Grid>
+          
         {/* Horizontal Line */}
         <Grid sm={12} xs={12}>
         <hr style={{width:'98%',color:'grey',align:'right'}} noshade />
         </Grid>
+        <input
+        type='file'
+        accept='image/*'
+        id='imageselect'
+        style={{display:'none'}}
+        onChange={imageUpload}
+        />
+        <Avatar
+        sx={{
+          height:100,
+          width:100,
+          color:'white',
+          backgroundColor:'secondary',
+          fontSize:30,
+          position:'relative',
+          cursor:'pointer',
+          m:3,
+          borderRadius:'5%'
+        }}
+        onClick={handlAddImage}
+        variant='square'
+        >
+        {selectedImage ? (
+              <>
+              <img src={selectedImage} alt="Profile" style={{width:'100%',height:'100%'}} />
+                    
+              </>
+          ) : (
+              <div className='text-center fs-6 '>Add Photo</div>
+            )}
+                  
+        </Avatar>
+        <i hidden={remove_bool} className='mx-3 text-danger  feather icon-x ' ><a  href='#'  style={{textDecoration:'none'}} onClick={()=>{
+        setImageSelected(null)
+        setRemove_bool(!remove_bool)
+        }} > Remove Photo</a></i>
+      
+      </Grid>
 
-        
         {/* Row 1 */}
         <FormField label="First Name" name="firstName" value={user_Details.firstName} onChange={handleInputChange} />
         <FormField  label="Last Name" name="lastName"  value={user_Details.lastName} onChange={handleInputChange}  />

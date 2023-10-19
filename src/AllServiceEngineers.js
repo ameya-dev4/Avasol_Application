@@ -57,7 +57,7 @@ function AllServiceEngineers(){
     <AdminDash_upblock />
     <Typography  variant='h4' className='mx-3 mt-5'>All Service Engineers</Typography>
     {TicketDetails.length > 0 ? <Table_SE array_Details={TicketDetails} /> : 
-      <h2 className="mx-3 mt-3">Service Engineer Details Display Here</h2>}
+      ""}
     </main>
     </div>  
     </>
