@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-
+import { FiAlertTriangle } from "react-icons/fi";
 function ConfirmationModal({ open, onClose, onConfirm }) {
   return (
     <Dialog open={open} onClose={onClose} >
-      <DialogTitle>Confirm Action</DialogTitle>
+      <DialogTitle className='text-warning' ><FiAlertTriangle/> warning...</DialogTitle>
       <DialogContent>
         <DialogContentText>Do you want to discard the changes?</DialogContentText>
       </DialogContent>

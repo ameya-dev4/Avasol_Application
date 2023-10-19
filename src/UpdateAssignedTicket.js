@@ -8,6 +8,7 @@ import Admin_sidebar from './Admin_sidebar';
 import FormField from './Update/InputFormField';
 import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
+import ConfirmationModal from './Confirmation';
 
 const authToken = GetToken();
 
@@ -93,6 +94,21 @@ const performanceOptions = [{label:preform_def,value:1},{label:'Average',value:'
     // Perform your form submission logic here
   };
 
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+   const handleCancle = () => {
+     setIsConfirmationOpen(true);
+   };
+ 
+   const handleCloseConfirmation = () => {
+     setIsConfirmationOpen(false);
+   };
+ 
+   const handleConfirm = () => {
+     navigate('/userMyBatteries')
+     setIsConfirmationOpen(false);
+   };
+
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
       {/* ... form rendering ... */}
@@ -171,6 +187,13 @@ const performanceOptions = [{label:preform_def,value:1},{label:'Average',value:'
               >
                 Save Changes
               </Button>
+
+              <ConfirmationModal
+              open={isConfirmationOpen}
+              onClose={handleCloseConfirmation}
+              onConfirm={handleConfirm}
+          
+            />
             </Grid>
         </Grid>
         </Table>

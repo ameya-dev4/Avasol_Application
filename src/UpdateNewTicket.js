@@ -10,6 +10,7 @@ import FormField from './Update/InputFormField';
 import EditFormField from './Update/EditInputFormField';
 import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
+import ConfirmationModal from './Confirmation';
 
 function UpdateNewTickets() {
   const authToken = GetToken();
@@ -88,6 +89,23 @@ function UpdateNewTickets() {
       [name]: value,
     }));
   };
+
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+   const handleCancle = () => {
+     setIsConfirmationOpen(true);
+   };
+ 
+   const handleCloseConfirmation = () => {
+     setIsConfirmationOpen(false);
+   };
+ 
+   const handleConfirm = () => {
+     navigate('/userMyBatteries')
+     setIsConfirmationOpen(false);
+   };
+
 
   const handleSEChange = (e) => {
     const selectedValue = e.target.value || '<TBD>'; // Provide a default value if it's empty
@@ -300,7 +318,7 @@ function UpdateNewTickets() {
                       size="large"
                       fullWidth
                       sx={{ml:40,mt:5,mb:3}}
-                      onClick={() => navigate(-1)}
+                      onClick={handleCancle}
                     >
                       close
                     </Button>
@@ -316,6 +334,12 @@ function UpdateNewTickets() {
                     >
                       Save Changes
                     </Button>
+
+                    <ConfirmationModal
+              open={isConfirmationOpen}
+              onClose={handleCloseConfirmation}
+              onConfirm={handleConfirm}
+            />
                   </Grid>
            </Grid>
        </Grid>

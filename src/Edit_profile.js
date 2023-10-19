@@ -222,12 +222,13 @@
 import React, { useEffect, useState } from 'react';
 import { GetToken } from './Api/auth';
 import { useNavigate } from 'react-router-dom';
-import {Grid,Typography,Button,Table,Link,FormControl,FormControlLabel,Radio,RadioGroup,Box} from '@mui/material';
+import {Grid,Typography,Button,Table,Link,FormControl,FormControlLabel,Radio,RadioGroup,Box, Avatar} from '@mui/material';
 //import AdminDash_upblock from "../../Pages/Admin_Upblocks";
 import Header from "./Header";
 import Sidebar from './Sidebar';
 import EditInputFormField from './Update/EditInputFormField';
 import SERVER_URL from './Server/Server';
+
 
 
 const authToken = GetToken();
@@ -302,6 +303,27 @@ function EditProfile() {
     // Perform your form submission logic here
   };
 
+  const [selectedImage, setImageSelected]=useState(null)
+  const [remove_bool, setRemove_bool] = useState(true)
+
+  const imageUpload=(e)=>{
+    const file=e.target.files[0]
+    if(file){
+      const reader = new FileReader()
+      reader.onloadend=()=>{
+        setImageSelected(reader.result)
+      }
+      reader.readAsDataURL(file)
+      setRemove_bool(!remove_bool)
+    }
+
+  }
+
+
+  const handlAddImage=()=>{
+    document.getElementById('imageselect').click()
+  }
+
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
       {/* ... form rendering ... */}
@@ -329,12 +351,49 @@ function EditProfile() {
             <Box>
               <Typography sx={{color:'black',fontWeight:'500',fontSize:'28px',m:1,px:2}}>Personal Info</Typography>
             </Box>
-          </Grid>
+          
         {/* Horizontal Line */}
         <Grid sm={12} xs={12}>
         <hr style={{width:'98%',color:'grey',align:'right',marginLeft:'2%'}} noshade />
         </Grid>
+        <input
+        type='file'
+        accept='image/*'
+        id='imageselect'
+        style={{display:'none'}}
+        onChange={imageUpload}
+        />
+        <Avatar
+        sx={{
+          height:100,
+          width:100,
+          color:'white',
+          backgroundColor:'secondary',
+          fontSize:30,
+          position:'relative',
+          cursor:'pointer',
+          m:3,
+          borderRadius:'5%'
+        }}
+        onClick={handlAddImage}
+        variant='square'
+        >
+        {selectedImage ? (
+              <>
+              <img src={selectedImage} alt="Profile" style={{width:'100%',height:'100%'}} />
+                    
+              </>
+          ) : (
+              <div className='text-center fs-6 '>Add Photo</div>
+            )}
+                  
+        </Avatar>
+        <i hidden={remove_bool} className='mx-3 text-danger  feather icon-x ' ><a  href='#'  style={{textDecoration:'none'}} onClick={()=>{
+        setImageSelected(null)
+        setRemove_bool(!remove_bool)
+        }} > Remove Photo</a></i>
 
+    </Grid>
         
         {/* Row 1 */}
         <EditInputFormField label="First Name" name="firstName" value={user_Details.firstName} onChange={handleInputChange} />

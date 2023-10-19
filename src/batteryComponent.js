@@ -67,20 +67,21 @@ function DisplayBattery(){
     return <>
     {TicketDetails.length > 0 ?
         <>
-            <Row>
-            <Col md={3} className='mx-4 mt-4' >
-            Records
+            <Row className='mt-5' >
+            <Col md={3} className='mx-4 ' >
             <select className="form-select " aria-label="Default select example">
-                <option selected>5</option>
+                <option  selected>5</option>
                 <option value="15">15</option>
                 <option value="50">50</option>
                 <option value="All">All</option>
             </select>
             </Col>
-            <Col ></Col>
-            <Col md={3} className='mt-5' style={{textAlign:'right',marginRight:'2%'}}>
+           <Col></Col>
+            <Col md={3}  style={{textAlign:'right'}}>
                 <Typography variant='h4' ><Button  variant='contained' style={{backgroundColor:'lightseagreen',color:'white'}} onClick={()=>navigate('/battery_add')}  >Add Battery</Button> </Typography>
-                <Typography variant='h4' ><Button variant='contained' style={{ backgroundColor: 'lightseagreen', color: 'white' }} onClick={handleRequest}  >Add Service Request</Button> </Typography>
+            </Col>
+            <Col  style={{textAlign:'right',marginRight:'2%'}}>
+            <Typography variant='h4' ><Button variant='contained' style={{ backgroundColor: 'lightseagreen', color: 'white' }} onClick={handleRequest}  >Add Service Request</Button> </Typography>
             </Col>
             
         </Row>
@@ -94,7 +95,7 @@ function DisplayBattery(){
           <Typography variant='h4' >No Batteries</Typography>
           </Col>
           <Col ></Col>
-          <Col md={3} style={{textAlign:'right',marginRight:'2%'}}>
+          <Col md={3}  className='mt-3' style={{textAlign:'right',marginRight:'2%'}}>
               <Typography variant='h5' ><Button  variant='contained' style={{backgroundColor:'lightseagreen',color:'white'}} onClick={()=>navigate('/battery_add')}  >Add Battery</Button> </Typography>
           </Col>
     

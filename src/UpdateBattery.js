@@ -11,6 +11,7 @@ import DropDownField from './Update/DropDownField';
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
+import ConfirmationModal from './Confirmation';
 
 const authToken = GetToken();
 const warrantyType = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
@@ -190,6 +191,20 @@ function UpdateBattery() {
     // Perform your form submission logic here
   };
    
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+   const handleCancle = () => {
+     setIsConfirmationOpen(true);
+   };
+ 
+   const handleCloseConfirmation = () => {
+     setIsConfirmationOpen(false);
+   };
+ 
+   const handleConfirm = () => {
+     navigate('/userMyBatteries')
+     setIsConfirmationOpen(false);
+   };
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -252,7 +267,7 @@ function UpdateBattery() {
                 size="large"
                 fullWidth
                 sx={{ mt: 5,mb:2}}
-                onClick={() => navigate(-1)}
+                onClick={handleCancle}
               >
                close
               </Button>
@@ -282,6 +297,13 @@ function UpdateBattery() {
               >
                 Delete Battery
               </Button>
+
+            <ConfirmationModal
+          open={isConfirmationOpen}
+          onClose={handleCloseConfirmation}
+          onConfirm={handleConfirm}
+          
+        />
             </Grid>
         </Grid>
         </Table>

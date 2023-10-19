@@ -311,7 +311,7 @@
 // export default UpdateLatestServReq;
 import React, { useEffect, useState } from 'react';
 import { GetToken } from './Api/auth';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Form, useLocation, useNavigate } from 'react-router-dom';
 import {
   Grid,
   Box,
@@ -331,6 +331,7 @@ import EditFormField from './Update/EditInputFormField'; // Replace with your ac
 import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
+import ConfirmationModal from './Confirmation';
 
 const authToken = GetToken();
 
@@ -345,6 +346,7 @@ function UpdateLatestServReq() {
     batteryDetails || {} 
   );
 
+  const [batteryInfo, setbatteryInfo] = useState([])
   const [status_def, setSatus_def] = useState('');
   const [preform_def, setPerform_def] = useState('None');
   const [warranty_def, setWarranty_def] = useState('No');
@@ -440,7 +442,7 @@ function UpdateLatestServReq() {
   };
 
   const [latestRequests, setLatestRequests] = useState([]);
-  const [displayDetails, setDisplayDetails] = useState(false);
+  const [displayDetails, setDisplayDetails] = useState('');
 
   useEffect(() => {
     // Function to make the GET request
@@ -526,6 +528,54 @@ function UpdateLatestServReq() {
     // Perform your form submission logic here
   };
 
+
+  //Showing battery Details
+  useEffect(() => {
+    // Function to make the GET request
+    async function batteryDetails() {
+      try {
+        const response = await fetch(`${SERVER_URL}user/get-battery-details`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken,
+          },
+          body:JSON.stringify({batteryId:formData.batteryId})
+        });
+        const data = await response.json();
+        setbatteryInfo(data);
+        batteryInfo.map((eachbattery)=>{
+          setDisplayDetails(eachbattery)
+         })
+        // console.log(data)
+      } catch (error) {
+        console.error('Error  in fetching battery details:', error);
+      }
+    }
+
+    // Call the function to get and display the latest service requests on page load
+    batteryDetails();
+  }, []);
+
+  console.log("batteryInfo",batteryInfo)
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+   const handleCancle = () => {
+     setIsConfirmationOpen(true);
+   };
+ 
+   const handleCloseConfirmation = () => {
+     setIsConfirmationOpen(false);
+   };
+ 
+   const handleConfirm = () => {
+     navigate('/userMyBatteries')
+     setIsConfirmationOpen(false);
+   };
+
+
+
   return (
     <div className="grid-container" style={{ borderBlock: '2px solid black' }}>
       <Header OpenSidebar={OpenSidebar} />
@@ -555,12 +605,14 @@ function UpdateLatestServReq() {
                 <EditFormField label="Description" name="shortDescription" value={formData.shortDescription} onChange={handleInputChange} />
 
                 {/* Row 2 */}
-                <EditFormField label="Make" name="make" onChange={handleInputChange} value={formData.make} />
-                <EditFormField label="Model" name="model" onChange={handleInputChange} value={formData.model} />
+                <FormField label="Make" name="make"  value={displayDetails.make} />
+                <FormField label="Model" name="model"  value={displayDetails.model} />
 
                 {/* Row 3 */}
-                <EditFormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.batteryVoltage} />
-                <EditFormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange} value={formData.batteryCurrent} />
+                <FormField label="Battery Voltage" name="batteryVoltage"  value={displayDetails.batteryVoltage} />
+                <FormField label="Battery Current" name="batteryCurrent"  value={displayDetails.batteryCurrent} />
+                <FormField label="Battery Capacity" name="batteryCapacity"  value={displayDetails.batteryCapacity} />
+
 
                 {/* Row 4 */}
                 <EditFormField label="Vehicle Type" name="vehicleType" onChange={handleInputChange} value={formData.vehicleType} />
@@ -576,15 +628,15 @@ function UpdateLatestServReq() {
 
                 {/* Row 7 */}
                 <DropDownField label="Status" name="status" onChange={handleStatusChange} value={status_def} options={statusOptions} />
-                <FormField label="Last Status Updated" name="status" onChange={handleInputChange} value={formData.status} />
+                {/* <FormField label="Last Status Updated" name="status" onChange={handleInputChange} value={formData.status} /> */}
 
-                <EditFormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.amount} />
+                <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.amount} />
                 <EditFormField label="Visit Amount Paid" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid} />
 
-                <EditFormField label="Service Date" name="serviceDate" onChange={handleInputChange} value={formData.serviceDate} />
-                <EditFormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes} />
+                <FormField label="Service Date" name="serviceDate" onChange={handleInputChange} value={formData.serviceDate} />
+                <FormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes} />
 
-                <EditFormField label="Service Amount" name="serviceAmount" onChange={handleInputChange} value={formData.serviceAmount} />
+                <FormField label="Service Amount" name="serviceAmount" onChange={handleInputChange} value={formData.serviceAmount} />
                 <EditFormField label="Service Amount Paid" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid} />
 
                 <DropDownField label="Customer Rating" name="performance" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />
@@ -596,7 +648,7 @@ function UpdateLatestServReq() {
                     size="medium"
                     fullWidth
                     sx={{ mb: 2 }}
-                    onClick={() => navigate(-1)}
+                    onClick={handleCancle}
                   >
                     Close
                   </Button>
@@ -625,6 +677,13 @@ function UpdateLatestServReq() {
                   >
                     Delete Service
                   </Button>
+
+                  <ConfirmationModal
+              open={isConfirmationOpen}
+              onClose={handleCloseConfirmation}
+              onConfirm={handleConfirm}
+          
+            />
                 </Grid>
               </Grid>
             </Table>
