@@ -15,58 +15,63 @@ import SERVER_URL from './Server/Server';
 
 const authToken = GetToken();
 
-async function fetchUserDetails(item) {
-  const data = {
-    username: item.username,
-  };
-  const response = await fetch(`${SERVER_URL}admin/get-user`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${authToken}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  return await response.json();
-}
-
-async function fetchDataAndEnhanceArray(array_Details) {
+async function fetchDataAndEnhanceArray({ array_Details }) {
   const enhancedArray = await Promise.all(
     array_Details.map(async (item) => {
-      const outPut_value = await fetchUserDetails(item);
+      const data = {
+        username: item.username,
+      };
+      const response = await fetch(`${SERVER_URL}admin/get-user`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const outPut_value = await response.json();
+      console.log(outPut_value);
+
       return { ...item, customerDetails: outPut_value };
+    
     })
-  );
+  )
   return enhancedArray;
 }
 
-function Table_Tickets({ array_Details }) {
+function Table_AllTickets({ array_Details }) {
   const navigate = useNavigate();
   const [enhancedArray, setEnhancedArray] = useState([]);
   const [record_status, setRecord_status]=useState([])
 
   useEffect(() => {
-    async function fetchData() {
-      const result = await fetchDataAndEnhanceArray(array_Details);
+    fetchDataAndEnhanceArray({ array_Details: array_Details }).then((result) => {
       setEnhancedArray(result);
-    }
-    fetchData();
-  }, [array_Details]);
-
-  const handleTicketClick = (record) => {
-    localStorage.setItem('display_details', JSON.stringify(record));
-    navigate('/update_ticket_details', { state: { ticketId: record.requestId } });
-  };
-
+    });
+  }, [])
 
   const Row = ({ record }) => {
+    const [showDetails, setShowDetails] = useState(false);
+
+    const toggleDetails = () => {
+      setShowDetails(!showDetails);
+    };
+
+    const handleTicketClick = ({ record }) => {
+    
+      localStorage.setItem('Ticket_Record', JSON.stringify(record));
+      navigate('/update_ticket_details', { state: { ticketId: record.requestId } });
+
+    };
+
     setRecord_status(record)
+   
     return (
       <>
         <TableRow>
           <TableCell style={{ fontSize: '18px' }}>{record.requestId}</TableCell>
           <TableCell style={{ fontSize: '18px' }}>
-            <Link style={{ textDecoration: 'None', cursor: 'pointer' }} onClick={() => handleTicketClick(record)}>{record.shortDescription}</Link>
+            <Link style={{ textDecoration: 'None', cursor: 'pointer' }} onClick={() => handleTicketClick({ record })}>{record.shortDescription}</Link>
           </TableCell>
           <TableCell style={{ fontSize: '18px' }}>{record.username}</TableCell>
           <TableCell style={{ fontSize: '18px' }}>
@@ -76,15 +81,15 @@ function Table_Tickets({ array_Details }) {
           <TableCell style={{ fontSize: '18px' }}>
             {record.customerDetails ? record.customerDetails.city : 'N/A'}
           </TableCell>
-          {record.status === 2 && (
             <TableCell style={{ fontSize: '18px' }}>{record.serviceEngineerId}</TableCell>
-          )}
+            <TableCell style={{ fontSize: '18px' }}>{record.status}</TableCell>
+
+        
         </TableRow>
       </>
     );
   };
 
-  
   return (
     <>
       <TableContainer component={Paper} sx={{ m: 1, bgcolor: 'white', maxWidth: '99%', mt: 5 }}>
@@ -96,7 +101,9 @@ function Table_Tickets({ array_Details }) {
             <TableCell><h4>Contact Number</h4></TableCell>
             <TableCell><h4>Open Date</h4></TableCell>
             <TableCell><h4>Service Location</h4></TableCell>
-            {record_status.status === 2 && (<TableCell><h4 className='text-dark'>ServiceEngineer ID</h4></TableCell>)}
+            <TableCell><h4 >ServiceEngineer ID</h4></TableCell>
+            <TableCell><h4 >Status</h4></TableCell>
+           
           </TableRow>
           <TableBody>
             {enhancedArray.map((record) => (
@@ -109,4 +116,4 @@ function Table_Tickets({ array_Details }) {
   );
 }
 
-export default Table_Tickets;
+export default Table_AllTickets;

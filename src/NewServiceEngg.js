@@ -26,6 +26,8 @@ const url = `${SERVER_URL}admin/get-service-engineers`
 function NewServiceEngineers(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const OpenSidebar = () => {
       setOpenSidebarToggle(!openSidebarToggle)
@@ -33,6 +35,7 @@ function NewServiceEngineers(){
 
     useEffect (()=> {
       async function fetchDetails(){
+        try{
           const response = await fetch(url,{
               method : 'POST',
               headers : {
@@ -40,10 +43,18 @@ function NewServiceEngineers(){
                   'Content-type': 'application/json',
               },
               body : JSON.stringify({status:1}),
-          }).then((response) => response.json())
-          .then((array_Details) =>{
-              setTicketDetails(array_Details);
           })
+          if (response.ok) {
+            const result = await response.json();
+            setTicketDetails(result);
+        } else {
+            throw new Error('Failed to fetch New ticket Details....!');
+        }
+    } catch (error) {
+        setError(error.message);
+    } finally {
+        setIsLoading(false);
+    }
         }
         fetchDetails();
     },[])
@@ -57,7 +68,14 @@ function NewServiceEngineers(){
     <AdminDash_upblock />
     <Typography  variant='h4' className='mx-3 mt-5'>New Service Engineers</Typography>
     {TicketDetails.length > 0 ? <Table_SE array_Details={TicketDetails} /> : 
-      <h2 className="mx-3 mt-3">No Service Engineers to show...</h2>}
+        isLoading &&
+          <div className="text-center">
+              <button className="btn btn-primary" type="button" disabled>
+                <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status"> Loading...</span>
+              </button>
+          </div>
+      }
     </main>
     </div>
     </>

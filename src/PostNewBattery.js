@@ -114,6 +114,14 @@ function PostNewBattery() {
   });
 
   const handleBatteryChange = (e) => {
+    // setBatteryId(e.target.value);
+    // //getting the selected batteryID  details
+    // batteryDetails.map((selectBatteryId) => {
+    //   if (selectBatteryId.batteryId === batteryId) {
+    //     setBatterySelected(selectBatteryId);
+    //     setWarranty_def(selectBatteryId.warranty);
+    //   }
+    // });
     const selectedBatteryId = e.target.value; // Get the value directly from the event target
       setBatteryId(selectedBatteryId);
       //getting the selected batteryID details

@@ -8,7 +8,7 @@ import Header from "./Header";
 import Admin_sidebar from './Admin_sidebar';
 import EditInputFormField from './Update/EditInputFormField';
 import SERVER_URL from './Server/Server';
-
+import ConfirmationModal from './Confirmation';
 const authToken = GetToken();
 
 
@@ -98,6 +98,23 @@ function Admin_Edit_Profile() {
   const handleAddImage=()=>{
     document.getElementById('Imageselect').click()
   }
+
+  //Confirmation alert box
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancle = () => {
+    setIsConfirmationOpen(true);
+  };
+
+  const handleCloseConfirmation = () => {
+    setIsConfirmationOpen(false);
+  };
+
+  const handleConfirm = () => {
+    navigate('/admin_profile')
+    setIsConfirmationOpen(false);
+  };
+
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -208,7 +225,7 @@ function Admin_Edit_Profile() {
                 size="large"
                 fullWidth
                 sx={{ mt: 7,mb:2,ml:40}}
-                onClick={() => navigate(-1)}
+                onClick={handleCancle}
               >
                close
               </Button>
@@ -224,6 +241,13 @@ function Admin_Edit_Profile() {
               >
                 Save Changes
               </Button>
+
+              <ConfirmationModal
+              open={isConfirmationOpen}
+              onClose={handleCloseConfirmation}
+              onConfirm={handleConfirm}
+              />
+
             </Grid>
         </Grid>
         </Table>

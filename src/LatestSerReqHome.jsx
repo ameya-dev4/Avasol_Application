@@ -124,6 +124,7 @@ import Sidebar from './Sidebar';
 import DisplayBattery from './table_js';
 import SERVER_URL from './Server/Server';
 import Popup from './Popup';
+import ErrorBoundary from './ErrorHandlingPage';
 
 const access_token = GetToken();
 const apiUrl = `${SERVER_URL}user/get-battery-list`;
@@ -181,6 +182,23 @@ function LatestServReqHome({ Toggle }) {
       setIsOpen(true);
     }
   };
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancle = () => {
+    setIsConfirmationOpen(true);
+  };
+
+  const handleCloseConfirmation = () => {
+    setIsConfirmationOpen(false);
+  };
+
+  const handleConfirm = () => {
+    navigate('/userMyBatteries')
+    setIsConfirmationOpen(false);
+  };
+
+
 
   return (
     <>

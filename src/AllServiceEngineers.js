@@ -24,6 +24,8 @@ const url = `${SERVER_URL}admin/get-service-engineers`
 function AllServiceEngineers(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
     const [TicketDetails, setTicketDetails] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const OpenSidebar = () => {
       setOpenSidebarToggle(!openSidebarToggle)
@@ -31,6 +33,7 @@ function AllServiceEngineers(){
 
     useEffect (()=> {
       async function fetchDetails(){
+        try{
           const response = await fetch(url,{
               method : 'POST',
               headers : {
@@ -38,12 +41,19 @@ function AllServiceEngineers(){
                   'Content-type': 'application/json',
               },
               body : JSON.stringify({status:-1}),
-          }).then((response) => response.json())
-          .then((array_Details) =>{
-              setTicketDetails(array_Details);
-              console.log(array_Details);
-              
           })
+          if (response.ok) {
+            const result = await response.json();
+            setTicketDetails(result);
+        } else {
+            throw new Error('Failed to fetch New ticket Details....!');
+        }
+    } catch (error) {
+        setError(error.message);
+    } finally {
+        setIsLoading(false);
+    }
+
         }
         fetchDetails();
     },[])
@@ -57,7 +67,14 @@ function AllServiceEngineers(){
     <AdminDash_upblock />
     <Typography  variant='h4' className='mx-3 mt-5'>All Service Engineers</Typography>
     {TicketDetails.length > 0 ? <Table_SE array_Details={TicketDetails} /> : 
-      ""}
+      isLoading &&
+      <div className="text-center">
+          <button className="btn btn-primary" type="button" disabled>
+            <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status"> Loading...</span>
+          </button>
+      </div>
+     }
     </main>
     </div>  
     </>

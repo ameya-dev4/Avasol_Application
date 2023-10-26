@@ -47,6 +47,9 @@ function UpdateNewTickets() {
 
   const [all_serviceEngg, setAll_serviceEngg] = useState([]);
   const [status_def, setStatus_def] = useState('');
+  const Each_ticket=localStorage.getItem('Ticket_Record')
+  const parse_Ticket=JSON.parse(Each_ticket)
+
 
   const statusOptions = [{ value: status_def, label: status_def }, { label: 'New', value: 1 }, { label: 'Assigned', value: 2 }, { label: 'Rejected', value: 5 }, { label: 'Closed', value: 14 }, { label: 'Opened', value: 8 }];
   
@@ -102,7 +105,7 @@ function UpdateNewTickets() {
    };
  
    const handleConfirm = () => {
-     navigate('/new_tickets')
+     navigate('/admin_mydash')
      setIsConfirmationOpen(false);
    };
 
@@ -160,6 +163,8 @@ function UpdateNewTickets() {
     fetchData();
   }, []);
 
+
+
   const onSubmit = async (e) => {
     e.preventDefault();
     // Create a copy of the form data with all the default values
@@ -186,6 +191,8 @@ function UpdateNewTickets() {
     }
   };
 
+console.log("hello",parse_Ticket)
+console.log("ser",serviceEnggID)
   return (
     <div className="grid-container" style={{ borderBlock: '2px solid black' }}>
       <Header OpenSidebar={OpenSidebar} />
@@ -217,11 +224,11 @@ function UpdateNewTickets() {
 
        {/* Row 3 */}
        <FormField label="Date Opened" name="date" onChange={handleInputChange} value={formData.openDate}/>
-       <FormField label="Service Location" name="serviceArea" onChange={handleInputChange}  value={formData.serviceArea}/>
+       <FormField label="Service Location" name="serviceArea" onChange={handleInputChange}  value={parse_Ticket.customerDetails ? parse_Ticket.customerDetails.city : 'N/A'}/>
 
        {/*Row 4 */}
        <FormField label="Customer Name" name="username" onChange={handleInputChange} value={formData.username}/>
-       <FormField label="Contact" name="contactNumber" onChange={handleInputChange}  value={formData.contactNumber}/>
+       <FormField label="Contact" name="contactNumber" onChange={handleInputChange}  value={parse_Ticket.customerDetails ? parse_Ticket.customerDetails.contactNumber : 'N/A'}/>
 
        <FormField label="Notes To ServiceEngineer" name="noteToServiceengineer" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
        <DropDownField label="Status" name="status" onChange={handleStausChange}  options={statusOptions} value={status_def} />

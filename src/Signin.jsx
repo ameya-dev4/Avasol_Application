@@ -101,11 +101,11 @@ const handleChange = (event) => {
         
       // alert("Register Successfull!...Welocome user")
             if(loginType==='user'){
-              navigate('/latest_serv_request')
+              navigate('/myDashBoard')
             }
             else if (loginType==='admin'){
               // window.open('/admin_home','_blank')
-              navigate('/admin_home')
+              navigate('/admin_mydash')
             } 
             else{
               navigate('/se_myDashboard')
@@ -213,7 +213,7 @@ const handleChange = (event) => {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
+                  <Link href={loginType==='admin'?'/Admin_signup':loginType==='user'?'/signup':'/se_signup'} variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

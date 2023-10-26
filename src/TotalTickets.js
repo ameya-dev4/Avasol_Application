@@ -1,71 +1,91 @@
-import AdminDash_upblock from "./AdminDash_upblock";
-import Table_comp from "../Table_Component";
-import Header from './Sidebar'
+
+import Table_comp from "./Table_Componenet";
+import Header from './Header'
 import Sidebar from './Admin_sidebar'
 import { useState ,useEffect} from "react";
 import { GetToken } from "./Api/auth";
-import Admin_sidebar from "./Admin_sidebar";
+import { Box, Typography,Container } from "@mui/material";
+import { Card,Row } from "react-bootstrap";
+import AdminDash_upblock from "./AdminDash_upblock";
 import SERVER_URL from "./Server/Server";
+import Table_Tickets from "./Table_Tickets";
+import Table_AllTickets from "./Table_AllTickets";
 
 const userName = localStorage.getItem('username');
 console.log(userName);
-const url = `${SERVER_URL}get-ticket-details`
 
 
 function TotalTickets(){
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
-    const [TicketDetails, setTicketDetails] = useState([]);
+    const [TicketDetails , setTicketDetails] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
     //const {authToken} = useAuth();
     const authToken = GetToken();
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
-  let data = {
-    username : userName,
-  }
+
   useEffect (()=> {
     async function fetchDetails(){
-        const response = await fetch(url,{
+      try{
+        const response = await fetch(`${SERVER_URL}admin/get-ticket-details`,{
             method : 'POST',
             headers : {
                 'Authorization' : `Bearer ${authToken}`,
                 'Content-type': 'application/json',
-                "Access-Control-Allow-Origin": "*",
             },
-            body : JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((array_Details) =>{
-            setTicketDetails(array_Details);
+            body:JSON.stringify({status:-1})
         })
+                if (response.ok) {
+                  const result = await response.json();
+                  setTicketDetails(result);
+              } else {
+                  throw new Error('Failed to fetch New ticket Details....!');
+              }
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
       }
       fetchDetails();
-  },[TicketDetails]) 
+  },[])
   
-
+  console.log("all tickets",TicketDetails)
+  
     return (
     <>
     <div className='grid-container'>
       <Header OpenSidebar={OpenSidebar}/>
-      <Admin_sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
       <main className="main-container">
-      <AdminDash_upblock/>
-      {TicketDetails.length > 1 ? <Table_comp array_Details={TicketDetails} /> : 
-      <>
-        <h2>No Tickets are Assigned BadLuck</h2>
-        <div className=" position-absolute top-50 start-50 translate-middle col-1 shadow p-3 bg-body-tertiary rounded ">
-                            
-                            <div className="text-center  py-1 px-2">
-                            <div className="spinner-border text-primary " role="status">
-                              <span className="visually-hidden ">Loading...</span>
-                            </div> 
-                            <p className="text-dark d-flex justify-content-center">Loading....</p>
-                            </div>  
+      <AdminDash_upblock /><br/><br/>
+
+      {isLoading ? (
+                    <div className="text-center">
+                        <button className="btn btn-primary" type="button" disabled>
+                          <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                          <span role="status"> Loading...</span>
+                        </button>
+                    </div>
+                ) : error ?(
+                  
+                  <div className="text-center alert alert-danger" role="alert">
+                        Error: {error}
+                        
+                    </div> 
+                ) : (
+                    <div>
+                        {TicketDetails.length > 0 ? (
+                            <Table_AllTickets array_Details={TicketDetails} />
+                        ) : (
+                            <h2 className="mx-3 mt-3">No  Tickets Details</h2>
+                        )}
+                    </div>
+                )}
       
-                          </div>
-      </>
-      
-      }
       
       </main>
     </div>

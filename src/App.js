@@ -47,6 +47,9 @@ import SE_Logout from './SE_logout'
 import LatestServReqHome from './LatestSerReqHome'
 import Admin_Logout from './Admin_logout'
 import ManageUsers_details from './ManageUsers_details'
+import User_MyDashBoard from './User_MyDashBoard'
+import ErrorBoundary from './ErrorHandlingPage'
+import TotalTickets from './TotalTickets'
 
 
 function App() {
@@ -57,6 +60,7 @@ function App() {
 
   return (
     <>
+
     <Routes>
             <Route path='/' element={<SignIn/>} />
             <Route path='signup' element={<SignUp1/>}/>
@@ -74,6 +78,7 @@ function App() {
             <Route path='user_profile' element={<UserProfile/>}/>
             <Route path='update_latestServRequest' element={<UpdateLatestServReq/>}/>
             <Route path='update_battery' element={<UpdateBattery/>}/>
+            <Route path='myDashBoard' element={<User_MyDashBoard/>}/>
 
             
             <Route path='Admin_signup' element={<AdminSignUp/>}/>
@@ -92,6 +97,7 @@ function App() {
             <Route path='update_asigned_ticket' element={<UpdateNewTickets/>}/>
             <Route path='update_new_ticket' element={<UpdateNewTickets/>}/>
             <Route path='ManageUser_details' element={<ManageUsers_details/>}/>
+            <Route path='all_tickets' element={<TotalTickets/>}/>
 
 
 

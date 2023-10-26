@@ -104,7 +104,7 @@ function AdminMyProfile() {
                 fullWidth
                 
               >
-                <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Profile</Typography>
+                <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Admin Profile</Typography>
               </Button>
             </Grid>
 

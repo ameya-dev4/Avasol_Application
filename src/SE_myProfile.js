@@ -286,7 +286,7 @@ function SE_MyProfile() {
               
                 
               >
-                <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>Update Profile</Typography>
+                <Typography variant="h5" sx={{textAlign :'left',textTransform:'none'}}>User Profile</Typography>
               </Button>
             </Grid>
        
