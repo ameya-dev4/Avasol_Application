@@ -172,7 +172,7 @@ function EditSe_Profile() {
         >
         {selectedImage ? (
               <>
-              <img src={selectedImage} alt="Profile" style={{width:'100%',height:'100%'}} />
+              <img src={selectedImage} loading='lazy'  alt="Profile" style={{width:'100%',height:'100%'}} />
                     
               </>
           ) : (

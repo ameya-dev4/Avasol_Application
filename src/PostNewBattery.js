@@ -10,6 +10,8 @@ import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 import { GetToken } from './Api/auth';
 import ConfirmationModal from './Confirmation';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const authToken = GetToken();
 
@@ -165,26 +167,36 @@ function PostNewBattery() {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     // formData contains the form values
-    console.log(formData);
-    fetch(`${SERVER_URL}user/add-service-request`, {
+
+    try{
+    const response =await fetch(`${SERVER_URL}user/add-service-request`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${authToken}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData)
-    }).then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        alert('Service Request done successfully..!');
-        navigate(-1);
-      }).catch((error) => {
-        console.log(error);
-      });
-    // Perform your form submission logic here
+    })
+        if (response.ok) {
+          const result = await response.json();
+          toast.success("Add Request Successfully...!", {
+            position: toast.POSITION.TOP_CENTER
+          });
+          setTimeout(() => {
+            navigate('/latest_serv_request')
+          }, 5100);
+
+      } else {
+          throw new Error('Failed to fetch New ticket Details....!');
+        }
+    } catch (error) {
+        toast.error("Error Occured...!", {
+            position: toast.POSITION.TOP_LEFT
+          });
+      } 
   };
 
   const checkboxHandler = () => {
@@ -205,6 +217,7 @@ function PostNewBattery() {
    };
  
    const handleConfirm = () => {
+
      navigate('/userMyBatteries')
      setIsConfirmationOpen(false);
    };
@@ -266,12 +279,11 @@ function PostNewBattery() {
                 
                   {warranty_def==='Yes' &&(<EditFormField label="self Declaration"  name='selfDeclaration' value={formData.selfDeclaration} placeholder='Agree the terms & conditions' onChange={handleInputChange} /> )}
 
-                {/* <Grid item xs={12} className='mx-3 text-primary text-center'>
+                <Grid item xs={12} className='mx-3 text-primary text-center'>
                   <FormControlLabel
                     control={<Checkbox checked={agree} onChange={checkboxHandler} />}
-                    label="Warranty"
-                  />
-                </Grid> */}
+                    label="Agree to Pay the Visit Charges of Rs 400/- "/>
+                </Grid>
               </Grid>
               <Grid container spacing={3} sx={{ p: 3 }}>
                 <Grid item xs={3}>
@@ -294,6 +306,7 @@ function PostNewBattery() {
                     fullWidth
                     sx={{ mb: 2 }}
                     onClick={onSubmit}
+                    disabled={agree?false:true}
                   >
                     Add Request
                   </Button>
@@ -305,6 +318,9 @@ function PostNewBattery() {
           onConfirm={handleConfirm}
           
         />
+
+        {/* success Notification */}
+        <ToastContainer/>
                 </Grid>
               </Grid>
             </Table>

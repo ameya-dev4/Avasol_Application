@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
 import ErrorBoundary from './ErrorHandlingPage';
 
-
+{/* <meta httpEquiv='refresh' content='30'/> */}
+<meta httpEquiv='refresh' content='30;https://www.w3schools.com/jsref/'/>
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

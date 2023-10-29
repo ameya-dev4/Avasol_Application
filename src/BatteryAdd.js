@@ -212,6 +212,8 @@ import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 import ConfirmationModal from './Confirmation';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -320,6 +322,7 @@ function BatteryAdd() {
    const onSubmit = async(e) => {
     e.preventDefault();
     // formData contains the form values
+    try{
     console.log(formData);
     
     const response=await fetch(`${SERVER_URL}user/add-new-battery`,{
@@ -332,9 +335,18 @@ function BatteryAdd() {
     })
     if(response.ok){
       const result= await response.json()
-      alert('Battery successfully added...!');
-      navigate(-1);
+      toast.success("Battery Added Successfully...!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose:3000
+      });
+      setTimeout(() => {
+        navigate('/userMyBatteries');
+      }, 4000);
+      
     }
+  }catch{
+    toast.error('Something went wrong! Try Again..')
+  }
     
   };
 
@@ -458,14 +470,20 @@ function BatteryAdd() {
               >
                 Add
               </Button>
+
+              {/* Toast Notification */}
+              <ToastContainer/>
+
             </Grid>
-            
             <ConfirmationModal
         open={isConfirmationOpen}
         onClose={handleCloseConfirmation}
         onConfirm={handleConfirm}
         
       />
+
+      
+      
 
         </Grid>
         

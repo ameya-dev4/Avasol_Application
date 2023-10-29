@@ -183,6 +183,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EditInputFormField from './Update/EditInputFormField';
 import SE_Sidebar from './SE_Sidebar';
 import SERVER_URL from './Server/Server';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import ConfirmationModal from './Confirmation';
 
 const authToken = GetToken();
 
@@ -199,14 +202,30 @@ function SE_UpdateTicket() {
 
   const [train_def, setTrain_def]=useState(formData.trainingDetails)
   const [status_def, setSatus_def]=useState(formData.status)
-  const [payment_def, setPayment_def]=useState('nill')
+  const [payment_def, setPayment_def]=useState('null')
   const [assign_def, setAssign_def]=useState(formData.assignedBy)
 console.log("assign",assign_def)
 
 const assignedByOpt = [{value:assign_def, label :assign_def},{value:'SE1', label :'SE1'},{label:'SE2',value:'SE2'}]
-const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14},{label:'Opened',value:8}];
 const paymentOptions = [{value:payment_def, label :'Payment status'},{label:'Paid',value:'paid'},{label:'Yet to be Paid',value:'yet to be paid'},{label:'raised',value:'raised'},{label:'failed',value:'failed'}];
 const userName = localStorage.getItem('username');
+
+const statusOptions = [
+  { value: status_def, label: status_def },
+  { label: 'New', value: 1 },
+  { label: 'Approved', value: 10 },
+  { label: 'Active', value: 3 },
+  { label: 'Inactive', value: 4 },
+  { label: 'Hold', value: 9 },
+  { label: 'Deleted', value: 6 },
+  { label: 'Rejected', value: 5},
+  { label: 'Service Amount Due', value: 12 },
+  { label: 'Service Amount Paid', value: 15},
+  { label: 'Visit Amount Paid', value: 13},
+  
+  
+
+];
 
   
 
@@ -259,32 +278,55 @@ const userName = localStorage.getItem('username');
   }
 
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     // formData contains the form values
-    console.log(formData);
-    fetch(`${SERVER_URL}se/update-service-request`,{
-      method:'PUT',
-      headers:{
-        'Authorization':`Bearer ${authToken}`,
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify({
-        ...formData,
-        username:formData.serviceEngineerId,
+    try{
+      console.log(formData);
+      const response =await fetch(`${SERVER_URL}se/update-service-request`,{
+        method:'PUT',
+        headers:{
+          'Authorization':`Bearer ${authToken}`,
+          'Content-Type':'application/json',
+        },
+        body:JSON.stringify({
+          ...formData,
+          username:formData.serviceEngineerId,
+        })
       })
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
-      alert('Details are Successfully Updated');
-      navigate(-1);
-    }).catch((error) => {
-      console.log(error);
-    })
+        if (response.ok) {
+          const result = await response.json();
+          toast.success(`${formData.serviceEngineerId} update successfully...!`,{
+            position:toast.POSITION.TOP_CENTER,
+            autoClose:3000
+          })
+      } 
+    } catch (error) {
+      toast.error('Error Occured! please try again...')
+      // setError(error.message);
+    } 
     // Perform your form submission logic here
   };
 
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+   const handleCancle = () => {
+     setIsConfirmationOpen(true);
+   };
+ 
+   const handleCloseConfirmation = () => {
+     setIsConfirmationOpen(false);
+   };
+ 
+   const handleConfirm = () => {
+
+     navigate('/se_myDashboard')
+     setIsConfirmationOpen(false);
+   };
+
+
   return (
+
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
       {/* ... form rendering ... */}
       <Header OpenSidebar={OpenSidebar}/>
@@ -357,7 +399,7 @@ const userName = localStorage.getItem('username');
                 size="large"
                 fullWidth
                 sx={{ mt: 7,mb:2,ml:40}}
-                onClick={() => navigate(-1)}
+                onClick={handleCancle}
               >
                close
               </Button>
@@ -373,6 +415,16 @@ const userName = localStorage.getItem('username');
               >
                 Save Changes
               </Button>
+
+              {/* Toast Notification */}
+              <ToastContainer/>
+
+              <ConfirmationModal
+              open={isConfirmationOpen}
+              onClose={handleCloseConfirmation}
+              onConfirm={handleConfirm}
+            />
+
             </Grid>
         </Grid>
         </Table>

@@ -332,6 +332,8 @@ import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 import ConfirmationModal from './Confirmation';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const authToken = GetToken();
 
@@ -377,9 +379,10 @@ function UpdateLatestServReq() {
   const statusOptions = [
     { value: status_def, label: status_def },
     { label: 'New', value: 1 },
-    { label: 'Assigned', value: 2 },
-    { label: 'Rejected', value: 5 },
-    { label: 'Closed', value: 14 },
+    { label: 'Active', value: 3 },
+    { label: 'Inactive', value: 4 },
+    { label: 'Hold', value: 9 },
+    { label: 'Deleted', value: 6 },
   ];
 
   const performanceOptions = [
@@ -459,7 +462,10 @@ function UpdateLatestServReq() {
         setLatestRequests(data);
         // console.log(data)
       } catch (error) {
-        console.error('Error fetching latest requests:', error);
+        toast.error('Network Error! Please check internet connection',{
+          position:toast.POSITION.TOP_LEFT,
+          delay:3000
+        })
       }
     }
 
@@ -489,17 +495,23 @@ function UpdateLatestServReq() {
     })
       .then((response) => {
         if (response.ok) {
-          console.log('DELETE request successful.');
-          alert('Deleted Successfully');
-          navigate('/latest_serv_request');
+          toast.success("Delete Successfully...!", {
+            position: toast.POSITION.TOP_CENTER
+          });
+           setTimeout(() => {
+            navigate('/latest_serv_request');
+           },5100);
+          
           // Handle success or update the UI accordingly
         } else {
-          console.error('DELETE request failed.');
+          toast.error('Something went wrong! Try again...')
+          // console.error('DELETE request failed.');
           // Handle error or update the UI accordingly
         }
       })
       .catch((error) => {
-        console.error('Error occurred during DELETE request:', error);
+        toast.error('Might Newtork Error! Try again...')
+        // console.error('Error occurred during DELETE request:', error);
         // Handle error or update the UI accordingly
       });
   };
@@ -516,16 +528,29 @@ function UpdateLatestServReq() {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        alert('Details are Successfully Updated');
-        navigate(-1);
+    .then((response) => {
+      if (response.ok) {
+        toast.success("Update Request Successfully...!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose:3000
+        });
+         setTimeout(() => {
+          navigate('/latest_serv_request');
+         },4000);
+        
+        // Handle success or update the UI accordingly
+      } else {
+        toast.error('Something went wrong! Try again...',{
+          autoClose:3000
+        })
+       
+      }
+    })
+    .catch((error) => {
+      toast.error('Might Newtork Error! Try again...',{
+        autoClose:3000
       })
-      .catch((error) => {
-        console.log(error);
-      });
-    // Perform your form submission logic here
+    });
   };
 
 
@@ -546,7 +571,10 @@ function UpdateLatestServReq() {
         setbatteryInfo(data[0]);
         // console.log(data)
       } catch (error) {
-        console.error('Error  in fetching battery details:', error);
+        toast.error('Newtork Error! please check internet connection...',{
+          delay:3000
+        })
+        // console.error('Error  in fetching battery details:', error);
       }
     }
 
@@ -627,13 +655,13 @@ function UpdateLatestServReq() {
                 {/* <FormField label="Last Status Updated" name="status" onChange={handleInputChange} value={formData.status} /> */}
 
                 <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.amount} />
-                <EditFormField label="Visit Amount Paid" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid} />
+                <EditFormField label="Visit Amount Paid Ref" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid} />
 
                 <FormField label="Service Date" name="serviceDate" onChange={handleInputChange} value={formData.serviceDate} />
                 <FormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes} />
 
                 <FormField label="Service Amount" name="serviceAmount" onChange={handleInputChange} value={formData.serviceAmount} />
-                <EditFormField label="Service Amount Paid" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid} />
+                <EditFormField label="Service Amount Paid Ref" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid} />
 
                 <DropDownField label="Customer Rating" name="performance" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />
               </Grid>
@@ -680,6 +708,9 @@ function UpdateLatestServReq() {
               onConfirm={handleConfirm}
           
             />
+
+            {/* Toast Notification */}
+            <ToastContainer/>
                 </Grid>
               </Grid>
             </Table>

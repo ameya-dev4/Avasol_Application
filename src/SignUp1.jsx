@@ -16,6 +16,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SERVER_URL from './Server/Server';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultTheme=createTheme()
 
@@ -67,15 +69,26 @@ const SignUp1=()=>{
         if (response.ok) {
           setSuccess(true)
           const data = await response.json();
-          navigate('/signin')
-  
+          toast.success("Registered Successfully...!", {
+            position: toast.POSITION.TOP_CENTER,
+            delay:3000
+          });
+          setTimeout(() => {
+            navigate('/signin')
+          }, 3100);
+          
         } else {
           // Handle signup error here
           console.error('Signup failed:', response.statusText);
         }
       } catch (error) {
         // Handle any network errors
-        console.error('Network error:', error);
+        // console.error('Network error:', error);
+        toast.error("Error Occured...!", {
+          position: toast.POSITION.TOP_CENTER,
+          delay:3000
+        });
+
       }
     };
    
@@ -85,7 +98,7 @@ const SignUp1=()=>{
     }
 
         return(
-
+            <>
             <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="md">
         <CssBaseline />
@@ -355,6 +368,10 @@ const SignUp1=()=>{
         
       </Container>
     </ThemeProvider>
+
+    {/* success Notification */}
+    <ToastContainer/>
+    </>
         )
     }   
 

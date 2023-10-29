@@ -101,7 +101,10 @@ localStorage.setItem('profile_details',JSON.stringify(user_Details))
                 ) : (
                     <div>
                         {TicketDetails.length > 0 ? (
+                            <>
+                            <h2 className="mx-3"> Total Tickets</h2>
                             <Table_AllTickets array_Details={TicketDetails} />
+                            </>
                         ) : (
                             <h2 className="mx-3 mt-3">No  Tickets Details</h2>
                         )}

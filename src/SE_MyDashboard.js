@@ -139,7 +139,7 @@ function SE_MyDashboard(){
       <main className="main-container">
       <SE_Dash_upblocks/>
       {TicketDetails.length > 0 ? <Table_comp array_Details={TicketDetails} /> : 
-      <h2>No Tickets are Assigned</h2>}
+      <h2 className="mx-3">No Tickets are Assigned</h2>}
       
       </main>
     </div>

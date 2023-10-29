@@ -11,6 +11,8 @@ import EditFormField from './Update/EditInputFormField';
 import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
 import ConfirmationModal from './Confirmation';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function UpdateNewTickets() {
   const authToken = GetToken();
@@ -25,36 +27,36 @@ function UpdateNewTickets() {
   const ticketId = location.state.ticketId;
 
   const [serviceEnggID, setServiceEnggId] = useState('<TBD>');
-  const [formData, setFormData] = useState({
-    amount: "",
-    assignedBy: "",
-    assignedDate: "",
-    attendedDate: "",
-    batteryId: "",
-    noteToServiceEngineer: "",
-    openDate: "",
-    otpId: 5,
-    payerId: "",
-    requestId: 0,
-    selfDeclaration: true,
-    serviceEngineerId: "",
-    serviceEngineerNotes: "",
-    shortDescription: "",
-    status: 6,
-    transactionId: 1,
-    username: ""
-  });
-
   const [all_serviceEngg, setAll_serviceEngg] = useState([]);
   const [status_def, setStatus_def] = useState('');
   const Each_ticket=localStorage.getItem('Ticket_Record')
   const parse_Ticket=JSON.parse(Each_ticket)
+  const [formData, setFormData] = useState(parse_Ticket);
+  console.log("fom",formData)
+  const statusOptions = [
+    { value: status_def, label: status_def },
+    { label: 'New', value: 1 },
+    { label: 'Assigned', value: 2 },
+    { label: 'Active', value: 3 },
+    { label: 'Inactive', value: 4 },
+    { label: 'Hold', value: 9 },
+    { label: 'Deleted', value: 6 },
+    { label: 'Rejected', value: 5 },
+    { label: 'In Progress', value: 7},
+    { label: 'Open', value: 8 },
+    { label: 'Visit Amount Paid', value: 13},
+    { label: 'Service Amount Due', value: 12},
+    { label: 'Service Amount Paid', value: 15 },
 
+  ];
+  useEffect(()=>{
+    setServiceEnggId(formData.serviceEngineerId || 'select Service Engineer');
+    setStatus_def(formData.status || 'select Status');
+  },[formData])
 
-  const statusOptions = [{ value: status_def, label: status_def }, { label: 'New', value: 1 }, { label: 'Assigned', value: 2 }, { label: 'Rejected', value: 5 }, { label: 'Closed', value: 14 }, { label: 'Opened', value: 8 }];
-  
   useEffect(() => {
     async function fetchDetails() {
+      try{
       const response = await fetch(`${SERVER_URL}admin/get-ticket-details`, {
         method: 'POST',
         headers: {
@@ -63,14 +65,15 @@ function UpdateNewTickets() {
         },
         body: JSON.stringify({ ticketId: ticketId })
       });
-      if (response.ok) {
-        const result = await response.json();
-        setFormData(result);
-        setServiceEnggId(result.serviceEngineerId || 'select Service Engineer');
-        setStatus_def(result.status || 'select Status');
-        
-      } else {
-        throw new Error('Failed to update ticket details...!');
+        if (response.ok) {
+          const result = await response.json();
+          setFormData(result);
+          setServiceEnggId(result.serviceEngineerId || 'select Service Engineer');
+          setStatus_def(result.status || 'select Status');
+          
+        }
+      }catch{
+          toast.error('Error Occured! Try again...')
       }
     }
     fetchDetails();
@@ -117,6 +120,7 @@ function UpdateNewTickets() {
 
   useEffect(() => {
     async function fetchData() {
+      try{
       const response = await fetch(`${SERVER_URL}admin/get-service-engineers`, {
         method: 'POST',
         headers: {
@@ -125,14 +129,12 @@ function UpdateNewTickets() {
         },
         body: JSON.stringify({ ticketId: ticketId })
       });
-      if (response.ok) {
-        const result = await response.json();
-        setFormData(result);
-        setServiceEnggId(result.serviceEngineerId || 'select Service Engineer');
-        setStatus_def(result.status || 'select Status');
-       
-      } else {
-        throw new Error('Failed to get service engineers details...!');
+        if (response.ok) {
+          const result = await response.json();
+        
+        }
+      }catch{
+        toast.error('Error Occured! Try again...')
       }
     }
     fetchData();
@@ -140,6 +142,7 @@ function UpdateNewTickets() {
 
   useEffect(() => {
     async function fetchData() {
+      try{
       const response = await fetch(`${SERVER_URL}admin/get-service-engineers`, {
         method: 'POST',
         headers: {
@@ -148,16 +151,19 @@ function UpdateNewTickets() {
         },
         body: JSON.stringify({ status: -1 }),
       });
-      if (response.ok) {
-        const array_Details = await response.json();
-        setAll_serviceEngg(array_Details);
-        const serviceEngineers = array_Details.map(eachSE => ({
-          label: eachSE.username,
-          value: eachSE.username
-        }));
-        setAll_serviceEngg(serviceEngineers);
-      } else {
-        throw new Error('Failed to get service engineers...!');
+        if (response.ok) {
+          const array_Details = await response.json();
+          setAll_serviceEngg(array_Details);
+          const serviceEngineers = array_Details.map(eachSE => ({
+            label: eachSE.username,
+            value: eachSE.username
+          }));
+          //If SE Id is <TBD> then
+          serviceEngineers.push({label:'Not Yet Assigned',value:'<TBD>'})
+          setAll_serviceEngg(serviceEngineers);
+        }
+      }catch{
+        toast.error('Error Occured! Try again...')
       }
     }
     fetchData();
@@ -168,6 +174,7 @@ function UpdateNewTickets() {
   const onSubmit = async (e) => {
     e.preventDefault();
     // Create a copy of the form data with all the default values
+    try{
     const updatedData = {
       ...formData,
       status: status_def,
@@ -184,11 +191,22 @@ function UpdateNewTickets() {
     });
     if (response.ok) {
       const result = await response.json();
-      alert('Details are Successfully Updated');
-      navigate(-1);
+      // alert('Details are Successfully Updated');
+    toast.success("Updated Successfully...!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose:3000
+      });
+      setTimeout(()=>{
+        navigate(-1);
+      },4000) 
     } else {
       throw new Error('Failed to Update Ticket Details...!');
     }
+  }
+    catch{
+      toast.error("Error Occured...!");
+    }
+
   };
 
 console.log("hello",parse_Ticket)
@@ -347,7 +365,11 @@ console.log("ser",serviceEnggID)
               onClose={handleCloseConfirmation}
               onConfirm={handleConfirm}
             />
-                  </Grid>
+
+            {/* Toast Success Notification */}
+            <ToastContainer/>
+
+              </Grid>
            </Grid>
        </Grid>
           </Table>

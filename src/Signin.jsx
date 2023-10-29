@@ -19,6 +19,8 @@ import {GetToken} from '../src/Api/auth'
 import { json, useNavigate } from 'react-router-dom';
 import UserGetDetails from './UserGetDetals';
 import SERVER_URL from './Server/Server';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function Copyright(props) {
   return (
@@ -101,14 +103,34 @@ const handleChange = (event) => {
         
       // alert("Register Successfull!...Welocome user")
             if(loginType==='user'){
-              navigate('/myDashBoard')
+              toast.success("Login Successful...!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose:3000
+              });
+              setTimeout(() => {
+                navigate('/myDashBoard')
+              }, 4000);
             }
             else if (loginType==='admin'){
               // window.open('/admin_home','_blank')
-              navigate('/admin_mydash')
+              toast.success("Login Successful...!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose:3000
+              });
+              setTimeout(() => {
+                navigate('/admin_mydash')
+              }, 4000);
+              
             } 
             else{
-              navigate('/se_myDashboard')
+              toast.success("Login Successful...!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose:3000
+              });
+              setTimeout(() => {
+                navigate('/se_myDashboard')
+              }, 4000);
+              
             }
       
       } else {
@@ -118,7 +140,10 @@ const handleChange = (event) => {
       }
     } catch (error) {
       // Handle any network errors
-      console.error('Network error:', error);
+      // console.error('Network error:', error);
+      toast.error("Login Failed...!", {
+        position: toast.POSITION.TOP_LEFT,
+      });
     }
 
 
@@ -126,7 +151,7 @@ const handleChange = (event) => {
 
   
   return (
-
+    <>
     <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs" style={{backgroundColor:'white',borderRadius:'5px'}}>
         
@@ -223,5 +248,9 @@ const handleChange = (event) => {
           <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
       </ThemeProvider>
+
+      {/* toast success notification */}
+      <ToastContainer/>
+      </>
   );
 }

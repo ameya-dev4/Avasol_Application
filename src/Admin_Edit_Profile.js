@@ -9,6 +9,8 @@ import Admin_sidebar from './Admin_sidebar';
 import EditInputFormField from './Update/EditInputFormField';
 import SERVER_URL from './Server/Server';
 import ConfirmationModal from './Confirmation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const authToken = GetToken();
 
 
@@ -57,26 +59,36 @@ function Admin_Edit_Profile() {
 
   
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     // formData contains the form values
+    try{
+      const response= await fetch(`${SERVER_URL}admin/profile-update`,{
+        method:'PUT',
+        headers:{
+          'Authorization':`Bearer ${authToken}`,
+          'Content-Type':'application/json',
+        },
+        body:JSON.stringify(user_Details)
+      })
+        if (response.ok) {
+          const result = await response.json();
+          toast.success('Updated Successfully...!',{
+            position: toast.POSITION.TOP_CENTER
+          })
+          setTimeout(()=>{
+            navigate('/admin_profile')
+          },5100)
+          
+      } else {
+          throw new Error('Failed to Update Details....!');
+      }
+    } catch (error) {
+      toast.error('Error Occured...!',{
+        position: toast.POSITION.TOP_LEFT
+      })
+    }
     
-    fetch(`${SERVER_URL}admin/profile-update`,{
-      method:'PUT',
-      headers:{
-        'Authorization':`Bearer ${authToken}`,
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify(user_Details)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
-      alert('Details are Successfully Updated');
-      navigate('/admin_profile');
-    }).catch((error) => {
-      console.log(error);
-    })
-    // Perform your form submission logic here
   };
 
   const [selectedImage,setImageSelected]=useState(null)
@@ -170,7 +182,7 @@ function Admin_Edit_Profile() {
                 >
                   {selectedImage ? (
                     <>
-                    <img src={selectedImage} alt="Profile" style={{width:'100%',height:'100%'}} />
+                    <img src={selectedImage}  loading='lazy' alt="Profile" style={{width:'100%',height:'100%'}} />
                     
                     </>
                   ) : (
@@ -242,15 +254,21 @@ function Admin_Edit_Profile() {
                 Save Changes
               </Button>
 
+            {/* // showing discard changes  warning box */}
               <ConfirmationModal
               open={isConfirmationOpen}
               onClose={handleCloseConfirmation}
               onConfirm={handleConfirm}
               />
 
+            {/* Toast Succes Notification*/}
+            <ToastContainer/>
+
+
             </Grid>
         </Grid>
         </Table>
+        
       </form>
       </main>
     </div>

@@ -60,7 +60,10 @@ function App() {
 
   return (
     <>
-
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    </head>
+    <body>
     <Routes>
             <Route path='/' element={<SignIn/>} />
             <Route path='signup' element={<SignUp1/>}/>
@@ -115,7 +118,8 @@ function App() {
             <Route exact path='/update-Profile' element={<EditSe_Profile/>} />
             
             
-          </Routes>      
+          </Routes>     
+      </body> 
     </>
     
   )

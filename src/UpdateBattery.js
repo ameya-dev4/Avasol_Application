@@ -12,11 +12,10 @@ import Dashboard_upBlocks from './Dashboard_upBlocks';
 import Sidebar from './Sidebar';
 import SERVER_URL from './Server/Server';
 import ConfirmationModal from './Confirmation';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const authToken = GetToken();
-const warrantyType = [{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-const statusOptions = [{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const performanceOptions = [{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
 
 
 
@@ -38,8 +37,14 @@ function UpdateBattery() {
   const [warranty_def,setWarranty_def]=useState('No')
 
   const warrantyType = [{value:warranty_def, label :warranty_def},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-  const statusOptions = [{value:status_def, label :status_def},{label:'New',value:1},{label:'Assigned',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-  
+  const statusOptions = [
+    { value: status_def, label: status_def },
+    { label: 'New', value: 1 },
+    { label: 'Active', value: 3 },
+    { label: 'Inactive', value: 4 },
+    { label: 'Hold', value: 9 },
+    { label: 'Deleted', value: 6 },
+  ];
 
   useEffect(()=>{
     setSatus_def(formData.status || 'select Status')
@@ -90,6 +95,7 @@ function UpdateBattery() {
   const [latestRequests, setLatestRequests] = useState([]);
   const[displayDetails , setDisplayDetails] = useState(false);
 
+
   useEffect(() => {
     // Function to make the GET request
     async function getLatestRequests() {
@@ -121,11 +127,11 @@ function UpdateBattery() {
               for(let i=0; i<latestRequests.length ; i++){
                 if(batteryId === latestRequests[i].batteryId){
                   batteryInfo = latestRequests[i]
+                  var batteryName=batteryInfo.batteryName
                   latestRequests.pop(batteryInfo);
                 }
 
               }
-    
 
             fetch(`${SERVER_URL}user/delete-battery`,{
               method : "DELETE",
@@ -136,17 +142,20 @@ function UpdateBattery() {
               body: JSON.stringify(batteryInfo),
             }).then(response => {
               if (response.ok) {
-                console.log('DELETE request successful.');
-                alert("Deleted Succesfully")
-                navigate('/userMyBatteries')
+                toast.success(`${batteryName} deleted Successfully...!`, {
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose:3000
+                });
+                setTimeout(() => {
+                  navigate('/userMyBatteries')
+                },4000);
+                
                 // Handle success or update the UI accordingly
-              } else {
-                console.error('DELETE request failed.');
-                // Handle error or update the UI accordingly
-              }
+              } 
             })
             .catch(error => {
-              console.error('Error occurred during DELETE request:', error);
+              toast.error('Network Error! please check internet connection...')
+              // console.error('Error occurred during DELETE request:', error);
               // Handle error or update the UI accordingly
             });
           }
@@ -173,6 +182,7 @@ function UpdateBattery() {
     // formData contains the form values
     formData.purchaseDate=formData.purchaseDate.slice(0,10)
     console.log(formData)
+    try{
     const response= await fetch(`${SERVER_URL}user/update-battery`,{
       method:'PUT',
       headers:{
@@ -183,12 +193,19 @@ function UpdateBattery() {
     })
     if (response.ok){
       const result =await response.json()
-      alert('Details are Successfully Updated');
-      navigate(-1);
-    }else{
-      throw new Error('Failed to Update the Battery details...')
+      toast.success(`${formData.batteryName} updated Successfully...!`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose:3000
+      });
+      setTimeout(() => {
+        navigate('/userMyBatteries')
+      },4000);
+      // alert('Details are Successfully Updated');
+      // navigate(-1);
     }
-    // Perform your form submission logic here
+  }catch{
+    toast.error('Something went wrong! please Try again...')
+  }
   };
    
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -298,12 +315,17 @@ function UpdateBattery() {
                 Delete Battery
               </Button>
 
+            {/* Toast Notification */}
+            <ToastContainer/>
+            
             <ConfirmationModal
           open={isConfirmationOpen}
           onClose={handleCloseConfirmation}
           onConfirm={handleConfirm}
           
         />
+
+        
             </Grid>
         </Grid>
         </Table>

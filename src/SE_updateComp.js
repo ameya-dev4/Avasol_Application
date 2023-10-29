@@ -230,6 +230,12 @@ import FormField from './Update/EditInputFormField';
 import DropDownField from './Update/DropDownField';
 import SERVER_URL from './Server/Server';
 import Admin_sidebar from './Admin_sidebar';
+import ConfirmationModal from './Confirmation';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+import { Toast } from 'react-bootstrap';
+
 
 const authToken = GetToken();
 function Update() {
@@ -238,35 +244,32 @@ function Update() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
-  const [formData, setFormData] = useState({
-    "approvedBy": "",
-  "approvedDate": "",
-  "bankAccountNo": "",
-  "bankName": "",
-  "branchName": "",
-  "contactNumber": "",
-  "emailId": "",
-  "firstName": "",
-  "ifsc": "",
-  "lastName": "",
-  "password": "",
-  "performance": "",
-  "serviceArea": "",
-  "status":1,
-  "trainingDetails": "",
-  "username": ""
-    
-  });
+  const [formData, setFormData] = useState([]);
   const location = useLocation();
   const ServiceEngineerName = location.state.updateArray.username;
-  const [status_def, setSatus_def]=useState(Number(1))
+  const [status_def, setSatus_def]=useState('')
   const [preform_def,setPerform_def]=useState('None')
   const [train_def,setTrain_def]=useState('No')
-
-  console.log("status",status_def)
 const trainingOptions = [{value:train_def, label :train_def},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
-const statusOptions = [{label:status_def,value:status_def},{label:'New',value:1},{label:'Approved',value:2},{label:'Rejected',value:5},{label:'Closed',value:14}];
-const performanceOptions = [{label:preform_def,value:preform_def},{label:'Average',value:'average'},{label:'Good',value:'good'},{label:'Excellent',value:'excellent'},{label:'Needs Improvement',value:'needs Improvement'}];
+const performanceOptions = [
+  {label:preform_def,value:preform_def},
+  {label:'Average',value:'average'},
+  {label:'Good',value:'good'},
+  {label:'Excellent',value:'excellent'},
+  {label:'Needs Improvement',value:'needs Improvement'},
+  {label:'select performance',value:'<TBD>'}
+  ];
+
+const statusOptions = [
+  { value: status_def, label: status_def },
+  { label: 'New', value: 1 },
+  { label: 'Approved', value: 10 },
+  { label: 'Active', value: 3 },
+  { label: 'Inactive', value: 4 },
+  { label: 'Hold', value: 9 },
+  { label: 'Deleted', value: 6 },
+  { label: 'Rejected', value: 5},
+];
 
 
   useEffect(() => {
@@ -284,25 +287,23 @@ const performanceOptions = [{label:preform_def,value:preform_def},{label:'Averag
           const data = await response.json();
           // Set form values using setFormData
           setFormData(data)
-          
-          setTrain_def(data.trainingDetails)
-          setPerform_def(data.performance)
-        //   setFormData({
-        //     ...data,
-        //   status : findselectedOption(data.status , statusOptions),
-        //   trainingDetails : findselectedOption(data.trainingDetails,trainingOptions),
-        //   performance : findselectedOption(data.performance ,performanceOptions),
-        // });
-        } else {
-          // Handle error if API request fails
         }
       } catch (error) {
         // Handle any other errors
+        
       }
     };
 
     fetchData();
   }, []);
+
+  console.log("form",formData)
+
+  useEffect(()=>{
+    setSatus_def(formData.status || 'select Status'); 
+    setTrain_def(formData.trainingDetails || 'choose Training ');
+    setPerform_def(formData.performance || 'select Performance'); 
+  })
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -345,27 +346,55 @@ const performanceOptions = [{label:preform_def,value:preform_def},{label:'Averag
   }
 
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     // formData contains the form values
-    console.log(formData);
-    fetch(`${SERVER_URL}admin/update-service-engineer`,{
+    try{
+    const response=await fetch(`${SERVER_URL}admin/update-service-engineer`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(formData)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
-      alert('Details are Successfully Updated');
-      navigate(-1);
-    }).catch((error) => {
-      console.log(error);
     })
-    // Perform your form submission logic here
+
+        if (response.ok) {
+          const result = await response.json();
+          toast.success('Updated Successfully...!',{
+            position:toast.POSITION.TOP_CENTER
+          })
+          
+          setTimeout(() => {
+            navigate('/all_service_engg')
+          }, 5100);
+
+      } else {
+          throw new Error('Failed to update Service Engineer Details....!');
+      }
+    } catch (error) {
+      toast.error('Error Occured...!',{
+        position: toast.POSITION.TOP_LEFT
+      })
+      // setError(error.message);
+    } 
+    
   };
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+   const handleCancle = () => {
+     setIsConfirmationOpen(true);
+   };
+ 
+   const handleCloseConfirmation = () => {
+     setIsConfirmationOpen(false);
+   };
+ 
+   const handleConfirm = () => {
+     navigate('/new_service_engg')
+     setIsConfirmationOpen(false);
+   };
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -435,7 +464,7 @@ const performanceOptions = [{label:preform_def,value:preform_def},{label:'Averag
                 size="large"
                 fullWidth
                 sx={{ mt: 20,mb:2}}
-                onClick={() => navigate(-1)}
+                onClick={handleCancle}
               >
                close
               </Button>
@@ -451,6 +480,15 @@ const performanceOptions = [{label:preform_def,value:preform_def},{label:'Averag
               >
                 Save Changes
               </Button>
+
+              <ConfirmationModal
+              open={isConfirmationOpen}
+              onClose={handleCloseConfirmation}
+              onConfirm={handleConfirm}
+            />
+
+            {/* Toast Success Notification */}
+            <ToastContainer/>
             </Grid>
         </Grid>
         </Table>

@@ -42,7 +42,7 @@ function SE_Dash_upblocks() {
             body : JSON.stringify(data),
         }).then((response) => response.json())
         .then((array_Details) =>{
-            setOpenTickets(array_Details);
+            setTicketDetails(array_Details);
         })
       }
       fetchDetails();
@@ -67,7 +67,8 @@ function SE_Dash_upblocks() {
         })
         if(response.ok){
           const result=await response.json()
-          setTicketDetails(result)
+          
+          setOpenTickets(result)
         }else{
           throw new Error('Failed to get Open Tickets details...!')
         }
@@ -86,7 +87,7 @@ function SE_Dash_upblocks() {
                     <div className='p-3 shadow-sm d-flex justify-content-around align-items-center rounded ' style={{backgroundColor:'#E35B5A'}}>
                         <Row>
                             <Col md={9}>
-                                <h6 className='fs-1'>{TicketDetails>0? TicketDetails.length:0}</h6>
+                                <h6 className='fs-1'>{TicketDetails? TicketDetails.length:0}</h6>
                                 <small className='fs-6'>Today's Tasks</small>
 
                             </Col>
@@ -108,7 +109,7 @@ function SE_Dash_upblocks() {
                     <div className='p-3  shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#5C9BD1'}}>
                         <Row>
                             <Col md={9}>
-                            <h6 className='fs-1'>{openTickets>0?openTickets.length:0}</h6>
+                            <h6 className='fs-1'>{openTickets?openTickets.length:0}</h6>
                             <small className='fs-6 '>My Open Tasks</small>
                             </Col>
                             <Col></Col>

@@ -12,6 +12,8 @@ import {
 import { GetToken } from './Api/auth';
 import TicketPage from './TicketPage';
 import SERVER_URL from './Server/Server';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 const authToken = GetToken();
@@ -65,17 +67,19 @@ function Table_Batteries({array_Details}){
         };
         
         const handleDelete = (input_value) =>{
+          
             let batteryInfo;
             let batteryId = input_value;
             for(let i=0; i<array_Details.length ; i++){
               if(batteryId === array_Details[i].batteryId){
                  batteryInfo = array_Details[i]
+                 var batteryName=batteryInfo.batteryName
                 array_Details.pop(batteryInfo);
               }
         
             }
             
-        
+        console.log("batteryName",batteryName)
             fetch(`${SERVER_URL}user/delete-battery`,{
               method : "DELETE",
               headers : {
@@ -85,9 +89,16 @@ function Table_Batteries({array_Details}){
               body: JSON.stringify(batteryInfo),
             }).then(response => {
               if (response.ok) {
-                console.log('DELETE request successful.');
-                alert("Deleted Succesfully")
-                navigate('/userMyBatteries')
+                toast.success(`${batteryName} deleted Successfully...!`, {
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose:3000
+                });
+                setTimeout(() => {
+                 window.location.reload()
+                },4000);
+                // console.log('DELETE request successful.');
+                // alert("Deleted Succesfully")
+                
                 // Handle success or update the UI accordingly
               } else {
                 console.error('DELETE request failed.');
@@ -152,6 +163,9 @@ function Table_Batteries({array_Details}){
             </TableBody>  
            </Table>
         </TableContainer>
+
+        {/* Toast Notification */}
+        <ToastContainer/>
       </>
     );  
 

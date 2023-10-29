@@ -10,6 +10,8 @@ import EditInputFormField from './Update/EditInputFormField';
 import SERVER_URL from './Server/Server';
 import ConfirmationModal from './Confirmation';
 import ErrorBoundary from './ErrorHandlingPage';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 const authToken = GetToken();
@@ -27,6 +29,7 @@ function EditProfile() {
   }
   
   useEffect (() =>{ async function fetchDetails(){
+    try{
     const response = await fetch(`${SERVER_URL}user/get-profile`,{
         method : 'GET',
         headers : {
@@ -34,12 +37,15 @@ function EditProfile() {
             'Content-type': 'application/json',
             "Access-Control-Allow-Origin": "*",
         }
-    }).then((response) => response.json())
-    .then((user_Details) =>{
-      setUserDetails(user_Details);
-      console.log(user_Details);
-        
     })
+        if (response.ok) {
+          const result = await response.json();
+          setUserDetails(result);
+      } 
+    } catch (error) {
+      toast.error('Error Occured! Try again...')
+      // setError(error.message);
+    } 
   }
   fetchDetails();
 },[])
@@ -62,27 +68,35 @@ function EditProfile() {
 
   
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     // formData contains the form values
-    
-    fetch(`${SERVER_URL}user/profile-update`,{
+    try{
+    const response= await fetch(`${SERVER_URL}user/profile-update`,{
       method:'PUT',
       headers:{
         'Authorization':`Bearer ${authToken}`,
         'Content-Type':'application/json',
       },
       body:JSON.stringify(user_Details)
-    }).then((response) => response.json())
-    .then((data) =>{
-      console.log(data);
-      alert('Details are Successfully Updated');
-      navigate('/user_profile');
-    }).catch((error) => {
-      console.log(error);
     })
-    // Perform your form submission logic here
-  };
+    if (response.ok) {
+      const result = await response.json();
+      setUserDetails(result);
+      toast.success("Profile Update Successfully...!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose:3000
+      });
+      setTimeout(() => {
+        navigate('/user_profile');
+      }, 4000);
+  } 
+    } catch (error) {
+      toast.error('Error Occured! Try again...')
+      // setError(error.message);
+    }
+        // Perform your form submission logic here
+  };  
 
   const [selectedImage, setImageSelected]=useState(null)
   const [remove_bool, setRemove_bool] = useState(true)
@@ -177,7 +191,7 @@ function EditProfile() {
         >
         {selectedImage ? (
               <>
-              <img src={selectedImage} alt="Profile" style={{width:'100%',height:'100%'}} />
+              <img src={selectedImage} loading='lazy'  alt="Profile" style={{width:'100%',height:'100%'}} />
                     
               </>
           ) : (
@@ -257,6 +271,9 @@ function EditProfile() {
               onClose={handleCloseConfirmation}
               onConfirm={handleConfirm}
               />
+            
+            {/* Toast Notification */}
+            <ToastContainer/>
             </Grid>
         </Grid>
         </Table>

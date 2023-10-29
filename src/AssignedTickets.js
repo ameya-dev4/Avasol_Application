@@ -97,7 +97,16 @@ function AssignedTickets(){
             </Row>
 
     { TicketDetails && TicketDetails.length > 0 ? <Table_Tickets array_Details={TicketDetails} /> : 
-      <h2 className="mx-3 mt-3">  No Assigned Tickets </h2>}
+        <>
+      <h2 className="mx-3 mt-3">Assigned Tickets Details </h2>
+      <div className="text-center">
+          <button className="btn btn-primary" type="button" disabled>
+            <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status"> Loading...</span>
+          </button>
+      </div>
+      </>
+      }
     </main>
     </div>
     </>

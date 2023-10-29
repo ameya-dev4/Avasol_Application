@@ -106,6 +106,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { GetToken } from "./Api/auth";
 import SERVER_URL from "./Server/Server";
 import ErrorHandlingPage from "./ErrorMessageAlert";
+import ToastSuccessNotify from "./ToastSuccesNotify";
 
 const authToken = GetToken();
 
@@ -184,6 +185,7 @@ function NewTickets() {
                 </Row>
 
                 {isLoading ? (
+
                     <div className="text-center">
                         <button className="btn btn-primary" type="button" disabled>
                           <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
