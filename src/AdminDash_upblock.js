@@ -82,7 +82,7 @@ function AdminDash_upblock() {
                     <div className='p-3 shadow-sm d-flex justify-content-around align-items-center rounded ' style={{backgroundColor:'#E35B5A'}}>
                         <Row>
                             <Col md={9}>
-                                <h6 className='fs-1'>{TicketDetails && TicketDetails.length}</h6>
+                                <h6 className='fs-1'>{TicketDetails.length>0?TicketDetails.length:0}</h6>
                                 <small className='fs-6'>Manage Tickets</small>
                             </Col>
                             <Col>
@@ -103,7 +103,7 @@ function AdminDash_upblock() {
                     <div className='p-3  shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#578EBE'}}>
                         <Row>
                             <Col md={12}>
-                            <h6 className='fs-1'>{All_serv_engg && All_serv_engg.length}</h6>
+                            <h6 className='fs-1'>{All_serv_engg.length>0?All_serv_engg.length:0}</h6>
                             <small className='fs-6 '>Manage Service Engineers</small>
                             </Col>
                             <Col></Col>
@@ -122,7 +122,7 @@ function AdminDash_upblock() {
                     <div className='p-3  shadow-sm d-flex justify-content-around align-items-center rounded' style={{backgroundColor:'#8775A7'}}>
                         <Row>
                             <Col md={9}>
-                                <h6 className='fs-1'>{users && users.length}</h6>
+                                <h6 className='fs-1'>{users.length>0?users.length:0}</h6>
                                 <small className='fs-6'>Manage Users</small>
                             </Col>
                             <Col>

@@ -358,7 +358,7 @@ function UpdateLatestServReq() {
     setSatus_def(formData.status || 'select Status'); 
     setDeclare_def(formData.selfDeclaration || false);
     setWarranty_def(formData.warranty || 'select Warranty'); 
-    setPerform_def(formData.performance || 'select Performance'); 
+    setPerform_def(formData.customerRating || 'select Performance'); 
   }, [formData]);
 
   console.log('warranty', warranty_def);
@@ -387,10 +387,11 @@ function UpdateLatestServReq() {
 
   const performanceOptions = [
     { value: preform_def, label: preform_def },
-    { label: 'Average', value: 'average' },
-    { label: 'Good', value: 'good' },
-    { label: 'Excellent', value: 'excellent' },
-    { label: 'Needs Improvement', value: 'needs Improvement' },
+    { label: 'Average', value: 3},
+    { label: 'Good', value: 4 },
+    { label: 'Excellent', value:5},
+    { label: 'Needs Improvement', value:2},
+    { label: 'bad', value: 1},
   ];
 
   const navigate = useNavigate();
@@ -464,7 +465,7 @@ function UpdateLatestServReq() {
       } catch (error) {
         toast.error('Network Error! Please check internet connection',{
           position:toast.POSITION.TOP_LEFT,
-          delay:3000
+          autoClose:3000
         })
       }
     }
@@ -496,7 +497,9 @@ function UpdateLatestServReq() {
       .then((response) => {
         if (response.ok) {
           toast.success("Delete Successfully...!", {
-            position: toast.POSITION.TOP_CENTER
+            position: toast.POSITION.TOP_CENTER,
+            autoClose:3000
+            
           });
            setTimeout(() => {
             navigate('/latest_serv_request');
@@ -536,7 +539,7 @@ function UpdateLatestServReq() {
         });
          setTimeout(() => {
           navigate('/latest_serv_request');
-         },4000);
+         },5100);
         
         // Handle success or update the UI accordingly
       } else {
@@ -599,6 +602,12 @@ function UpdateLatestServReq() {
      setIsConfirmationOpen(false);
    };
 
+   function handlepara(){
+    return<>
+    <div><b>Note:</b>amount will show only  after service engineer alloted</div>
+    </>
+   }
+
 
   return (
     <div className="grid-container" style={{ borderBlock: '2px solid black' }}>
@@ -639,8 +648,9 @@ function UpdateLatestServReq() {
 
 
                 {/* Row 4 */}
-                <EditFormField label="Vehicle Type" name="vehicleType" onChange={handleInputChange} value={formData.vehicleType} />
-                <EditFormField label="Service Location" name="serviceLocation" onChange={handleInputChange} value={formData.service_location} />
+                <EditFormField label="Service Latitude" name="serviceLatitude" onChange={handleInputChange} value={formData.serviceLatitude} />
+                <EditFormField label="Service Longitude" name="serviceLongitude" onChange={handleInputChange} value={formData.serviceLongitude} />
+                <EditFormField label="Service Location" name="serviceLocation" onChange={handleInputChange} value={formData.serviceLocation} />
 
                 {/* Row 5 */}
                 <FormField label="Date Opened" name="openDate" onChange={handleInputChange} value={formData.openDate ? formData.openDate.slice(0, 10) : ''} />
@@ -651,19 +661,18 @@ function UpdateLatestServReq() {
                 <DropDownField label="self Declaration" placeholder="I agree terms & conditions" name="selfDeclaration" onChange={handleDeclareChange} options={Declaration} value={Declare_def} />
 
                 {/* Row 7 */}
-                <DropDownField label="Status" name="status" onChange={handleStatusChange} value={status_def} options={statusOptions} />
                 {/* <FormField label="Last Status Updated" name="status" onChange={handleInputChange} value={formData.status} /> */}
 
                 <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.amount} />
                 <EditFormField label="Visit Amount Paid Ref" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid} />
 
-                <FormField label="Service Date" name="serviceDate" onChange={handleInputChange} value={formData.serviceDate} />
+                <FormField label="Service Date" name="targetDate" onChange={handleInputChange} value={formData.targetDate ? formData.targetDate.slice(0, 10) : ''} />
                 <FormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes} />
 
-                <FormField label="Service Amount" name="serviceAmount" onChange={handleInputChange} value={formData.serviceAmount} />
+                <FormField label="Service Amount" name="serviceAmount" para_label={handlepara()} onChange={handleInputChange} value={formData.serviceAmount?formData.serviceAmount:'Not yet decided'} />
                 <EditFormField label="Service Amount Paid Ref" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid} />
-
-                <DropDownField label="Customer Rating" name="performance" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />
+                <DropDownField label="Status" name="status" onChange={handleStatusChange} value={status_def} options={statusOptions} />
+                <DropDownField label="Customer Rating" name="customerRating" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />
               </Grid>
               <Grid container spacing={3} sx={{ p: 3 ,mt:3}}>
                 <Grid item xs={3}>

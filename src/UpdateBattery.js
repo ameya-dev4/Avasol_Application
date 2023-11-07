@@ -248,7 +248,7 @@ function UpdateBattery() {
        
         {/* Row 1 */}
         <EditFormField label="Battery Name" name="batteryName" value={formData.batteryName} onChange={handleInputChange} />
-        <EditFormField  label="Battery Number" name="batteryNumber"  value={formData.batteryNumber} onChange={handleInputChange}  />
+        <EditFormField  label="Battery ID" name="batteryId"  value={formData.batteryId} onChange={handleInputChange}  />
 
         {/* Row 2 */}
         <EditFormField label="Make" name="make" onChange={handleInputChange} value={formData.make}/>
@@ -257,6 +257,7 @@ function UpdateBattery() {
         {/* Row 3 */}
         <EditFormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.batteryVoltage}/>
         <EditFormField label="Battery Current" name="batteryCurrent" onChange={handleInputChange}  value={formData.batteryCurrent}/>
+        <EditFormField label="Battery Capacity" name="batteryCapacity" onChange={handleInputChange}  value={formData.batteryCapacity}/>
 
         {/* Row 4 */}
         <EditFormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)}/>
@@ -266,12 +267,12 @@ function UpdateBattery() {
         <EditFormField label="Vechicle Type" name="vechicleType" onChange={handleInputChange} value={formData.vechicleType}/>
 
         {/* Row 6 */}
-        <EditFormField label="Dealer Addrees" name="dealerAddress" onChange={handleInputChange} value={formData.delearAddress}/>
-        <EditFormField label="Dealer Contact" name="Dealer Contact" onChange={handleInputChange} value={formData.DealerContact}/>
+        <EditFormField label="Dealer ID" name="dealerId" onChange={handleInputChange} value={formData.delearId}/>
+        <EditFormField label="Principal ID" name="principalId" onChange={handleInputChange} value={formData.principalId}/>
 
         {/* Row 7 */}
-        <EditFormField label="Sub-DealerAddress" name="subDealerAddress" onChange={handleInputChange}  value={formData.subDealerAddress}/>
-        <EditFormField label="Sub-Dealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/>
+        {/* <EditFormField label="Sub-DealerAddress" name="subDealerAddress" onChange={handleInputChange}  value={formData.subDealerAddress}/>
+        <EditFormField label="Sub-Dealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/> */}
 
         {/* Row 8 */}
         <DropDownField label="Status" name="status" onChange={handleStatusChange}   value={Number(status_def)} options={statusOptions}/>

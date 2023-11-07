@@ -1,6 +1,6 @@
 import { Grid,Box,Typography,Select,MenuItem} from '@mui/material';
 
-function DropDownField({ label,name, value ,options,onChange}) {
+function DropDownField({ label,name, value ,options,onChange,para_label}) {
     return (
       <Grid item xs={12} sm={6} >
         <Box >
@@ -20,6 +20,7 @@ function DropDownField({ label,name, value ,options,onChange}) {
                   </MenuItem>
                 ))}
                 </Select>
+                <Typography sx={{color:'blue' , mb:2,ml:3,fontSize:14}}>{para_label}</Typography>
         </Box>
       </Grid>
     );
