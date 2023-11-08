@@ -20,7 +20,7 @@ function PostNewBattery() {
   const [warranty_def, setWarranty_def] = useState('no');
   const [vechicel_def, setVechicle_def] = useState('None');
   const [status_def, setStatus_def] = useState('None');
-  const [preform_def, setPerform_def] = useState('None');
+  const [preform_def, setPerform_def] = useState(0);
   const [batteryId, setBatteryId] = useState('');
   const [batterySelected, setBatterySelected] = useState('');
   const [batteryDetails, setBatteryDetails] = useState([]);
@@ -43,10 +43,12 @@ function PostNewBattery() {
 
   const performanceOptions = [
     { value: preform_def, label: preform_def },
-    { label: 'Average', value: 'average' },
-    { label: 'Good', value: 'good' },
-    { label: 'Excellent', value: 'excellent' },
-    { label: 'Needs Improvement', value: 'needs Improvement' },
+    { label: 'Average', value:3 },
+    { label: 'Good', value: 4 },
+    { label: 'Excellent', value: 5 },
+    { label: 'Needs Improvement', value: 2 },
+    { label: 'bad', value: 1 },
+    { label: 'Select rating', value:0 },
   ];
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
 
@@ -110,7 +112,7 @@ function PostNewBattery() {
     assignedDate: "2023-09-09",
     attendedDate: "2023-07-12",
     batteryId: "",
-    customerRating: "",
+    customerRating:0,
     noteToServiceEngineer: "",
     openDate: currentDate,
     otpId: 5,
@@ -195,7 +197,7 @@ function PostNewBattery() {
   const onSubmit = async(e) => {
     e.preventDefault();
     // formData contains the form values
-
+    formData.customerRating=parseInt(formData.customerRating)
     try{
     const response =await fetch(`${SERVER_URL}user/add-service-request`, {
       method: 'POST',
@@ -289,19 +291,19 @@ function PostNewBattery() {
                 <FormField label="Battery Current" name="batteryCurrent" placeholder='Enter Current' onChange={handleInputChange} value={batterySelected.batteryCurrent} />
                 <FormField label="Battery Voltage" name="batteryVoltage" placeholder='Enter Voltage' onChange={handleInputChange} value={batterySelected.batteryVoltage} />
                 <EditFormField label="Description" name="shortDescription" placeholder='Enter Short Description' value={formData.shortDescription} onChange={handleInputChange} />
-                <EditFormField label="noteToServiceEngineer" name="Note To Service Engineer" placeholder='Enter note to service engineer' value={formData.noteToServiceEngineer} onChange={handleInputChange} />
+                <EditFormField label="noteToServiceEngineer" name="noteToServiceEngineer" placeholder='Enter note to service engineer' value={formData.noteToServiceEngineer} onChange={handleInputChange} />
 
                 {/* Row 4 */}
                 {/* <DropDownField label="Vehicle Type" name="vehicleType" onChange={handleVechicleChange} value={vechicel_def} options={vechicleType} /> */}
 
                 <EditFormField label="Service Location" name="serviceLocation" placeholder='eg:Hyderabad' onChange={handleInputChange} value={batterySelected.serviceLocation} />
-                <EditFormField label="Service Latitude" name="service_location" placeholder='eg:36.2' onChange={handleInputChange} value={batterySelected.serviceLatitude} />
-                <EditFormField label="Service Longitude" name="service_location" placeholder='eg:15.5' onChange={handleInputChange} value={batterySelected.serviceLongitude} />
+                <EditFormField label="Service Latitude" name="serviceLatitude" placeholder='eg:36.2' onChange={handleInputChange} value={batterySelected.serviceLatitude} />
+                <EditFormField label="Service Longitude" name="serviceLongitude" placeholder='eg:15.5' onChange={handleInputChange} value={batterySelected.serviceLongitude} />
 
                 {/* Row 5 */}
                 {/* <EditFormField label="Date Opened" name="openDate" placeholder='YYYY-MM-DD' onChange={handleInputChange} value={formData.openDate}  /> */}
-                <EditFormField label="ServiceEngineer ID" name="serviceengineerId" placeholder='abcXX23' onChange={handleInputChange} value={batterySelected.serviceEngineerId} />
-                <EditFormField label="ServiceEngineer Notes" name="noteToServiceEngineer" placeholder='Enter Note to Service Engineer' onChange={handleInputChange} value={formData.serviceEngineerNotes} />
+                <EditFormField label="ServiceEngineer ID" name="serviceEngineerId" placeholder='abcXX23' onChange={handleInputChange} value={batterySelected.serviceEngineerId} />
+                <EditFormField label="ServiceEngineer Notes" name="serviceEngineerNotes" placeholder='Enter Note to Service Engineer' onChange={handleInputChange} value={formData.serviceEngineerNotes} />
                 <DropDownField label="Customer Rating" name="performance" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />
 
                 {/* Row 6 */}

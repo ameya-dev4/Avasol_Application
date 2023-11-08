@@ -12,6 +12,7 @@ import ConfirmationModal from './Confirmation';
 import ErrorBoundary from './ErrorHandlingPage';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import NoEditFormField from './Update/InputFormField';
 
 
 const authToken = GetToken();
@@ -213,6 +214,8 @@ function EditProfile() {
         {/* Row 2 */}
         <EditInputFormField label="Contact Number#" name="contactNumber" onChange={handleInputChange} value={user_Details.contactNumber}/>
         <EditInputFormField label="Email Id" name="emailId" onChange={handleInputChange}  value={user_Details.emailId}/>
+        <EditInputFormField label="Username" name="username" onChange={handleInputChange}  value={user_Details.username}/>
+        <NoEditFormField label="Current Password"  name="currentPassword" onChange={handleInputChange}  value={parse_password} type='password'/>
         
         {/* Row 3 */}
         <Grid item xs={12} sm={12}>
@@ -228,19 +231,19 @@ function EditProfile() {
 
         
         {/* Row 4 */}
-        <EditInputFormField label="District" name="district" onChange={handleSelectChange}  value={user_Details.district}/>
+        <EditInputFormField label="Address" name="address" onChange={handleSelectChange}  value={user_Details.address}/>
+        <EditInputFormField label="City" name="city" onChange={handleSelectChange}  value={user_Details.city}/>
         <EditInputFormField label="Mandal" name="mandal"  onChange={handleInputChange} value={user_Details.mandal} />
-        
+        <EditInputFormField label="District" name="district" onChange={handleSelectChange}  value={user_Details.district}/>
+       
         {/* Row 5 */}
+        <EditInputFormField label="State" name="state"  onChange={handleInputChange} value={user_Details.state} />
+        <EditInputFormField label="Pincode" name="pincode" onChange={handleInputChange} value={user_Details.pincode}/>
         <EditInputFormField label="Latitude" name="latitude" onChange={handleInputChange} value={user_Details.latitude}/>
         <EditInputFormField label="Longitude" name="longitude" onChange={handleInputChange}  value={user_Details.longitude}/>
-
-        {/* Row 6 */}
-        <EditInputFormField label="Pincode" name="pincode" onChange={handleInputChange} value={user_Details.pincode}/>
-        <EditInputFormField label="Current Password" name="currentPassword" onChange={handleInputChange}  value={parse_password}/>
-       
+ 
         {/* Row 7 */}
-        <EditInputFormField label="New Password" name="newPassword" onChange={handleInputChange} value={user_Details.newpassword}/>
+        <EditInputFormField label="New Password" name="password" onChange={handleInputChange} value={user_Details.password}/>
         <EditInputFormField label="Re-Enter Password" name="re-enterPassword" onChange={handleInputChange} value={user_Details.re_enterPassword}/>
       
         <Grid item xs={2}>

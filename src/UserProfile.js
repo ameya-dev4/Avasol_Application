@@ -161,6 +161,8 @@ function UserProfile() {
         {/* Row 2 */}
         <FormField label="Contact Number#" name="contactNumber" onChange={handleInputChange} value={user_Details.contactNumber}/>
         <FormField label="Email Id" name="emailId" onChange={handleInputChange}  value={user_Details.emailId}/>
+        <FormField label="Username" name="username" onChange={handleInputChange}  value={user_Details.username}/>
+        <FormField label="Current Password"  name="currentPassword" onChange={handleInputChange}  value={parse_password} type='password'/>
         
         <Grid item xs={12} sm={12}>
             <Box>
@@ -175,17 +177,18 @@ function UserProfile() {
 
         
         {/* Row 4 */}
-        <FormField label="District" name="district" onChange={handleSelectChange}  value={user_Details.district}/>
+        <FormField label="Address" name="address" onChange={handleSelectChange}  value={user_Details.address}/>
+        <FormField label="City" name="city" onChange={handleSelectChange}  value={user_Details.city}/>
         <FormField label="Mandal" name="mandal"  onChange={handleInputChange} value={user_Details.mandal} />
-        
+        <FormField label="District" name="district" onChange={handleSelectChange}  value={user_Details.district}/>
+       
         {/* Row 5 */}
+        <FormField label="State" name="state"  onChange={handleInputChange} value={user_Details.state} />
+        <FormField label="Pincode" name="pincode" onChange={handleInputChange} value={user_Details.pincode}/>
         <FormField label="Latitude" name="latitude" onChange={handleInputChange} value={user_Details.latitude}/>
         <FormField label="Longitude" name="longitude" onChange={handleInputChange}  value={user_Details.longitude}/>
 
         {/* Row 6 */}
-        <FormField label="Pincode" name="pincode" onChange={handleInputChange} value={user_Details.pincode}/>
-        <FormField label="Current Password"  name="currentPassword" onChange={handleInputChange}  value={parse_password} type='password'/>
-        
         
         <Grid item xs={2}>
               <Button

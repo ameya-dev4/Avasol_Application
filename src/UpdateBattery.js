@@ -14,6 +14,7 @@ import SERVER_URL from './Server/Server';
 import ConfirmationModal from './Confirmation';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import DeleteConfirm from './DeleteConfirm';
 
 const authToken = GetToken();
 
@@ -35,6 +36,7 @@ function UpdateBattery() {
 
   const [status_def, setSatus_def]=useState('')
   const [warranty_def,setWarranty_def]=useState('No')
+  const [vechicel_def,setVechicle_def]=useState(0)
 
   const warrantyType = [{value:warranty_def, label :warranty_def},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
   const statusOptions = [
@@ -49,9 +51,10 @@ function UpdateBattery() {
   useEffect(()=>{
     setSatus_def(formData.status || 'select Status')
     setWarranty_def(formData.warranty || 'select Warranty')
+    setVechicle_def(formData.vehicleType)
   })
 
-  console.log("formdata",formData)
+  console.log("formdata",typeof(formData.vehicleType))
   // const fdata=JSON.stringify(formData)
   // const parse_formdata=JSON.parse(fdata)
   // console.log("parse",parse_formdata)
@@ -88,14 +91,21 @@ function UpdateBattery() {
       [name]: value,
     }));
   };
+  const handleVechicleChange= (e) => {
+    setVechicle_def(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
 
   //View Batteries
 
   const [latestRequests, setLatestRequests] = useState([]);
   const[displayDetails , setDisplayDetails] = useState(false);
-
-
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   useEffect(() => {
     // Function to make the GET request
     async function getLatestRequests() {
@@ -122,6 +132,7 @@ function UpdateBattery() {
 
 
             const handleDelete = (input_value) =>{
+              setIsDeleteConfirmOpen(false)
               let batteryInfo;
               let batteryId = input_value;
               for(let i=0; i<latestRequests.length ; i++){
@@ -133,6 +144,8 @@ function UpdateBattery() {
 
               }
 
+            batteryInfo.vehicleType = parseInt(batteryInfo.vehicleType);
+            batteryInfo.warrantyYears = parseInt(batteryInfo.warrantyYears);
             fetch(`${SERVER_URL}user/delete-battery`,{
               method : "DELETE",
               headers : {
@@ -181,6 +194,12 @@ function UpdateBattery() {
     e.preventDefault();
     // formData contains the form values
     formData.purchaseDate=formData.purchaseDate.slice(0,10)
+    //below 2 lines are converting string type to integer type:
+    formData.vehicleType = parseInt(formData.vehicleType);
+    formData.warrantyYears = parseInt(formData.warrantyYears);
+    formData.dealerId = parseInt(formData.dealerId);
+    formData.principalId = parseInt(formData.principalId);
+
     console.log(formData)
     try{
     const response= await fetch(`${SERVER_URL}user/update-battery`,{
@@ -192,6 +211,7 @@ function UpdateBattery() {
       body:JSON.stringify(formData)
     })
     if (response.ok){
+      
       const result =await response.json()
       toast.success(`${formData.batteryName} updated Successfully...!`, {
         position: toast.POSITION.TOP_CENTER,
@@ -199,10 +219,14 @@ function UpdateBattery() {
       });
       setTimeout(() => {
         navigate('/userMyBatteries')
+        setIsConfirmationOpen(false);
       },4000);
       // alert('Details are Successfully Updated');
       // navigate(-1);
+    }else{
+      toast.error('Something went wrong! please Try again...')
     }
+    
   }catch{
     toast.error('Something went wrong! please Try again...')
   }
@@ -222,6 +246,23 @@ function UpdateBattery() {
      navigate('/userMyBatteries')
      setIsConfirmationOpen(false);
    };
+
+
+
+   const deleteCancle = () => {
+     setIsDeleteConfirmOpen(true);
+   };
+ 
+   const deleteCloseConfirmation = () => {
+     setIsDeleteConfirmOpen(false);
+   };
+ 
+  //  const deleteConfirm = () => {
+  //    navigate('/userMyBatteries')
+  //    setIsConfirmationOpen(false);
+  //  };
+
+   
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -264,10 +305,10 @@ function UpdateBattery() {
         <DropDownField label="Warranty" name="warranty" onChange={handlewarrantyChange}  value={warranty_def} options={warrantyType}/>
         
         <EditFormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>
-        <EditFormField label="Vechicle Type" name="vechicleType" onChange={handleInputChange} value={formData.vechicleType}/>
+        <EditFormField label="Vechicle Type" name="vehicleType" onChange={handleVechicleChange} value={formData.vehicleType}/>
 
         {/* Row 6 */}
-        <EditFormField label="Dealer ID" name="dealerId" onChange={handleInputChange} value={formData.delearId}/>
+        <EditFormField label="Dealer ID" name="dealerId" onChange={handleInputChange} value={formData.dealerId}/>
         <EditFormField label="Principal ID" name="principalId" onChange={handleInputChange} value={formData.principalId}/>
 
         {/* Row 7 */}
@@ -276,7 +317,6 @@ function UpdateBattery() {
 
         {/* Row 8 */}
         <DropDownField label="Status" name="status" onChange={handleStatusChange}   value={Number(status_def)} options={statusOptions}/>
-        {/* options={Rating} */}
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>
         <Grid item xs={3}>
@@ -311,7 +351,7 @@ function UpdateBattery() {
                 fullWidth
                 color='error'
                 sx={{ mt: 5,mb:2  }}
-                onClick={() => handleDelete(formData.batteryId)}
+                onClick={deleteCancle}
               >
                 Delete Battery
               </Button>
@@ -323,6 +363,14 @@ function UpdateBattery() {
           open={isConfirmationOpen}
           onClose={handleCloseConfirmation}
           onConfirm={handleConfirm}
+          
+        />
+
+        {/* delete confirmation */}
+        <DeleteConfirm
+          open={isDeleteConfirmOpen}
+          onClose={deleteCloseConfirmation}
+          onConfirm={()=>handleDelete(formData.batteryId)}
           
         />
 

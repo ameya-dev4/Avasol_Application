@@ -14,6 +14,7 @@ import TicketPage from './TicketPage';
 import SERVER_URL from './Server/Server';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import DeleteConfirm from './DeleteConfirm';
 
 
 const authToken = GetToken();
@@ -52,6 +53,7 @@ function Table_Batteries({array_Details}){
   //   setEnhancedArray(result);
   // });
   // },[])
+        
   
    const Row = ({ record }) => {
         const [showDetails, setShowDetails] = useState(false);
@@ -67,7 +69,7 @@ function Table_Batteries({array_Details}){
         };
         
         const handleDelete = (input_value) =>{
-          
+            setIsDeleteConfirmOpen(false)
             let batteryInfo;
             let batteryId = input_value;
             for(let i=0; i<array_Details.length ; i++){
@@ -125,7 +127,17 @@ function Table_Batteries({array_Details}){
             return formattedDate;
         
           }
+
         
+          const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+        const deleteCancle = () => {
+          setIsDeleteConfirmOpen(true);
+        };
+      
+        const deleteCloseConfirmation = () => {
+          setIsDeleteConfirmOpen(false);
+        };
+
       
         return (
           <>
@@ -136,9 +148,16 @@ function Table_Batteries({array_Details}){
             <TableCell style={{fontSize:'18px'}}>{record.model}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.warranty}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
-            <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleDelete(record.batteryId)} > Delete</Link></TableCell>
+            <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={deleteCancle} > Delete</Link></TableCell>
 
             </TableRow>
+          
+           {/* delete confirmation */}
+           <DeleteConfirm
+          open={isDeleteConfirmOpen}
+          onClose={deleteCloseConfirmation}
+          onConfirm={()=>handleDelete(record.batteryId)}
+          />
                     
         </>);
     };
@@ -166,6 +185,10 @@ function Table_Batteries({array_Details}){
 
         {/* Toast Notification */}
         <ToastContainer/>
+        
+          
+        />
+      
       </>
     );  
 

@@ -222,8 +222,7 @@ function BatteryAdd() {
   const authToken = GetToken();
   const [warranty_def, setWarranty_def]=useState('no')
   const [vechicel_def, setVechicle_def]=useState('None')
-  const [principal_def, setPrincipal_def]=useState('None')
-
+  const [principal_def, setPrincipal_def]=useState('')
 
   const vechicleType = [{value:vechicel_def, label :'Select Vechicle Type  '},{value:'2', label:'Two'},{label:'Three',value:'3'}]
   const warrantyType = [{value:warranty_def, label :'Select Warranty'},{value:'yes', label :'Yes'},{label:'No',value:'no'}]
@@ -268,9 +267,10 @@ function BatteryAdd() {
   username:parse_username,
   updatedBy:"",
   warranty:"",
-  dealerId:"",
+  dealerId:0,
   batteryName:"",
   warrantyYears:Number(6),
+  principalId:0
 
 
 
@@ -374,6 +374,7 @@ function handleLabel(){
 }
    
 
+
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
       <Header OpenSidebar={OpenSidebar}/>
@@ -420,23 +421,21 @@ function handleLabel(){
           <>
             <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears} placeholder='Enter Warranty Years' para_label={handleLabel()}/>
             <DropDownField label="Principal Id" name="principalId" onChange={handlePrincipalChange}  placeholder='Enter Principal ID' options={principalType} value={principal_def}/>
-            <FormField label="Dealer Id" name="DealerId" onChange={handleInputChange} placeholder='Enter Dealer ID' value={formData.dealerId}/>
+            <FormField label="Dealer Id" name="dealerId" onChange={handleInputChange} placeholder='Enter Dealer ID' value={formData.dealerId}/>
             {/* <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears} placeholder='Enter Warranty Years'/> */}
           </>
             
         )}
 
-        {warranty_def==='no' && (
+      {warranty_def==='no' && (
           <>
             <NoEditable label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears} placeholder='Enter Warranty Years'/>
-            <NoEditable label="Principal Id" name="principalId" onChange={handlePrincipalChange}  placeholder='Enter Principal ID' options={principalType} value={principal_def}/>
-            {/* <NoEditable label="Dealer Id" name="DealerId" onChange={handleInputChange} placeholder='Enter Dealer ID' value={formData.dealerId}/> */}
+            <NoEditable label="Principal Id" name="principalId" onChange={handlePrincipalChange}  placeholder='Enter Principal ID' options={principalType} value={Number(principal_def)}/>
+            <NoEditable label="Dealer Id" name="dealerId" onChange={handleInputChange} placeholder='Enter Dealer ID' value={Number(formData.dealerId)}/>
 
           </>
             
-        )}
-
-        {/* <NoEditable label="Status" name="status" onChange={handleInputChange}   value={formData.status}/> */}
+        )} 
         
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>
@@ -475,7 +474,6 @@ function handleLabel(){
         
       />
 
-      
       
 
         </Grid>
