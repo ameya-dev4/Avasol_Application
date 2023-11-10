@@ -96,7 +96,6 @@ import SERVER_URL from "./Server/Server";
 
 const userName = localStorage.getItem('username');
 console.log(userName);
-const url = `${SERVER_URL}se/latest-service-requests`
 
 
 function SE_MyDashboard(){
@@ -113,7 +112,7 @@ function SE_MyDashboard(){
   }
   useEffect (()=> {
     async function fetchDetails(){
-        const response = await fetch(url,{
+        const response = await fetch(`${SERVER_URL}se/latest-service-requests`,{
             method : 'GET',
             headers : {
                 'Authorization' : `Bearer ${authToken}`,

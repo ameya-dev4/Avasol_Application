@@ -663,13 +663,13 @@ function UpdateLatestServReq() {
                 {/* Row 7 */}
                 {/* <FormField label="Last Status Updated" name="status" onChange={handleInputChange} value={formData.status} /> */}
 
-                <FormField label="Visit Amount" name="visitAmount" onChange={handleInputChange} value={formData.amount} />
+                <FormField label="Visit Amount" name="visit_amount" onChange={handleInputChange} value={formData.visit_amount} />
                 <EditFormField label="Visit Amount Paid Ref" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid} />
 
                 <FormField label="Service Date" name="targetDate" onChange={handleInputChange} value={formData.targetDate ? formData.targetDate.slice(0, 10) : ''} />
-                <FormField label="ServiceEngineer Notes" name="serviceEnggNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes} />
+                <FormField label="ServiceEngineer Notes" name="serviceEngineerNotes" onChange={handleInputChange} value={formData.serviceEngineerNotes} />
 
-                <FormField label="Service Amount" name="serviceAmount" para_label={handlepara()} onChange={handleInputChange} value={formData.serviceAmount?formData.serviceAmount:'Not yet decided'} />
+                <FormField label="Service Amount" name="service_amount" para_label={handlepara()} onChange={handleInputChange} value={formData.service_amount?formData.service_amount:'Not yet decided'} />
                 <EditFormField label="Service Amount Paid Ref" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid} />
                 <DropDownField label="Status" name="status" onChange={handleStatusChange} value={status_def} options={statusOptions} />
                 <DropDownField label="Customer Rating" name="customerRating" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />

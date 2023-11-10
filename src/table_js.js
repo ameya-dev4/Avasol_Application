@@ -464,7 +464,7 @@ function DisplayBattery(){
         };
         const handleTicketClick = ({record}) => {
           console.log(record)
-          localStorage.setItem('display_details',record);
+          localStorage.setItem('display_details',JSON.stringify(record));
           navigate('/update_latestServRequest',{state:{shortDescription:record}});
         };
         
@@ -474,7 +474,8 @@ function DisplayBattery(){
             for(let i=0; i<latestRequests.length ; i++){
               if(batteryId === latestRequests[i].batteryId){
                  batteryInfo = latestRequests[i]
-                latestRequests.pop(batteryInfo);
+                // latestRequests.pop(batteryInfo);
+                latestRequests.splice(i, 1);
               }
         
             }
@@ -516,9 +517,9 @@ function DisplayBattery(){
               year: "numeric",
               month: "long",
               day: "numeric",
-              hour: "numeric",
-              minute: "numeric",
-              second: "numeric",
+              // hour: "numeric",
+              // minute: "numeric",
+              // second: "numeric",
               // timeZoneName: "short",
             });
             return formattedDate;
@@ -532,13 +533,13 @@ function DisplayBattery(){
           
            <TableRow >
             <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.shortDescription}</Link></TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.openDate.slice(0,10)}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.assignedDate.slice(0,10)}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>service_location</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.openDate?record.openDate.slice(0,10):'NA'}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.assignedDate?record.assignedDate.slice(0,10):'NA'}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.serviceLocation}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerId}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.serviceEngineerNotes}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>N/A</TableCell>
-            <TableCell style={{fontSize:'18px'}}>target serviceDate</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.seContactNumb}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.targetDate}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.status}</TableCell>
             {/* <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleDelete(record.batteryId)} > Delete</Link></TableCell> */}
 

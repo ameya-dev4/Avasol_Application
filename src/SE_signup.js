@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import SERVER_URL from './Server/Server';
 import { useNavigate } from 'react-router-dom';
+import { Label } from 'recharts';
+
 
 
 
@@ -45,21 +47,29 @@ export default function SE_signUp() {
     } = useForm(
       {
         defaultValues:{
+          address1:"",
+          address2:"",
           approvedBy: "",
             approvedDate: "",
             bankAccountNo: "",
             bankName: "",
             branchName: "",
+            contactNumber:"",
+            district:"",
             emailId: "",
             firstName: "",
+            govtPhotoId:"",
             ifsc: "",
             lastName: "",
             password: "",
             performance: "",
+            photoFile:"",
+            postalCode:"",
             serviceArea: "",
+            state:"",
+            status:"",
             trainingDetails: "",
             username:"",
-            contactNumber:"",
         }
       }
     );
@@ -90,9 +100,14 @@ export default function SE_signUp() {
     */
   };
 
+  const [agree,setAgree]=useState(false)
+  const checkboxHandler=()=>{
+      setAgree(!agree)
+  }
+
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="md">
         <CssBaseline />
         <Box
           sx={{
@@ -143,7 +158,7 @@ export default function SE_signUp() {
 
                 />
               </Grid>
-              <Grid item xs={12} >
+              <Grid item xs={12} sm={6} >
                 <TextField
                  {...register('username', {
                     required: 'username is required',
@@ -161,24 +176,24 @@ export default function SE_signUp() {
               </Grid>
 
 
-              <Grid item xs={12} >
+              <Grid item xs={12} sm={6} >
                 <TextField
-                 {...register('pincode', {
+                 {...register('postalCode', {
                     required: 'pincode Name is required',
                   })}
                   required
                   fullWidth
-                  name="pincode"
+                  name="postalCode"
                   label="Pincode"
                   type="text"
-                  id="pincode"
-                  autoComplete="pincode"
-                  error = {!!errors.pincode}
-                  helperText = {errors.pincode?.message}
+                  id="postalCode"
+                  autoComplete="postalCode"
+                  error = {!!errors.postalCode}
+                  helperText = {errors.postalCode?.message}
                 />
               </Grid>
               
-              <Grid item xs={12} >
+              <Grid item xs={12} sm={6} >
                 <TextField
                  {...register('contactNumber', {
                     required: 'Contact Number is required',
@@ -195,7 +210,7 @@ export default function SE_signUp() {
                 />
               </Grid>
 
-              <Grid item xs={12} >
+              <Grid item xs={12} sm={6} >
                 <TextField
                  {...register('emailId', {
                     required: 'Email Id is required',
@@ -211,7 +226,7 @@ export default function SE_signUp() {
                   helperText = {errors.emailId?.message}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                  {...register('password', {
                     required: 'password is required',
@@ -227,10 +242,189 @@ export default function SE_signUp() {
                   helperText = {errors.password?.message}
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                 {...register('state', {
+                    required: 'password is required',
+                  })}
+                  required
+                  fullWidth
+                  name="state"
+                  label="State"
+                  type="text"
+                  id="state"
+                  autoComplete="state"
+                  error = {!!errors.state}
+                  helperText = {errors.state?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                 {...register('district', {
+                    required: 'district is required',
+                  })}
+                  required
+                  fullWidth
+                  name="district"
+                  label="District"
+                  type="text"
+                  id="district"
+                  autoComplete="district"
+                  error = {!!errors.district}
+                  helperText = {errors.district?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                 {...register('address1', {
+                    required: 'address1 is required',
+                  })}
+                  required
+                  fullWidth
+                  name="address1"
+                  label="Address1"
+                  type="text"
+                  id="address1"
+                  autoComplete="address1"
+                  error = {!!errors.address1}
+                  helperText = {errors.address1?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                 {...register('address2', {
+                    required: 'address2 is required',
+                  })}
+                  required
+                  fullWidth
+                  name="address2"
+                  label="Address2"
+                  type="text"
+                  id="address2"
+                  autoComplete="address2"
+                  error = {!!errors.address2}
+                  helperText = {errors.address2?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                 {...register('serviceArea', {
+                    required: 'serviceArea is required',
+                  })}
+                  required
+                  fullWidth
+                  name="serviceArea"
+                  label="Service Area"
+                  type="text"
+                  id="serviceArea"
+                  autoComplete="serviceArea"
+                  error = {!!errors.serviceArea}
+                  helperText = {errors.serviceArea?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <label className='mb-3'>Upload Photo</label>
+                <TextField
+                 {...register('photoFile', {
+                    required: 'photoFile is required',
+                  })}
+                  required
+                  fullWidth
+                  name="photoFile"
+                  // label="Upload Photo"
+                  type="file"
+                  id="photoFile"
+                  autoComplete="photoFile"
+                  error = {!!errors.photoFile}
+                  helperText = {errors.photoFile?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <label className='mb-3'>Govt Photo ID</label>
+                <TextField
+                 {...register('govtPhotoId', {
+                    required: 'govtPhotoId is required',
+                  })}
+                  required
+                  fullWidth
+                  name="govtPhotoId"
+                  // label="GovtPhoto ID"
+                  type="file"
+                  id="govtPhotoId"
+                  autoComplete="govtPhotoId"
+                  error = {!!errors.govtPhotoId}
+                  helperText = {errors.govtPhotoId?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                 {...register('bankName', {
+                    required: 'bankName is required',
+                  })}
+                  required
+                  fullWidth
+                  name="Bank Name"
+                  label="bankName"
+                  type="text"
+                  id="bankName"
+                  autoComplete="bankName"
+                  error = {!!errors.bankName}
+                  helperText = {errors.bankName?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                 {...register('branchName', {
+                    required: 'branchName is required',
+                  })}
+                  required
+                  fullWidth
+                  name="branchName"
+                  label="Branch Name"
+                  type="text"
+                  id="branchName"
+                  autoComplete="branchName"
+                  error = {!!errors.branchName}
+                  helperText = {errors.branchName?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                 {...register('ifsc', {
+                    required: 'ifsc is required',
+                  })}
+                  required
+                  fullWidth
+                  name="ifsc"
+                  label="IFSC Code "
+                  type="text"
+                  id="ifsc"
+                  autoComplete="ifsc"
+                  error = {!!errors.ifsc}
+                  helperText = {errors.ifsc?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                 {...register('bankAccountNo', {
+                    required: 'bankAccountNo is required',
+                  })}
+                  required
+                  fullWidth
+                  name="bankAccountNo"
+                  label="Bank AccountNo"
+                  type="text"
+                  id="bankAccountNo"
+                  autoComplete="bankAccountNo"
+                  error = {!!errors.bankAccountNo}
+                  helperText = {errors.bankAccountNo?.message}
+                />
+              </Grid>
+
               
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={<Checkbox value="allowExtraEmails" color="primary"  onChange={checkboxHandler} />}
                   label="I Agree to the terms and conditions."
                 />
               </Grid>
@@ -240,6 +434,7 @@ export default function SE_signUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!agree}
             >
               Sign Up
             </Button>

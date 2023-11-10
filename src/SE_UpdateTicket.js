@@ -354,8 +354,8 @@ const statusOptions = [
         <FormField  label="Battery Number" name="batteryId"  value={formData.batteryId} onChange={handleInputChange}  />
 
         {/* Row 2 */}
-        <FormField label="Battery Make" name="batteryMake" onChange={handleInputChange} value={formData.batteryMake}/>
-        <FormField label="Battery Model" name="batteryModel" onChange={handleInputChange}  value={formData.batteryModel}/>
+        <FormField label="Battery Make" name="batterymake" onChange={handleInputChange} value={formData.batterymake}/>
+        <FormField label="Battery Model" name="batterymodel" onChange={handleInputChange}  value={formData.batterymodel}/>
 
         {/* Row 3 */}
         <FormField label="Battery Voltage" name="batteryVoltage" onChange={handleInputChange} value={formData.batteryVoltage}/>
@@ -375,7 +375,7 @@ const statusOptions = [
         <FormField label="Customer contact" name="contactNumber" onChange={handleInputChange}  value={formData.batteryCurrent}/>
         
         {/* Row 7 */}
-        <FormField label="Service Location" name="serviceArea" onChange={handleInputChange} value={formData.serviceArea}/>
+        <FormField label="Service Location" name="serviceLocation" onChange={handleInputChange} value={formData.serviceLocation}/>
         <Typography sx={{mt:5,ml:10,mb:3}}><LocationOnIcon  style={{ fontSize: 60 }} /><Link sx={{fontSize : '24px' , cursor:'pointer'}}  href={`${`https://google.com/maps?q=${34},${45}`}`} target='_blank'>Location</Link></Typography>
        
        

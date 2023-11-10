@@ -197,7 +197,7 @@ function AdminMyProfile() {
                 size="large"
                 fullWidth
                 sx={{ mt: 7,mb:2,ml:40}}
-                onClick={() => navigate(-1)}
+                onClick={() => navigate('/admin_mydash')}
               >
                close
               </Button>

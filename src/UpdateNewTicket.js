@@ -237,8 +237,8 @@ console.log("ser",serviceEnggID)
        <FormField  label="Battery Id" name="batteryId"  value={formData.batteryId} onChange={handleInputChange}  />
 
        {/* Row 2 */}
-       <FormField label="Battery Make" name="batteryMake" onChange={handleInputChange} value={formData.batteryMake}/>
-       <FormField label="Battery Model" name="batteryModel" onChange={handleInputChange}  value={formData.batteryModel}/>
+       <FormField label="Battery Make" name="batterymake" onChange={handleInputChange} value={formData.batterymake}/>
+       <FormField label="Battery Model" name="batterymodel" onChange={handleInputChange}  value={formData.batterymodel}/>
 
        {/* Row 3 */}
        <FormField label="Date Opened" name="date" onChange={handleInputChange} value={formData.openDate}/>
