@@ -70,10 +70,12 @@ function UserProfile() {
 
   const imageUpload=(e)=>{
     const file=e.target.files[0]
+    console.log("file",file)
     if(file){
       const reader = new FileReader()
       reader.onloadend=()=>{
         setImageSelected(reader.result)
+        
       }
       reader.readAsDataURL(file)
       setRemove_bool(!remove_bool)

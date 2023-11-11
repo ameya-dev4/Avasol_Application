@@ -344,6 +344,10 @@ function UpdateLatestServReq() {
   console.log(batteryDetails);
   console.log('***********');
 
+  const [batterySelected, setBatterySelected] = useState('');
+  const [batteryDetailsAll, setBatteryDetailsAll] = useState([]);
+  const [batteryList, setBatteryList] = useState([]);
+  const [batteryId,setBatteryId] = useState('')
   const [formData, setFormData] = useState(
     batteryDetails || {} 
   );
@@ -376,14 +380,21 @@ function UpdateLatestServReq() {
     { label: 'No', value: false },
   ];
 
+ 
   const statusOptions = [
-    { value: status_def, label: status_def },
+    // { value: status_def, label: status_def },
     { label: 'New', value: 1 },
     { label: 'Active', value: 3 },
     { label: 'Inactive', value: 4 },
     { label: 'Hold', value: 9 },
     { label: 'Deleted', value: 6 },
   ];
+  const status_values=JSON.stringify(statusOptions)
+  console.log("status",status_values)
+  const parse_statusOptions=JSON.parse(status_values)
+  console.log("parse",parse_statusOptions)
+
+  
 
   const performanceOptions = [
     { value: preform_def, label: preform_def },
@@ -445,6 +456,27 @@ function UpdateLatestServReq() {
     }));
   };
 
+
+  const handleBatteryChange = (e) => {
+    // setBatteryId(e.target.value);
+    // //getting the selected batteryID  details
+    // batteryDetails.map((selectBatteryId) => {
+    //   if (selectBatteryId.batteryId === batteryId) {
+    //     setBatterySelected(selectBatteryId);
+    //     setWarranty_def(selectBatteryId.warranty);
+    //   }
+    // });
+    const selectedBatteryId = e.target.value; // Get the value directly from the event target
+      setBatteryId(selectedBatteryId);
+      //getting the selected batteryID details
+      batteryDetailsAll.forEach((selectBatteryId) => {
+        if (selectBatteryId.batteryId === selectedBatteryId) { // Use the selectedBatteryId variable
+          setBatterySelected(selectBatteryId);
+          setWarranty_def(selectBatteryId.warranty);
+        }
+    });
+  }
+
   const [latestRequests, setLatestRequests] = useState([]);
   const [displayDetails, setDisplayDetails] = useState('');
 
@@ -484,15 +516,17 @@ function UpdateLatestServReq() {
       }
     }
 
-    formData.status = 6;
-    formData.transactionId = 1;
+    const deleteRequest={
+      username:formData.username,
+      requestId:formData.requestId
+    }
     fetch(`${SERVER_URL}user/delete-service-request`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${authToken}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(deleteRequest),
     })
       .then((response) => {
         if (response.ok) {
@@ -609,6 +643,43 @@ function UpdateLatestServReq() {
    }
 
 
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${SERVER_URL}user/get-battery-list`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        if (response.ok) {
+          const result = await response.json();
+          setBatteryDetailsAll(result);
+
+          // Extract battery IDs into the batteryList array
+          const batteryIds = result.map(eachBattery => ({
+            label: eachBattery.batteryId,
+            value: eachBattery.batteryId
+          }));
+          setBatteryList(batteryIds);
+          if (result.length > 0) {
+            setBatterySelected(result[0]);
+            setBatteryId(formData.batteryId);
+          }
+
+        } else {
+          throw new Error('Failed to Get Battery Details...!');
+        }
+
+      } catch (error) {
+        console.log('Error', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
   return (
     <div className="grid-container" style={{ borderBlock: '2px solid black' }}>
       <Header OpenSidebar={OpenSidebar} />
@@ -633,8 +704,23 @@ function UpdateLatestServReq() {
                   </Button>
                 </Grid>
 
-                {/* Row 1 */}
-                <FormField label="Battery ID" name="batteryId" value={formData.batteryId} />
+                
+                {/* <FormField label="Battery ID" name="batteryId" value={formData.batteryId} /> */}
+                {status_def===1?(
+                      batteryList.length > 0 ? (
+                      <DropDownField
+                        name="batteryId"
+                        label='Battery ID'
+                        placeholder="eg:1234"
+                        value={batteryId}
+                        onChange={handleBatteryChange}
+                        options={batteryList}
+                      />
+                    ) : (
+                      <EditFormField label="Battery ID" name="batteryId" placeholder='Enter BatteryID' value="BatteryID's fetching...!" />
+                    )
+                ):<FormField label="Battery ID" name="batteryId" value={formData.batteryId} />}
+                
                 <EditFormField label="Description" name="shortDescription" value={formData.shortDescription} onChange={handleInputChange} />
 
                 {/* Row 2 */}
@@ -659,10 +745,12 @@ function UpdateLatestServReq() {
                 {/* Row 6 */}
                 <DropDownField label="Under Warranty" name="warranty" onChange={handlewarrantyChange} value={warranty_def} options={warrantyType} />
                 <DropDownField label="self Declaration" placeholder="I agree terms & conditions" name="selfDeclaration" onChange={handleDeclareChange} options={Declaration} value={Declare_def} />
-
-                {/* Row 7 */}
-                {/* <FormField label="Last Status Updated" name="status" onChange={handleInputChange} value={formData.status} /> */}
-
+                <FormField label="Status" name="status" onChange={handleStatusChange} value={formData.status} />
+                <EditFormField label="Vehicle Type" name="vehicleType" onChange={handleInputChange} value={formData.vehicleType} />
+              
+              {status_def!==1 && 
+              (
+                <>
                 <FormField label="Visit Amount" name="visit_amount" onChange={handleInputChange} value={formData.visit_amount} />
                 <EditFormField label="Visit Amount Paid Ref" name="visitAmountPaid" onChange={handleInputChange} value={formData.visitAmountPaid} />
 
@@ -671,8 +759,13 @@ function UpdateLatestServReq() {
 
                 <FormField label="Service Amount" name="service_amount" para_label={handlepara()} onChange={handleInputChange} value={formData.service_amount?formData.service_amount:'Not yet decided'} />
                 <EditFormField label="Service Amount Paid Ref" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid} />
-                <DropDownField label="Status" name="status" onChange={handleStatusChange} value={status_def} options={statusOptions} />
                 <DropDownField label="Customer Rating" name="customerRating" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />
+                </>
+              )
+              }
+
+                
+                
               </Grid>
               <Grid container spacing={3} sx={{ p: 3 ,mt:3}}>
                 <Grid item xs={3}>
@@ -706,6 +799,7 @@ function UpdateLatestServReq() {
                     fullWidth
                     color="error"
                     sx={{ mb: 2 }}
+                    disabled={status_def===1?false:true}
                     onClick={() => handleDelete(formData.batteryId)}
                   >
                     Delete Service

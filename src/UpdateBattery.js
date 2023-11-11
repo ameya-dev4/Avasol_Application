@@ -316,7 +316,7 @@ function UpdateBattery() {
         <EditFormField label="Sub-Dealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/> */}
 
         {/* Row 8 */}
-        <DropDownField label="Status" name="status" onChange={handleStatusChange}   value={Number(status_def)} options={statusOptions}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange}   value={status_def} options={statusOptions}/>
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>
         <Grid item xs={3}>

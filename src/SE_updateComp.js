@@ -362,7 +362,8 @@ const statusOptions = [
         if (response.ok) {
           const result = await response.json();
           toast.success('Updated Successfully...!',{
-            position:toast.POSITION.TOP_CENTER
+            position:toast.POSITION.TOP_CENTER,
+            autoClose:3000
           })
           
           setTimeout(() => {
@@ -437,8 +438,8 @@ const statusOptions = [
         <DropDownField label="Status" name="status" onChange={handleStatusChange} options={statusOptions} value={status_def}/>
 
         {/* Row 5 */}
-        <FormField label="Address 1" name="address1" onChange={handleInputChange} value={formData.address}/>
-        <FormField label="Address 2" name="address" onChange={handleInputChange} value={formData.address2}/>
+        <FormField label="Address 1" name="address1" onChange={handleInputChange} value={formData.address1}/>
+        <FormField label="Address 2" name="address2" onChange={handleInputChange} value={formData.address2}/>
 
         {/* Row 6 */}
         <FormField label="Distric" name="district" onChange={handleInputChange} value={formData.district}/>
@@ -446,15 +447,15 @@ const statusOptions = [
 
         {/* Row 7 */}
         <DropDownField label="Performance" name="performance" onChange={handlePerfomChange} options={performanceOptions}  value={preform_def}/>
-        <FormField label="Reference" name="reference" onChange={handleInputChange} value={formData.reference}/>
+        <FormField label="Govt PhotoID" name="govtPhotoId" onChange={handleInputChange} value={formData.govtPhotoId}/>
 
         {/* Row 8 */}
-        <FormField label="Bank Name" name="bankName" onChange={handleInputChange}  value={formData.bankName}/>
-        <FormField label="Branch Name" name="branchName" onChange={handleInputChange} value={formData.branchName}/>
+        <FormField label="Bank Name" name="bankName" onChange={handleInputChange}  value={formData.bankName?formData.bankName:"NA"}/>
+        <FormField label="Branch Name" name="branchName" onChange={handleInputChange} value={formData.branchName?formData.branchName:"NA"}/>
 
         {/*Row 9 */}
         <FormField label="Account Holder Name " name="accountHolderName" onChange={handleInputChange} value={formData.accountHolderName}/>
-        <FormField label="Bank A/C #" name="bankAccount" onChange={handleInputChange} value={formData.bankAccountNo}/>
+        <FormField label="Bank Account No" name="bankAccount" onChange={handleInputChange} value={formData.bankAccountNo}/>
 
         {/* Row 10 */}
         <FormField label="IFSC code" name="ifsc" onChange={handleInputChange} value={formData.ifsc}/>

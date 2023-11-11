@@ -26,10 +26,12 @@ function Table_SE({array_Details}){
         };
         const handleTicketClick = ({record}) => {
           console.log(record)
+          
           localStorage.setItem('display_details',record);
           //navigate('/update-se',{state:{updateArray:record}});
           navigate('/update_se', {state : {updateArray : record}})
         };
+        
         
         
       
@@ -40,8 +42,8 @@ function Table_SE({array_Details}){
             <TableCell style={{fontSize:'18px'}}><Link style={{textDecoration : 'None',cursor:'pointer'}} onClick={() => handleTicketClick({record})} >{record.firstName}</Link></TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.contactNumber}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.emailId}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.GovtId}</TableCell>
-            <TableCell style={{fontSize:'18px'}}>{record.serviceArea}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.govtPhotoId}</TableCell>
+            <TableCell style={{fontSize:'18px'}}>{record.serviceArea?record.serviceArea:"NA"}</TableCell>
             <TableCell style={{fontSize:'18px'}}>{record.trainingDetails}</TableCell>
 
             </TableRow>
