@@ -121,6 +121,7 @@ function UpdateBattery() {
   const [latestRequests, setLatestRequests] = useState([]);
   const[displayDetails , setDisplayDetails] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+  const [principal_def, setPrincipal_def]=useState({})
   useEffect(() => {
     // Function to make the GET request
     async function getLatestRequests() {
