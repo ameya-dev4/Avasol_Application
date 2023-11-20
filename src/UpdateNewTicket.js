@@ -32,9 +32,8 @@ function UpdateNewTickets() {
   const Each_ticket=localStorage.getItem('Ticket_Record')
   const parse_Ticket=JSON.parse(Each_ticket)
   const [formData, setFormData] = useState(parse_Ticket);
-  console.log("fom",formData)
+  console.log("fom",parse_Ticket.status)
   const statusOptions = [
-    { value: status_def, label: status_def },
     { label: 'New', value: 1 },
     { label: 'Assigned', value: 2 },
     { label: 'Active', value: 3 },
@@ -50,8 +49,8 @@ function UpdateNewTickets() {
 
   ];
   useEffect(()=>{
-    setServiceEnggId(formData.serviceEngineerId || 'select Service Engineer');
-    setStatus_def(formData.status || 'select Status');
+    setServiceEnggId(parse_Ticket.serviceEngineerId || 'select Service Engineer');
+    setStatus_def(parse_Ticket.status || 'select Status');
   },[formData])
 
   useEffect(() => {
@@ -68,8 +67,8 @@ function UpdateNewTickets() {
         if (response.ok) {
           const result = await response.json();
           setFormData(result);
-          setServiceEnggId(result.serviceEngineerId || 'select Service Engineer');
-          setStatus_def(result.status || 'select Status');
+          // setServiceEnggId(result.serviceEngineerId || 'select Service Engineer');
+          // setStatus_def(result.status || 'select Status');
           
         }
       }catch{
@@ -88,13 +87,14 @@ function UpdateNewTickets() {
   };
 
   const handleStausChange = (e) => {
-    const { name, value } = e.target;
-    setStatus_def(e.target.value);
+    setStatus_def(e.target.value)
+    const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+  
 
 
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -176,9 +176,10 @@ function UpdateNewTickets() {
     // Create a copy of the form data with all the default values
     try{
     const updatedData = {
-      ...formData,
+      // ...formData,
       status: status_def,
       serviceEngineerId: serviceEnggID,
+      requestId:parse_Ticket.requestId
     };
 
     const response = await fetch(`${SERVER_URL}admin/update-ticket`, {

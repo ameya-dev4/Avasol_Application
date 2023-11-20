@@ -17,7 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function PostNewBattery() {
   const authToken = GetToken();
-  const [warranty_def, setWarranty_def] = useState('no');
+  const [warranty_def, setWarranty_def] = useState('NO');
   const [vechicel_def, setVechicle_def] = useState('None');
   const [status_def, setStatus_def] = useState('None');
   const [preform_def, setPerform_def] = useState(0);
@@ -25,9 +25,50 @@ function PostNewBattery() {
   const [batterySelected, setBatterySelected] = useState('');
   const [batteryDetails, setBatteryDetails] = useState([]);
   const [batteryList, setBatteryList] = useState([]);
-  const [selfDeclaration, setDeclaration] = useState('no');
+  const [selfDeclaration, setDeclaration] = useState(false);
+  const [isDeclared, setIsDeclared] = useState(false)
   const [agree, setAgree] = useState(false);
   const navigate = useNavigate();
+
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Month is zero-based, so add 1
+    const day = currentDate.getDate();
+
+    return `${day}/${month}/${year}`;
+  };
+
+  const currentDate = getCurrentDate();
+  const username = localStorage.getItem('username');
+  const parse_username = JSON.parse(username);
+  const [formData, setFormData] = useState({
+    adminnotes:"",
+    amount: "",
+    assignedBy: "",
+    assignedDate: "2023-09-09",
+    attendedDate: "2023-07-12",
+    batteryId:"",
+    customerRating:0,
+    noteToServiceEngineer: "",
+    openDate: currentDate,
+    otpId: 5,
+    payerId: "",
+    requestId: 0,
+    selfDeclaration:false,
+    serviceEngineerId: "",
+    serviceEngineerNotes: "",
+    shortDescription: "",
+    serviceLatitude: "",
+    serviceLocation: "",
+    serviceLongitude: "",
+    status: 6,
+    transactionId: 1,
+    username: parse_username
+    
+
+  });
+
 
   const vechicleType = [
     { value: vechicel_def, label: 'Select Vehicle Type' },
@@ -35,11 +76,7 @@ function PostNewBattery() {
     { label: 'Three', value: '3' }
   ];
 
-  const warrantyType = [
-    { value: warranty_def, label: 'select warranty' },
-    { value: 'Yes', label: 'Yes' },
-    { label: 'No', value: 'No' }
-  ];
+
 
   const performanceOptions = [
     { value: preform_def, label: preform_def },
@@ -69,88 +106,97 @@ function PostNewBattery() {
         if (response.ok) {
           const result = await response.json();
           setBatteryDetails(result);
-
+  
           // Extract battery IDs into the batteryList array
           const batteryIds = result.map(eachBattery => ({
             label: eachBattery.batteryId,
             value: eachBattery.batteryId
           }));
           setBatteryList(batteryIds);
+  
           if (result.length > 0) {
             setBatterySelected(result[0]);
-            setBatteryId(result[0].batteryId);
           }
-
         } else {
           throw new Error('Failed to Get Battery Details...!');
         }
-
       } catch (error) {
         console.log('Error', error);
       }
     };
+  
     fetchData();
-  }, []);
+  }, [authToken]); // Add authToken as a dependency
+  
+  // Use another useEffect to handle changes in batteryDetails
+  useEffect(() => {
+    if (batteryDetails.length > 0) {
+      setBatteryId(batteryDetails[0].batteryId);
+      setBatterySelected(batteryDetails[0]);
+    }
+  }, [batteryDetails]);
+  
+  
 
-  const getCurrentDate = () => {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1; // Month is zero-based, so add 1
-    const day = currentDate.getDate();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`${SERVER_URL}user/get-battery-list`, {
+  //         method: 'GET',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': `Bearer ${authToken}`
+  //         }
+  //       });
+  //       if (response.ok) {
+  //         const result = await response.json();
+  //         setBatteryDetails(result);
 
-    return `${day}/${month}/${year}`;
-  };
+  //         // Extract battery IDs into the batteryList array
+  //         const batteryIds = result.map(eachBattery => ({
+  //           label: eachBattery.batteryId,
+  //           value: eachBattery.batteryId
+  //         }));
+  //         setBatteryList(batteryIds);
+  //         if  (result.length > 0) {
+  //           setBatterySelected(result[0]);
+  //           setBatteryId(result[0].batteryId);
+  //           handleBatteryChange({ target: { value: result[0].batteryId } });
+            
+  //         }
 
-  const currentDate = getCurrentDate();
+  //       } else {
+  //         throw new Error('Failed to Get Battery Details...!');
+  //       }
 
-  const username = localStorage.getItem('username');
-  const parse_username = JSON.parse(username);
-  const [formData, setFormData] = useState({
-    adminnotes:"",
-    amount: "",
-    assignedBy: "",
-    assignedDate: "2023-09-09",
-    attendedDate: "2023-07-12",
-    batteryId: "",
-    customerRating:0,
-    noteToServiceEngineer: "",
-    openDate: currentDate,
-    otpId: 5,
-    payerId: "",
-    requestId: 0,
-    selfDeclaration: true,
-    serviceEngineerId: "",
-    serviceEngineerNotes: "",
-    shortDescription: "",
-    serviceLatitude: "",
-    serviceLocation: "",
-    serviceLongitude: "",
-    status: 6,
-    transactionId: 1,
-    username: parse_username
-    
+  //     } catch (error) {
+  //       console.log('Error', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  });
-
+  
+ 
+  const warrantyType = [
+    // { value: warranty_def, label: warranty_def },
+    { value: 'YES', label: 'Yes' },
+    { label: 'No', value: 'NO' }
+  ];
 
   const handleBatteryChange = (e) => {
-    // setBatteryId(e.target.value);
-    // //getting the selected batteryID  details
-    // batteryDetails.map((selectBatteryId) => {
-    //   if (selectBatteryId.batteryId === batteryId) {
-    //     setBatterySelected(selectBatteryId);
-    //     setWarranty_def(selectBatteryId.warranty);
-    //   }
-    // });
+    
     const selectedBatteryId = e.target.value; // Get the value directly from the event target
-      setBatteryId(selectedBatteryId);
       //getting the selected batteryID details
       batteryDetails.forEach((selectBatteryId) => {
         if (selectBatteryId.batteryId === selectedBatteryId) { // Use the selectedBatteryId variable
           setBatterySelected(selectBatteryId);
-          setWarranty_def(selectBatteryId.warranty);
+          setWarranty_def(selectBatteryId.warranty.toUpperCase());
         }
+        setBatteryId(selectedBatteryId);
   });
+
+  
 
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -177,12 +223,13 @@ function PostNewBattery() {
   };
 
   const handleWarrentyChange = (e) => {
-    setWarranty_def(e.target.value);
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const { name, value } = e.target;
+  setWarranty_def(value);  // Update the warranty_def state with the new value
+  setFormData((prevData) => ({ 
+    ...prevData,
+    [name]: value,
+  }));
+  
   };
 
   const handlePerformChange = (e) => {
@@ -198,6 +245,8 @@ function PostNewBattery() {
     e.preventDefault();
     // formData contains the form values
     formData.customerRating=parseInt(formData.customerRating)
+    formData.batteryId=batteryId
+    formData.selfDeclaration=selfDeclaration
     try{
     const response =await fetch(`${SERVER_URL}user/add-service-request`, {
       method: 'POST',
@@ -228,9 +277,20 @@ function PostNewBattery() {
 
   const checkboxHandler = () => {
     setAgree(!agree);
-    const declarationValue = agree ? 'no' : 'yes';
-    setDeclaration(declarationValue);
+    
   };
+
+  const selfDeclare=(e)=>{
+    // setIsDeclared(!isDeclared)
+    // const declarationValue = isDeclared ? 'no' : 'yes';
+    setDeclaration(!selfDeclaration);
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+  console.log(selfDeclaration)
 
    // Confirmation Dailog box
    const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -302,20 +362,32 @@ function PostNewBattery() {
 
                 {/* Row 5 */}
                 {/* <EditFormField label="Date Opened" name="openDate" placeholder='YYYY-MM-DD' onChange={handleInputChange} value={formData.openDate}  /> */}
-                <EditFormField label="ServiceEngineer ID" name="serviceEngineerId" placeholder='abcXX23' onChange={handleInputChange} value={batterySelected.serviceEngineerId} />
+                {/* <EditFormField label="ServiceEngineer ID" name="serviceEngineerId" placeholder='abcXX23' onChange={handleInputChange} value={batterySelected.serviceEngineerId} />
                 <EditFormField label="ServiceEngineer Notes" name="serviceEngineerNotes" placeholder='Enter Note to Service Engineer' onChange={handleInputChange} value={formData.serviceEngineerNotes} />
-                <DropDownField label="Customer Rating" name="performance" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />
+                <DropDownField label="Customer Rating" name="performance" onChange={handlePerformChange} value={preform_def} options={performanceOptions} /> */}
 
                 {/* Row 6 */}
-                <DropDownField label="Under Warranty" name="warranty" value={warranty_def} options={warrantyType}   onChange={handleWarrentyChange} />
+                <FormField label="Under Warranty" name="warranty" value={warranty_def} options={warrantyType}   onChange={handleWarrentyChange} />
                 
-                  {warranty_def==='Yes' &&(<EditFormField label="self Declaration"  name='selfDeclaration' value={formData.selfDeclaration} placeholder='Agree the terms & conditions' onChange={handleInputChange} /> )}
+                  {warranty_def==='YES' &&(<Grid item xs={12} className='mx-3 text-primary text-center'>
+                  <FormControlLabel
+                    control={<Checkbox  checked={selfDeclaration}  onChange={selfDeclare} />}
+                    label="I self Declared for warranty"/>
+                    <FormControlLabel
+                    control={<Checkbox checked={agree} onChange={checkboxHandler} />}
+                    label="Agree to Pay the Visit Charges of Rs 400/- "/>
+                </Grid>)}
+                {warranty_def==='NO' &&(<Grid item xs={12} className='mx-3 text-primary text-center'>
+                    <FormControlLabel
+                    control={<Checkbox checked={agree} onChange={checkboxHandler} />}
+                    label="Agree to Pay the Visit Charges of Rs 400/- "/>
+                </Grid>)}
 
-                <Grid item xs={12} className='mx-3 text-primary text-center'>
+                {/* <Grid item xs={12} className='mx-3 text-primary text-center'>
                   <FormControlLabel
                     control={<Checkbox checked={agree} onChange={checkboxHandler} />}
                     label="Agree to Pay the Visit Charges of Rs 400/- "/>
-                </Grid>
+                </Grid> */}
               </Grid>
               <Grid container spacing={3} sx={{ p: 3 }}>
                 <Grid item xs={3}>
@@ -338,7 +410,7 @@ function PostNewBattery() {
                     fullWidth
                     sx={{ mb: 2 }}
                     onClick={onSubmit}
-                    disabled={agree?false:true}
+                    disabled={warranty_def==='YES' ?(selfDeclaration && agree?false:true):!agree}
                   >
                     Add Request
                   </Button>

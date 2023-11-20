@@ -261,14 +261,21 @@ const performanceOptions = [
   ];
 
 const statusOptions = [
-  { value: status_def, label: status_def },
-  { label: 'New', value: 1 },
-  { label: 'Approved', value: 10 },
-  { label: 'Active', value: 3 },
-  { label: 'Inactive', value: 4 },
-  { label: 'Hold', value: 9 },
-  { label: 'Deleted', value: 6 },
-  { label: 'Rejected', value: 5},
+  // { value: status_def, label: status_def },
+    { label: 'New', value: 1 },
+    { label: 'Reject', value: 5 },
+    { label: 'Visit amount due', value: 11 },
+    { label: 'Visit amount paid', value: 12 },
+    { label: 'To be assigned', value: 2},
+    { label: 'Assigned', value: 7 },
+    { label: 'In progress', value: 8 },
+    { label: 'Hold', value: 9 },
+    { label: 'Cant be fulfilled ', value: 15 },
+    { label: 'Service amount due', value: 13 },
+    { label: 'Service amount paid', value: 14 },
+    { label: 'service amount verified', value: 18 },
+    { label: 'completed', value: 16 },
+    { label: 'closed', value: 17},
 ];
 
 
@@ -397,6 +404,13 @@ const statusOptions = [
      setIsConfirmationOpen(false);
    };
    
+   const [parse_statusOptions, setParse_statusOptions]= useState('')
+   useEffect(()=>{
+     const status_values=JSON.stringify(statusOptions?statusOptions.find(({value})=>value===formData.status).label:'')
+   // console.log("status",status_values)
+   setParse_statusOptions(JSON.parse(status_values))
+   // console.log("parse",parse_statusOptions)
+   },[])
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -435,7 +449,7 @@ const statusOptions = [
 
         {/* Row 4 */}
         <FormField label="Service Area" name="serviceArea" onChange={handleInputChange} value={formData.serviceArea} disabled={false} />
-        <DropDownField label="Status" name="status" onChange={handleStatusChange} options={statusOptions} value={status_def}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange} options={parse_statusOptions} value={status_def}/>
 
         {/* Row 5 */}
         <FormField label="Address 1" name="address1" onChange={handleInputChange} value={formData.address1}/>

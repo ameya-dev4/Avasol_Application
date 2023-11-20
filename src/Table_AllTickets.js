@@ -31,6 +31,9 @@ function Table_AllTickets({ array_Details }) {
       navigate('/update_ticket_details', { state: { ticketId: record.requestId } });
 
     };
+
+  
+
    
     return (
       <>

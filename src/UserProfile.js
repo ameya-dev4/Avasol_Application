@@ -24,7 +24,8 @@ function UserProfile() {
   const password=localStorage.getItem('password')
   const parse_password=JSON.parse(password)
   
-  useEffect (() =>{ async function fetchDetails(){
+  useEffect (() =>{ 
+    async function fetchDetails(){
     const response = await fetch(`${SERVER_URL}user/get-profile`,{
         method : 'GET',
         headers : {

@@ -40,18 +40,33 @@ function UpdateBattery() {
 
   const warrantyType = [{value:warranty_def, label :warranty_def},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
   const statusOptions = [
-    { value: status_def, label: status_def },
+    // { value: status_def, label: status_def },
     { label: 'New', value: 1 },
-    { label: 'Active', value: 3 },
-    { label: 'Inactive', value: 4 },
+    { label: 'Reject', value: 5 },
+    { label: 'Visit amount due', value: 11 },
+    { label: 'Visit amount paid', value: 12 },
+    { label: 'To be assigned', value: 2},
+    { label: 'Assigned', value: 7 },
+    { label: 'In progress', value: 8 },
     { label: 'Hold', value: 9 },
-    { label: 'Deleted', value: 6 },
+    { label: 'Cant be fulfilled ', value: 15 },
+    { label: 'Service amount due', value: 13 },
+    { label: 'Service amount paid', value: 14 },
+    { label: 'Service amount verified', value: 18 },
+    { label: 'Completed', value: 16 },
+    { label: 'Closed', value: 17},
+    {label:'Active',value:3}
+
   ];
+
+  const vechicleType = [{value:vechicel_def, label :'Select Vechicle Type  '},{value:'2', label:'Two'},{label:'Three',value:'3'}]
 
   useEffect(()=>{
     setSatus_def(formData.status || 'select Status')
     setWarranty_def(formData.warranty || 'select Warranty')
     setVechicle_def(formData.vehicleType)
+    
+    console.log("form",formData.warrantyYears)
   })
 
   console.log("formdata",typeof(formData.vehicleType))
@@ -231,6 +246,31 @@ function UpdateBattery() {
     toast.error('Something went wrong! please Try again...')
   }
   };
+
+//Get principals details
+  useEffect(()=>{
+    const fetchDetails= async()=>{
+  const response = await fetch(`${SERVER_URL}user/get-principals`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${authToken}`,
+      'Content-type': 'application/json',
+      'Accept': 'application/json', // Add this line
+      "Access-Control-Allow-Origin": "*",
+    }
+  });
+  if (response.ok) {
+    const user_Details = await response.json();
+    setPrincipal_def(user_Details);
+    console.log(user_Details);
+  } else {
+    console.error('Failed to fetch user details:', response.status, response.statusText);
+  }
+  }
+  fetchDetails();
+  },[])
+  
+  
    
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
@@ -262,6 +302,13 @@ function UpdateBattery() {
   //    setIsConfirmationOpen(false);
   //  };
 
+  const [parse_statusOptions, setParse_statusOptions]= useState(0)
+  useEffect(()=>{
+    const status_values=JSON.stringify(statusOptions.find(({value})=>value===formData.status).label)
+  // console.log("status",status_values)
+  setParse_statusOptions(JSON.parse(status_values))
+  // console.log("parse",parse_statusOptions)
+  },[])
    
 
   return (
@@ -304,8 +351,8 @@ function UpdateBattery() {
         <EditFormField label="Purchase Date" name="purchaseDate" onChange={handleInputChange} value={formData.purchaseDate.slice(0,10)}/>
         <DropDownField label="Warranty" name="warranty" onChange={handlewarrantyChange}  value={warranty_def} options={warrantyType}/>
         
-        <EditFormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>
-        <EditFormField label="Vechicle Type" name="vehicleType" onChange={handleVechicleChange} value={formData.vehicleType}/>
+        {warranty_def==='Yes' && <EditFormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears}/>}
+        <DropDownField label="Vechicle Type" name="vehicleType" onChange={handleVechicleChange}  options={vechicleType} value={formData.vehicleType}/>
 
         {/* Row 6 */}
         <EditFormField label="Dealer ID" name="dealerId" onChange={handleInputChange} value={formData.dealerId}/>
@@ -316,7 +363,7 @@ function UpdateBattery() {
         <EditFormField label="Sub-Dealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/> */}
 
         {/* Row 8 */}
-        <DropDownField label="Status" name="status" onChange={handleStatusChange}   value={status_def} options={statusOptions}/>
+        <FormField label="Status" name="status" onChange={handleStatusChange}   value={parse_statusOptions} options={statusOptions}/>
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>
         <Grid item xs={3}>

@@ -309,6 +309,7 @@
 
 
 // export default UpdateLatestServReq;
+ 
 import React, { useEffect, useState } from 'react';
 import { GetToken } from './Api/auth';
 import { Form, useLocation, useNavigate } from 'react-router-dom';
@@ -321,6 +322,7 @@ import {
   MenuItem,
   Table,
   Container,
+  Checkbox,FormControlLabel
 } from '@mui/material';
 import AdminDash_upblock from './AdminDash_upblock';
 import Header from './Header';
@@ -334,6 +336,7 @@ import SERVER_URL from './Server/Server';
 import ConfirmationModal from './Confirmation';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import DeleteConfirm from './DeleteConfirm';
 
 const authToken = GetToken();
 
@@ -348,6 +351,7 @@ function UpdateLatestServReq() {
   const [batteryDetailsAll, setBatteryDetailsAll] = useState([]);
   const [batteryList, setBatteryList] = useState([]);
   const [batteryId,setBatteryId] = useState('')
+  const [agree, setAgree]=useState(false)
   const [formData, setFormData] = useState(
     batteryDetails || {} 
   );
@@ -355,13 +359,13 @@ function UpdateLatestServReq() {
   const [batteryInfo, setbatteryInfo] = useState([])
   const [status_def, setSatus_def] = useState('');
   const [preform_def, setPerform_def] = useState('None');
-  const [warranty_def, setWarranty_def] = useState('No');
-  const [Declare_def, setDeclare_def] = useState(false);
+  const [warranty_def, setWarranty_def] = useState('NO');
+  const [vechicel_def, setVechicle_def] = useState(0);
 
   useEffect(() => {
     setSatus_def(formData.status || 'select Status'); 
-    setDeclare_def(formData.selfDeclaration || false);
-    setWarranty_def(formData.warranty || 'select Warranty'); 
+    setVechicle_def(formData.vehicleType ||'select Vehicle Type');
+    setWarranty_def(formData.warranty.toUpperCase() || 'select Warranty'); 
     setPerform_def(formData.customerRating || 'select Performance'); 
   }, [formData]);
 
@@ -369,30 +373,44 @@ function UpdateLatestServReq() {
 
   // Define options for your select fields
   const warrantyType = [
-    { value: warranty_def, label: warranty_def },
-    { value: 'Yes', label: 'Yes' },
-    { label: 'No', value: 'No' },
+    { value: 'YES', label: 'Yes' },
+    { label: 'No', value: 'NO' },
   ];
 
-  const Declaration = [
-    { value: Declare_def, label: Declare_def },
-    { value: true, label: 'Yes' },
-    { label: 'No', value: false },
+  const vechicleType = [
+    { value:2, label: 'Two' },
+    { label: 'Three', value: 3 },
+    { label: 'Four', value: 4 },
   ];
 
  
   const statusOptions = [
     // { value: status_def, label: status_def },
     { label: 'New', value: 1 },
-    { label: 'Active', value: 3 },
-    { label: 'Inactive', value: 4 },
+    { label: 'Reject', value: 5 },
+    { label: 'Visit amount due', value: 11 },
+    { label: 'Visit amount paid', value: 12 },
+    { label: 'To be assigned', value: 2},
+    { label: 'Assigned', value: 7 },
+    { label: 'In progress', value: 8 },
     { label: 'Hold', value: 9 },
-    { label: 'Deleted', value: 6 },
+    { label: 'Cant be fulfilled ', value: 15 },
+    { label: 'Service amount due', value: 13 },
+    { label: 'Service amount paid', value: 14 },
+    { label: 'service amount verified', value: 18 },
+    { label: 'completed', value: 16 },
+    { label: 'closed', value: 17},
+
   ];
-  const status_values=JSON.stringify(statusOptions)
-  console.log("status",status_values)
-  const parse_statusOptions=JSON.parse(status_values)
-  console.log("parse",parse_statusOptions)
+
+
+  const [parse_statusOptions, setParse_statusOptions]= useState('')
+  useEffect(()=>{
+    const status_values=JSON.stringify(statusOptions?statusOptions.find(({value})=>value===formData.status).label:'')
+  // console.log("status",status_values)
+  setParse_statusOptions(JSON.parse(status_values))
+  // console.log("parse",parse_statusOptions)
+  },[])
 
   
 
@@ -429,8 +447,8 @@ function UpdateLatestServReq() {
     }));
   };
 
-  const handleDeclareChange = (e) => {
-    setDeclare_def(e.target.value);
+  const handleVechicleChange = (e) => {
+    setVechicle_def(e.target.value);
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -507,6 +525,7 @@ function UpdateLatestServReq() {
   }, []);
 
   const handleDelete = (input_value) => {
+    setIsDeleteConfirmOpen(false)
     let batteryInfo;
     let batteryId = input_value;
     for (let i = 0; i < latestRequests.length; i++) {
@@ -556,7 +575,8 @@ function UpdateLatestServReq() {
   const onSubmit = (e) => {
     e.preventDefault();
     // formData contains the form values
-    console.log(formData);
+    // console.log(formData);
+    formData.selfDeclaration=agree?true:false
     fetch(`${SERVER_URL}user/update-service-request`, {
       method: 'PUT',
       headers: {
@@ -622,6 +642,7 @@ function UpdateLatestServReq() {
   console.log("batteryInfo",batteryInfo)
 
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
    const handleCancle = () => {
      setIsConfirmationOpen(true);
@@ -635,6 +656,14 @@ function UpdateLatestServReq() {
      navigate('/latest_serv_request')
      setIsConfirmationOpen(false);
    };
+
+   const deleteCancle = () => {
+    setIsDeleteConfirmOpen(true);
+  };
+
+  const deleteCloseConfirmation = () => {
+    setIsDeleteConfirmOpen(false);
+  };
 
    function handlepara(){
     return<>
@@ -679,13 +708,19 @@ function UpdateLatestServReq() {
     fetchData();
   }, []);
 
+  const checkboxHandler = () => {
+    setAgree(!agree);
+    
+  };
+
+
 
   return (
     <div className="grid-container" style={{ borderBlock: '2px solid black' }}>
       <Header OpenSidebar={OpenSidebar} />
       <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} />
       <main className="main-container">
-        <Dashboard_upBlocks />
+        <Dashboard_upBlocks />  
         <Container style={{ margin: '50px 0px' }}>
           <form noValidate>
             <Table sx={{ border: '1px solid black', p: 2, mt: 3, backgroundColor: 'white' }}>
@@ -744,9 +779,9 @@ function UpdateLatestServReq() {
 
                 {/* Row 6 */}
                 <DropDownField label="Under Warranty" name="warranty" onChange={handlewarrantyChange} value={warranty_def} options={warrantyType} />
-                <DropDownField label="self Declaration" placeholder="I agree terms & conditions" name="selfDeclaration" onChange={handleDeclareChange} options={Declaration} value={Declare_def} />
-                <FormField label="Status" name="status" onChange={handleStatusChange} value={formData.status} />
-                <EditFormField label="Vehicle Type" name="vehicleType" onChange={handleInputChange} value={formData.vehicleType} />
+                {/* <DropDownField label="self Declaration" placeholder="I agree terms & conditions" name="selfDeclaration" onChange={handleDeclareChange} options={Declaration} value={Declare_def} /> */}
+                <FormField label="Status" name="status" onChange={handleStatusChange} value={parse_statusOptions} />
+                <DropDownField label="Vehicle Type" name="vehicleType" onChange={handleVechicleChange}  options={vechicleType} value={formData.vehicleType} />
               
               {status_def!==1 && 
               (
@@ -759,13 +794,18 @@ function UpdateLatestServReq() {
 
                 <FormField label="Service Amount" name="service_amount" para_label={handlepara()} onChange={handleInputChange} value={formData.service_amount?formData.service_amount:'Not yet decided'} />
                 <EditFormField label="Service Amount Paid Ref" name="serviceAmountPaid" onChange={handleInputChange} value={formData.serviceAmountPaid} />
-                <DropDownField label="Customer Rating" name="customerRating" onChange={handlePerformChange} value={preform_def} options={performanceOptions} />
+                {/* <DropDownField label="Customer Rating" name="customerRating" onChange={handlePerformChange} value={preform_def} options={performanceOptions} /> */}
                 </>
-              )
+                )
               }
 
-                
-                
+              {warranty_def==='Yes' && (<Grid item xs={12} className='mx-3 text-primary text-center'>
+                    <FormControlLabel
+                    control={<Checkbox checked={agree} onChange={checkboxHandler} />}
+                    label="I self declared warranty"/>
+                </Grid>)
+              }          
+            
               </Grid>
               <Grid container spacing={3} sx={{ p: 3 ,mt:3}}>
                 <Grid item xs={3}>
@@ -788,6 +828,7 @@ function UpdateLatestServReq() {
                     fullWidth
                     sx={{ mb: 2 }}
                     onClick={onSubmit}
+                  
                   >
                     Update
                   </Button>
@@ -800,7 +841,7 @@ function UpdateLatestServReq() {
                     color="error"
                     sx={{ mb: 2 }}
                     disabled={status_def===1?false:true}
-                    onClick={() => handleDelete(formData.batteryId)}
+                    onClick={deleteCancle}
                   >
                     Delete Service
                   </Button>
@@ -811,6 +852,13 @@ function UpdateLatestServReq() {
               onConfirm={handleConfirm}
           
             />
+
+        <DeleteConfirm
+          open={isDeleteConfirmOpen}
+          onClose={deleteCloseConfirmation}
+          onConfirm={()=>handleDelete(formData.batteryId)}
+          
+        />
 
             {/* Toast Notification */}
             <ToastContainer/>
