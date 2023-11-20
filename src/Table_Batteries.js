@@ -187,7 +187,7 @@ function Table_Batteries({array_Details}){
         <ToastContainer/>
         
           
-        />
+     
       
       </>
     );  

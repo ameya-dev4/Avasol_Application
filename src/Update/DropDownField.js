@@ -1,6 +1,6 @@
 import { Grid,Box,Typography,Select,MenuItem} from '@mui/material';
 
-function DropDownField({ label,name, value ,options,onChange,para_label}) {
+function DropDownField({ label,name, value ,options,onChange,para_label,defaultValue}) {
     return (
       <Grid item xs={12} sm={6} >
         <Box >
@@ -13,6 +13,7 @@ function DropDownField({ label,name, value ,options,onChange,para_label}) {
               margin="normal"
               sx={{width:'80%',ml:3}}
               value={value}
+              defaultValue={defaultValue}
               >
                 {options.map((option) => (
                   <MenuItem key={option.value} value={option.value}>

@@ -799,7 +799,7 @@ function UpdateLatestServReq() {
                 )
               }
 
-              {warranty_def==='Yes' && (<Grid item xs={12} className='mx-3 text-primary text-center'>
+              {warranty_def==='YES' && (<Grid item xs={12} className='mx-3 text-primary text-center'>
                     <FormControlLabel
                     control={<Checkbox checked={agree} onChange={checkboxHandler} />}
                     label="I self declared warranty"/>
@@ -828,6 +828,7 @@ function UpdateLatestServReq() {
                     fullWidth
                     sx={{ mb: 2 }}
                     onClick={onSubmit}
+                    disabled={warranty_def==='YES'?(!agree?true:false):agree}
                   
                   >
                     Update

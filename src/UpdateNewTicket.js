@@ -34,20 +34,25 @@ function UpdateNewTickets() {
   const [formData, setFormData] = useState(parse_Ticket);
   console.log("fom",parse_Ticket.status)
   const statusOptions = [
+    // { value: status_def, label: status_def },
     { label: 'New', value: 1 },
-    { label: 'Assigned', value: 2 },
-    { label: 'Active', value: 3 },
-    { label: 'Inactive', value: 4 },
+    { label: 'Reject', value: 5 },
+    { label: 'Visit amount due', value: 11 },
+    { label: 'Visit amount paid', value: 12 },
+    { label: 'To be assigned', value: 2},
+    { label: 'Assigned', value: 7 },
+    { label: 'In progress', value: 8 },
     { label: 'Hold', value: 9 },
-    { label: 'Deleted', value: 6 },
-    { label: 'Rejected', value: 5 },
-    { label: 'In Progress', value: 7},
-    { label: 'Open', value: 8 },
-    { label: 'Visit Amount Paid', value: 13},
-    { label: 'Service Amount Due', value: 12},
-    { label: 'Service Amount Paid', value: 15 },
-
+    { label: 'Cant be fulfilled ', value: 15 },
+    { label: 'Service amount due', value: 13 },
+    { label: 'Service amount paid', value: 14 },
+    { label: 'Service amount verified', value: 18 },
+    { label: 'Completed', value: 16 },
+    { label: 'Closed', value: 17},
+    {label:'Active',value:3}
   ];
+
+
   useEffect(()=>{
     setServiceEnggId(parse_Ticket.serviceEngineerId || 'select Service Engineer');
     setStatus_def(parse_Ticket.status || 'select Status');
@@ -86,7 +91,7 @@ function UpdateNewTickets() {
     }));
   };
 
-  const handleStausChange = (e) => {
+  const handleStatusChange = (e) => {
     setStatus_def(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
@@ -250,7 +255,7 @@ console.log("ser",serviceEnggID)
        <FormField label="Contact" name="contactNumber" onChange={handleInputChange}  value={parse_Ticket.customerDetails ? parse_Ticket.customerDetails.contactNumber : 'N/A'}/>
 
        <FormField label="Notes To ServiceEngineer" name="noteToServiceengineer" onChange={handleInputChange} value={formData.noteToServiceEngineer} />
-       <DropDownField label="Status" name="status" onChange={handleStausChange}  options={statusOptions} value={status_def} />
+       <DropDownField label="Status" name="status" onChange={handleStatusChange}  options={statusOptions} value={status_def} />
               {all_serviceEngg.length>0?(
               <DropDownField 
               label="Service Engineer ID" 

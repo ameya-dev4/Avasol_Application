@@ -37,6 +37,11 @@ function UpdateBattery() {
   const [status_def, setSatus_def]=useState('')
   const [warranty_def,setWarranty_def]=useState('No')
   const [vechicel_def,setVechicle_def]=useState(0)
+  const [principalList,setPrincipalsList] =useState('')
+  const [principalId,setPrincipalId]= useState('')
+  const [dealerId,setDealerId] =useState('')
+  const [dealerList, setDealerList] =useState([])
+
 
   const warrantyType = [{value:warranty_def, label :warranty_def},{value:'Yes', label :'Yes'},{label:'No',value:'No'}]
   const statusOptions = [
@@ -64,9 +69,10 @@ function UpdateBattery() {
   useEffect(()=>{
     setSatus_def(formData.status || 'select Status')
     setWarranty_def(formData.warranty || 'select Warranty')
-    setVechicle_def(formData.vehicleType)
-    
-    console.log("form",formData.warrantyYears)
+    setVechicle_def(formData.vehicleType|| 'select Vehicle Type')
+    setPrincipalId(formData.principalId || 'select Principal ID')
+    setDealerId(formData.dealerId || 'select Dealer ID')
+
   })
 
   console.log("formdata",typeof(formData.vehicleType))
@@ -119,9 +125,7 @@ function UpdateBattery() {
   //View Batteries
 
   const [latestRequests, setLatestRequests] = useState([]);
-  const[displayDetails , setDisplayDetails] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
-  const [principal_def, setPrincipal_def]=useState({})
   useEffect(() => {
     // Function to make the GET request
     async function getLatestRequests() {
@@ -213,8 +217,8 @@ function UpdateBattery() {
     //below 2 lines are converting string type to integer type:
     formData.vehicleType = parseInt(formData.vehicleType);
     formData.warrantyYears = parseInt(formData.warrantyYears);
-    formData.dealerId = parseInt(formData.dealerId);
-    formData.principalId = parseInt(formData.principalId);
+    formData.dealerId = formData.dealerId;
+    formData.principalId = formData.principalId;
 
     console.log(formData)
     try{
@@ -249,6 +253,7 @@ function UpdateBattery() {
   };
 
 //Get principals details
+
   useEffect(()=>{
     const fetchDetails= async()=>{
   const response = await fetch(`${SERVER_URL}user/get-principals`, {
@@ -260,19 +265,56 @@ function UpdateBattery() {
       "Access-Control-Allow-Origin": "*",
     }
   });
-  if (response.ok) {
-    const user_Details = await response.json();
-    setPrincipal_def(user_Details);
-    console.log(user_Details);
-  } else {
-    console.error('Failed to fetch user details:', response.status, response.statusText);
-  }
+    if (response.ok) {
+      const user_Details = await response.json();
+      const principalIds = user_Details.map(eachprincpal => ({
+        label: eachprincpal.principalName,
+        value: eachprincpal.principalName
+      }));
+      setPrincipalsList(principalIds);
+
+         
+
+        } else {
+          console.error('Failed to fetch user details:', response.status, response.statusText);
+        }
+    }
+    fetchDetails();
+    },[])
+  
+  //Get Delear details
+  //Get principals details
+
+  useEffect(()=>{
+    const fetchDetails= async()=>{
+  const response = await fetch(`${SERVER_URL}user/get-dealers`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${authToken}`,
+      'Content-type': 'application/json',
+      'Accept': 'application/json', // Add this line
+      "Access-Control-Allow-Origin": "*",
+    }
+  });
+      if (response.ok) {
+        const user_Details = await response.json();
+        const dealerIds = user_Details.map(eachdealer => ({
+          label: eachdealer.dealerName,
+          value: eachdealer.dealerName
+        }));
+        setDealerList(dealerIds);
+
+
+      } else {
+        console.error('Failed to fetch user details:', response.status, response.statusText);
+      }
   }
   fetchDetails();
   },[])
   
-  
-   
+
+
+
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
    const handleCancle = () => {
@@ -310,7 +352,26 @@ function UpdateBattery() {
   setParse_statusOptions(JSON.parse(status_values))
   // console.log("parse",parse_statusOptions)
   },[])
-   
+
+  const handlePrincipalChange = (e) => {
+    
+    setPrincipalId(e.target.value)
+    const {name , value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+}
+
+const handleDealerChange = (e) => {
+    
+  setDealerId(e.target.value)
+  const {name , value} = e.target;
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+}
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -356,14 +417,32 @@ function UpdateBattery() {
         <DropDownField label="Vechicle Type" name="vehicleType" onChange={handleVechicleChange}  options={vechicleType} value={formData.vehicleType}/>
 
         {/* Row 6 */}
-        <EditFormField label="Dealer ID" name="dealerId" onChange={handleInputChange} value={formData.dealerId}/>
-        <EditFormField label="Principal ID" name="principalId" onChange={handleInputChange} value={formData.principalId}/>
+        {dealerList.length > 0 ? (
+                  <DropDownField
+                    name="dealerId"
+                    label='Dealer ID'
+                    placeholder="eg:1234"
+                    value={dealerId}
+                    onChange={handleDealerChange}
+                    options={dealerList}
+                    
+                  />
+                ) : (
+                  <EditFormField label="Dealer ID" name="dealerId" placeholder='Enter dealerId' value="DealerId's fetching...!" />
+                )}
+        {principalList.length > 0 ? (
+                  <DropDownField
+                    name="principalId"
+                    label='Principal ID'
+                    placeholder="eg:1234"
+                    value={principalId}
+                    onChange={handlePrincipalChange}
+                    options={principalList}
+                  />
+                ) : (
+                  <EditFormField label="Princilap ID" name="principalId" placeholder='Enter principalId' value="PrincipalId's fetching...!" />
+                )}
 
-        {/* Row 7 */}
-        {/* <EditFormField label="Sub-DealerAddress" name="subDealerAddress" onChange={handleInputChange}  value={formData.subDealerAddress}/>
-        <EditFormField label="Sub-Dealer Contact" name="subDealer Contact" onChange={handleInputChange} value={formData.subDealerContact}/> */}
-
-        {/* Row 8 */}
         <FormField label="Status" name="status" onChange={handleStatusChange}   value={parse_statusOptions} options={statusOptions}/>
         </Grid>
         <Grid container spacing={3} sx={{p:3}}>

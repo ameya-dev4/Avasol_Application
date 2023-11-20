@@ -404,13 +404,13 @@ const statusOptions = [
      setIsConfirmationOpen(false);
    };
    
-   const [parse_statusOptions, setParse_statusOptions]= useState('')
-   useEffect(()=>{
-     const status_values=JSON.stringify(statusOptions?statusOptions.find(({value})=>value===formData.status).label:'')
-   // console.log("status",status_values)
-   setParse_statusOptions(JSON.parse(status_values))
-   // console.log("parse",parse_statusOptions)
-   },[])
+  //  const [parse_statusOptions, setParse_statusOptions]= useState('')
+  //  useEffect(()=>{
+  //    const status_values=JSON.stringify(statusOptions?statusOptions.find(({value})=>value===formData.status).label:'')
+  //  // console.log("status",status_values)
+  //  setParse_statusOptions(JSON.parse(status_values))
+  //  // console.log("parse",parse_statusOptions)
+  //  },[])
 
   return (
     <div className="grid-container"  style={{borderBlock:'2px solid black'}}>
@@ -449,7 +449,7 @@ const statusOptions = [
 
         {/* Row 4 */}
         <FormField label="Service Area" name="serviceArea" onChange={handleInputChange} value={formData.serviceArea} disabled={false} />
-        <DropDownField label="Status" name="status" onChange={handleStatusChange} options={parse_statusOptions} value={status_def}/>
+        <DropDownField label="Status" name="status" onChange={handleStatusChange} options={statusOptions} value={status_def}/>
 
         {/* Row 5 */}
         <FormField label="Address 1" name="address1" onChange={handleInputChange} value={formData.address1}/>
@@ -464,12 +464,12 @@ const statusOptions = [
         <FormField label="Govt PhotoID" name="govtPhotoId" onChange={handleInputChange} value={formData.govtPhotoId}/>
 
         {/* Row 8 */}
-        <FormField label="Bank Name" name="bankName" onChange={handleInputChange}  value={formData.bankName?formData.bankName:"NA"}/>
-        <FormField label="Branch Name" name="branchName" onChange={handleInputChange} value={formData.branchName?formData.branchName:"NA"}/>
+        <FormField label="Bank Name" name="bankName" onChange={handleInputChange}  value={formData.bankName}/>
+        <FormField label="Branch Name" name="branchName" onChange={handleInputChange} value={formData.branchName}/>
 
         {/*Row 9 */}
         <FormField label="Account Holder Name " name="accountHolderName" onChange={handleInputChange} value={formData.accountHolderName}/>
-        <FormField label="Bank Account No" name="bankAccount" onChange={handleInputChange} value={formData.bankAccountNo}/>
+        <FormField label="Bank Account No" name="bankAccountNo" onChange={handleInputChange} value={formData.bankAccountNo}/>
 
         {/* Row 10 */}
         <FormField label="IFSC code" name="ifsc" onChange={handleInputChange} value={formData.ifsc}/>

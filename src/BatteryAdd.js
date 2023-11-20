@@ -23,11 +23,13 @@ function BatteryAdd() {
   const authToken = GetToken();
   const [warranty_def, setWarranty_def]=useState('no')
   const [vechicel_def, setVechicle_def]=useState('None')
-  const [principal_def, setPrincipal_def]=useState({})
+  const [principalList,setPrincipalsList] =useState([])
+  const [principalId,setPrincipalId]= useState(null)
+  const [dealerId,setDealerId] =useState(null)
+  const [dealerList, setDealerList] =useState([])
 
   const warrantyType = [{value:warranty_def, label :'Select Warranty'},{value:'yes', label :'Yes'},{label:'No',value:'no'}]
-  const principalType = [{value:principal_def, label :'Select Principal'},{label:1,value:1},{label:2,value:2},{label:3,value:3},{label:4,value:4}];
-  const vechicleType = [{label:'Two',value:2},{label:'Three',value:3},{label:'Four',value:4}];
+  const vechicleType = [{value:vechicel_def, label :'Select Vehicle Type'},{label:'Two',value:2},{label:'Three',value:3},{label:'Four',value:4}];
 
   const navigate = useNavigate();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -104,13 +106,26 @@ function BatteryAdd() {
   };
 
   const handlePrincipalChange = (e) => {
-    setPrincipal_def(e.target.value)
+    
+    setPrincipalId(e.target.value)
     const {name , value} = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  };
+}
+
+const handleDealerChange = (e) => {
+    
+  setDealerId(e.target.value)
+  const {name , value} = e.target;
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+}
+
+
 
 
   const [latestRequests, setLatestRequests] = useState([]);
@@ -172,6 +187,76 @@ function handleLabel(){
   
 }
 
+//Get principals details
+
+useEffect(()=>{
+  const fetchDetails= async()=>{
+const response = await fetch(`${SERVER_URL}user/get-principals`, {
+  method: 'GET',
+  headers: {
+    'Authorization': `Bearer ${authToken}`,
+    'Content-type': 'application/json',
+    'Accept': 'application/json', // Add this line
+    "Access-Control-Allow-Origin": "*",
+  }
+});
+  if (response.ok) {
+    const user_Details = await response.json();
+    const  principalIds = user_Details.map(eachprincpal => ({
+      label: eachprincpal.principalName,
+      value: eachprincpal.principalName
+    }));
+    const newPrincipal = { label: 'Select Principal ID', value: null };
+    setPrincipalsList([newPrincipal, ...principalIds]);
+    setPrincipalId(principalList.length > 0 ? principalList[0].value : null);
+       
+
+      } else {
+        console.error('Failed to fetch user details:', response.status, response.statusText);
+      }
+  }
+  fetchDetails();
+  },[])
+
+  // const newPrincipal={label:'select Principal ID',value:principalId}
+  // principalList.splice(0,0,newPrincipal)
+  // console.log("princi",principalList)
+
+//Get Delear details
+
+useEffect(()=>{
+  const fetchDetails= async()=>{
+const response = await fetch(`${SERVER_URL}user/get-dealers`, {
+  method: 'GET',
+  headers: {
+    'Authorization': `Bearer ${authToken}`,
+    'Content-type': 'application/json',
+    'Accept': 'application/json', // Add this line
+    "Access-Control-Allow-Origin": "*",
+  }
+});
+    if (response.ok) {
+      const user_Details = await response.json();
+      const dealerIds = user_Details.map(eachdealer => ({
+        label: eachdealer.dealerName,
+        value: eachdealer.dealerName
+      }));
+      const newDealer = { label: 'Select Dealer ID', value: null };
+      setDealerList([newDealer, ...dealerIds]);
+      setDealerId(dealerList.length > 0 ? dealerList[0].value : null);
+
+
+
+    } else {
+      console.error('Failed to fetch user details:', response.status, response.statusText);
+    }
+}
+fetchDetails();
+},[])
+
+
+
+
 
    
 
@@ -222,9 +307,30 @@ function handleLabel(){
         {warranty_def==='yes' && (
           <>
             <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears} placeholder='Enter Warranty Years' />
-            <DropDownField label="Principal Id" name="principalId" onChange={handlePrincipalChange}  placeholder='Enter Principal ID' options={principalType} value={principal_def}/>
-            <FormField label="Dealer Id" name="dealerId" onChange={handleInputChange} placeholder='Enter Dealer ID' value={formData.dealerId}/>
-            {/* <FormField label="Warranty Years" name="warrantyYears" onChange={handleInputChange} value={formData.warrantyYears} placeholder='Enter Warranty Years'/> */}
+            {dealerList.length > 0 ? (
+                  <DropDownField
+                    name="dealerId"
+                    label='Dealer ID'
+                    placeholder="eg:1234"
+                    value={dealerId}
+                    onChange={handleDealerChange}
+                    options={dealerList}
+                  />
+                ) : (
+                  <FormField label="Dealer ID" name="dealerId" placeholder='Enter dealerId' value="DealerId's fetching...!" />
+                )}
+            {principalList.length > 0 ? (
+                      <DropDownField
+                        name="principalId"
+                        label='Principal ID'
+                        placeholder="eg:1234"
+                        value={principalId}
+                        onChange={handlePrincipalChange}
+                        options={principalList}
+                      />
+                    ) : (
+                      <FormField label="Princilap ID" name="principalId" placeholder='Enter principalId' value="PrincipalId's fetching...!" />
+                    )}
           </>
             
         )}

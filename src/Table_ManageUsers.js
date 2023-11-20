@@ -186,7 +186,7 @@ function Table_ManageUsers({ array_Details }) {
             <Link style={{ textDecoration: 'None', cursor: 'pointer' }} onClick={() => handleTicketClick({ record })}>{record.lastName}</Link>
           </TableCell>
           <TableCell style={{ fontSize: '18px' }}>{record.username}</TableCell>
-          <TableCell style={{ fontSize: '18px' }}>{record.address}</TableCell>
+          <TableCell style={{ fontSize: '18px' }}>{record.address?record.address:'NA'}</TableCell>
           <TableCell style={{ fontSize: '18px' }}>{record.contactNumber}</TableCell>
           <TableCell style={{ fontSize: '18px' }}>{record.status}</TableCell>
         </TableRow>
